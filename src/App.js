@@ -13,7 +13,9 @@ function GetVCard() {
   async function getCard() {
     console.log("clicked");
     axios
-      .get("http://localhost:3000/vCards/Map/6250d30d4ff4877952abf798")
+      .get(
+        "https://britekard.herokuapp.com/vCards/Map/6250d30d4ff4877952abf798"
+      )
       .then(function (response) {
         download("dante.VCF", response.data);
       })
