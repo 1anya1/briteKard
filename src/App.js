@@ -11,7 +11,17 @@ export default function App() {
 function GetVCard() {
   async function getCard() {
     console.log("clicked");
-    await fetch("http://localhost:3000/vCards/Map/6250d30d4ff4877952abf798")
+
+    const getData = await fetch(
+      "http://localhost:3000/vCards/Map/6250d30d4ff4877952abf798",
+      {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then(function (response) {
         return response.text();
       })
@@ -19,6 +29,7 @@ function GetVCard() {
         download("dante.VCF", data);
         console.log(data);
       });
+    return getData;
   }
 
   function download(filename, text) {
