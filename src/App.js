@@ -1,5 +1,6 @@
 import "./App.css";
 import { createRoot } from "react-dom/client";
+const axios = require("axios");
 
 export default function App() {
   return (
@@ -11,23 +12,23 @@ export default function App() {
 function GetVCard() {
   async function getCard() {
     console.log("clicked");
-    await fetch("http://localhost:3000/vCards/Map/6250d30d4ff4877952abf798", {
-      mode: "no-cors",
-    })
+    axios
+      .get("http://localhost:3000/vCards/Map/6250d30d4ff4877952abf798")
       .then(function (response) {
-        return response.text();
+        download("dante.VCF", response.data);
       })
-      .then(function (data) {
-        download("dante.VCF", data);
-        console.log(data);
+      .catch(function (error) {
+        // handle error
+        console.log(error);
       });
   }
 
   function download(filename, text) {
+    console.log("here");
     var element = document.createElement("a");
     element.setAttribute(
       "href",
-      "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+      "data:text/vcard;charset=utf-8," + encodeURIComponent(text)
     );
     element.setAttribute("download", filename);
 
