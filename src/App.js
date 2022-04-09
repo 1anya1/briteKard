@@ -9,7 +9,6 @@ import {
 export default function App() {
   return (
     <div className="2xl:container 2xl:mx-auto">
-      <VCard />
       <GetVCard />
     </div>
   );
