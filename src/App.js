@@ -22,10 +22,19 @@ function GetVCard() {
   }
 
   function download(filename, text) {
-    var url = "data:text/vcard;charset=utf-8," + encodeURIComponent(text);
+    var element = document.createElement("a");
+    element.setAttribute(
+      "href",
+      "data:text/vcard;charset=utf-8," + encodeURIComponent(text)
+    );
+    element.setAttribute("download", filename);
 
-    // ask the browser to download it
-    document.location.href = url;
+    element.style.display = "none";
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
   }
 
   return <button onClick={getCard}>Get My Card</button>;
