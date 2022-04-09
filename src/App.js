@@ -22,7 +22,7 @@ function GetVCard() {
   }
 
   function download(filename, text) {
-    var url = "data:text/x-vcard;charset=utf-8," + encodeURIComponent(text);
+    var url = "data:text/vcard;charset=utf-8," + encodeURIComponent(text);
 
     // ask the browser to download it
     document.location.href = url;
