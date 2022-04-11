@@ -6,17 +6,68 @@ import Hero from "./components/Hero";
 import Feature from "./components/FeatureSection";
 import CTA from "./components/CTA";
 import VCard from "./components/SVG";
+import Chips from "./components/formType/Chips";
+import React, { useState } from "react";
+
 const axios = require("axios");
 
 export default function App() {
+  const [options, setOptions] = useState([
+    {
+      options: {
+        name: "Basic Information",
+        toggle: false,
+      },
+    },
+    {
+      options: {
+        name: "Social",
+        toggle: false,
+      },
+    },
+    {
+      options: {
+        name: "Photos",
+        toggle: false,
+      },
+    },
+    {
+      options: {
+        name: "Address",
+        toggle: false,
+      },
+    },
+    {
+      options: {
+        name: "About",
+        toggle: false,
+      },
+    },
+  ]);
+  // const [on, setOn] = useState(false);
+
+  function click(e) {
+    console.log(e);
+    const node = e.target.nodeName;
+    if (node === "SPAN") {
+      const text = e.target.childNodes[0];
+      const button = e.target.childNodes[1];
+      console.log(text, button);
+      // setOn((on) => !on);
+    }
+  }
+
   return (
     <div className="2xl:container 2xl:mx-auto">
+      <div
+        onClick={click}
+        className="flex flex-row flex-nowrap flex-none gap-x-8 overflow-scroll"
+      >
+        <Chips options={options} />
+      </div>
       <GetVCard />
       <Forms />
-      <Layouts />
-      <Hero />
-      <Feature />
-      <CTA />
+
       <VCard />
     </div>
   );
