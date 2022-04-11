@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SocialInputs from "../styling/SocialInputs";
 import FormDescription from "../styling/FormDescription";
 export default function SocialLinks() {
-  const [site, setSite] = useState([
+  const [site] = useState([
     {
       title: "LinkedIn",
     },
