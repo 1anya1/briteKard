@@ -1,6 +1,6 @@
 export default function HalfFormInput() {
   return (
-    <div className="col-span-6 sm:col-span-3">
+    <div className="col-span-6 sm:col-span-3 pb-8">
       <label
         htmlFor="first-name"
         className="block text-sm font-medium text-gray-700"
