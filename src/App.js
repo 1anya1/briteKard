@@ -1,10 +1,6 @@
 import "./App.css";
 import { createRoot } from "react-dom/client";
 import Forms from "./components/Form";
-import Layouts from "./components/Layouts";
-import Hero from "./components/Hero";
-import Feature from "./components/FeatureSection";
-import CTA from "./components/CTA";
 import VCard from "./components/SVG";
 import Chips from "./components/formType/Chips";
 import React, { useState } from "react";
@@ -12,7 +8,7 @@ import React, { useState } from "react";
 const axios = require("axios");
 
 export default function App() {
-  const [options, setOptions] = useState([
+  const [options] = useState([
     {
       options: {
         name: "Basic Information",
