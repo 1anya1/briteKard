@@ -1,7 +1,5 @@
 import "./App.css";
 import Forms from "./components/Form";
-import VCard from "./components/SVG";
-import GetVCard from "./components/GetVCard";
 
 export default function App() {
   // const [on, setOn] = useState(false);
