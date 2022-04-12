@@ -4,7 +4,7 @@ export default function SocialInputs(props) {
       {props.site.map((title, idx) => {
         console.log(title);
         return (
-          <div className=" pb-3">
+          <div className=" pb-3" key={idx}>
             <label
               htmlFor="company-website"
               className="block text-sm font-medium text-gray-700"
