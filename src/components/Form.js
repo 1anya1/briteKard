@@ -116,6 +116,8 @@ export default function Forms() {
               {options.map((el, idx) => {
                 if (el[0].toggle && el[0].id) {
                   return <div key={idx}>{el[0].id}</div>;
+                } else {
+                  return null;
                 }
               })}
               <button
