@@ -34,7 +34,7 @@ export default function ProfileImageInputs(props) {
       <div className="col-start-2 col-span-2">
         <label className="block text-sm font-medium text-gray-700">Photo</label>
         <div className="mt-1 flex items-center">
-          <span className="inline-block h-12 w-12 md:h-15 md:w-15 rounded-full overflow-hidden bg-gray-100">
+          <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
             {image ? (
               <img
                 src={image}
@@ -65,29 +65,6 @@ export default function ProfileImageInputs(props) {
               className="sr-only"
             />
           </label>
-          {/* <input
-            id="file-upload"
-            name="file-upload"
-            type="file"
-            accept="image/png, image/jpeg"
-            className=" sr-only ml-5 bg-blue-400 py-2 px-3 border border-blue-400 rounded-md shadow-sm text-sm leading-4 font-medium text-white hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          /> */}
-          {/* <input
-            type="file"
-            id="file"
-            // onChange={handleChange}
-            onClick={() => console.log(fileInputRef.current.click())}
-            ref={fileInputRef}
-            accept="image/png, image/jpeg"
-            className="ml-5 bg-blue-400 py-2 px-3 border border-blue-400 rounded-md shadow-sm text-sm leading-4 font-medium text-white hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            // style={{ display: "none" }}
-          /> */}
-          {/* <button
-            onClick={() => fileInputRef.current.click()}
-            className="ml-5 bg-blue-400 py-2 px-3 border border-blue-400 rounded-md shadow-sm text-sm leading-4 font-medium text-white hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            Change
-          </button> */}
         </div>
       </div>
     </div>

@@ -1,9 +1,10 @@
-import BasicInfo from "./formType/BasicInfo";
+import PersonalInfo from "./formType/PersonalInfo";
 import Profile from "./formType/Profile";
 import SocialLinks from "./formType/SocialLikns";
 import HomeAddress from "./formType/HomeAddress";
 import Chips from "./formType/Chips";
 import React, { useState } from "react";
+const axios = require("axios");
 export default function Forms() {
   //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
   const [options, setOptions] = useState([
@@ -77,10 +78,24 @@ export default function Forms() {
     event.preventDefault();
     console.log(event);
     console.log(userInputs);
-
-    //getting all the values
-    // console.log({ name }, { email }, { lastName });
+    console.log({ username: "Web Test" });
+    let username = {
+      username: "WebTest",
+    };
+    let body = { ...username, vCard: [userInputs] };
+    sendData(body);
   }
+  function sendData(body) {
+    axios
+      .post("https://britekard.herokuapp.com/vCards/", { body })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   function imageConvert(base64, type) {
     console.log(base64, type);
     const copyObj = { ...userInputs };
@@ -120,7 +135,7 @@ export default function Forms() {
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="mt-5 md:mt-0 md:col-span-3">
             <form onSubmit={handleSubmit}>
-              <BasicInfo
+              <PersonalInfo
                 handleChange={handleChange}
                 userInputs={userInputs}
                 imageConvert={imageConvert}
