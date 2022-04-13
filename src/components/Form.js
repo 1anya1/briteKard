@@ -79,16 +79,15 @@ export default function Forms() {
     console.log(event);
     console.log(userInputs);
     let username = {
-      username: "WebTest",
+      username: "anna",
     };
     let body = { ...username, vCard: [userInputs] };
     console.log(body);
     sendData(body);
   }
   function sendData(body) {
-    console.log(body);
     axios
-      .post("https://britekard.herokuapp.com/vCards/", body)
+      .post("http://localhost:3000/vCards", body)
       .then(function (response) {
         console.log(response);
       })
