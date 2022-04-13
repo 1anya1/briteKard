@@ -7,7 +7,7 @@ export default function Chips(props) {
   //   props.click(text, button);
   // }
   // console.log(props.on);
-  const toggleClass = "bg-blue-700";
+  const toggleClass = "bg-transparent text-blue-400";
   function click(event) {
     let idx = event.currentTarget.getAttribute("formid");
 
@@ -24,7 +24,7 @@ export default function Chips(props) {
         key={idx}
         formid={idx}
         className={
-          "cursor-pointer px-4 py-2 rounded-full flex-none text-white font-semibold text-sm flex align-center w-max cursor-pointer active:opacity-70 transition duration-300 ease " +
+          "cursor-pointer px-3 py-2 rounded-full flex-none text-white font-semibold text-xs flex align-center w-max  active:opacity-70 transition duration-300 ease border border-blue-400 " +
           (curr["toggle"] ? "bg-blue-400" : toggleClass)
         }
       >
@@ -36,7 +36,7 @@ export default function Chips(props) {
               focusable="false"
               data-prefix="fas"
               data-icon="times"
-              className="w-3 ml-3"
+              className="w-2 ml-3"
               role="img"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 352 512"

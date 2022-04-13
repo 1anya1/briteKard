@@ -81,6 +81,14 @@ export default function Forms() {
     //getting all the values
     // console.log({ name }, { email }, { lastName });
   }
+  function imageConvert(base64, type) {
+    console.log(base64, type);
+    const copyObj = { ...userInputs };
+    copyObj.photo.url = base64;
+    copyObj.photo.mediaType = type;
+    copyObj.photo.base64 = true;
+    setUserInputs(copyObj);
+  }
 
   const handleChange = (event) => {
     const userObj = { ...userInputs };
@@ -112,7 +120,11 @@ export default function Forms() {
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="mt-5 md:mt-0 md:col-span-3">
             <form onSubmit={handleSubmit}>
-              <BasicInfo handleChange={handleChange} userInputs={userInputs} />
+              <BasicInfo
+                handleChange={handleChange}
+                userInputs={userInputs}
+                imageConvert={imageConvert}
+              />
               {options.map((el, idx) => {
                 if (el[0].toggle && el[0].id) {
                   return <div key={idx}>{el[0].id}</div>;
