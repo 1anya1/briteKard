@@ -38,7 +38,7 @@ export default function ProfileImageInputs(props) {
             {image ? (
               <img
                 src={image}
-                alt="profile photo"
+                alt="profile"
                 className="bg-cover bg-center h-full"
               />
             ) : (
