@@ -89,6 +89,22 @@ export default function Forms() {
     axios
       .post("http://localhost:3000/vCards", body)
       .then(function (response) {
+        const [qr, username, id] = response.data;
+        console.log({ qr }, { username }, { id });
+        sendQR(qr, username, id);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  function sendQR(qr, username, id) {
+    axios
+      .post(`http://localhost:3000/vCards/${username}`, {
+        username: username,
+        qr: qr,
+        id: id,
+      })
+      .then(function (response) {
         console.log(response);
       })
       .catch(function (error) {
