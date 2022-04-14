@@ -1,9 +1,11 @@
 const axios = require("axios");
 export default function GetVCard() {
-  async function getCard() {
+  async function getCard(props) {
     console.log("clicked");
     axios
-      .get("http://localhost:3000/vCards/anya/62589c32f642c247aa3efea8")
+      .get(
+        "https://britekard.herokuapp.com/vCards/anya/62589c32f642c247aa3efea8"
+      )
       .then(function (response) {
         console.log(response);
         download(`${response.data[1]}.VCF`, response.data[0]);
