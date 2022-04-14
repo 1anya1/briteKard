@@ -49,4 +49,4 @@ const personalDataInputs = [
   ],
 ];
 
-export default personalDataInputs;
+export { personalDataInputs };

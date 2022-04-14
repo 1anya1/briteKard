@@ -3,11 +3,10 @@ export default function GetVCard() {
   async function getCard() {
     console.log("clicked");
     axios
-      .get(
-        "https://britekard.herokuapp.com/vCards/Map/6250d30d4ff4877952abf798"
-      )
+      .get("http://localhost:3000/vCards/anya/62589c32f642c247aa3efea8")
       .then(function (response) {
-        download("dante.VCF", response.data);
+        console.log(response);
+        download(`${response.data[1]}.VCF`, response.data[0]);
       })
       .catch(function (error) {
         // handle error
