@@ -93,7 +93,7 @@ export default function Forms() {
     axios
       .post("https://britekard.herokuapp.com/vCards", body)
       .then(function (response) {
-        const [qr, username, id] = response.data;
+        const [username, id] = response.data;
         setUsername(username);
         setId(id);
         console.log(username, id);
