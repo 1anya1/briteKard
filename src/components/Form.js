@@ -1,6 +1,7 @@
 import PersonalInfo from "./formType/PersonalInfo";
 import SocialLinks from "./formType/SocialLikns";
 import HomeAddress from "./formType/HomeAddress";
+import GetVCard from "./GetVCard";
 import Chips from "./formType/Chips";
 import React, { useState } from "react";
 import WorkInfo from "./formType/WorkInfo";
@@ -13,6 +14,8 @@ export default function Forms() {
     [{ name: "Home Address", toggle: true }],
     [{ name: "Work Info", toggle: true }],
   ]);
+  const [username, setUsername] = useState("");
+  const [id, setId] = useState("");
   const [userInputs, setUserInputs] = useState({
     uid: "",
     birthday: "",
@@ -79,20 +82,21 @@ export default function Forms() {
     event.preventDefault();
     console.log(event);
     console.log(userInputs);
-    let username = {
-      username: "anya",
+    let user = {
+      username: username,
     };
-    let body = { ...username, vCard: [userInputs] };
+    let body = { ...user, vCard: [userInputs] };
     console.log(body);
     sendData(body);
   }
   function sendData(body) {
     axios
-      .post("http://localhost:3000/vCards", body)
+      .post("https://britekard.herokuapp.com/vCards", body)
       .then(function (response) {
         const [qr, username, id] = response.data;
-        console.log({ qr }, { username }, { id });
-        console.log(response);
+        setUsername(username);
+        setId(id);
+        console.log(username, id);
         // sendQR(body.vCard, qr, username, id);
       })
       .catch(function (error) {
@@ -147,6 +151,7 @@ export default function Forms() {
 
   return (
     <div>
+      <GetVCard username={username} id={id} />
       <div className="flex flex-row flex-nowrap flex-none gap-x-8 overflow-scroll scrollbar-hide my-8">
         <Chips options={options} toggle={toggle} />
       </div>
