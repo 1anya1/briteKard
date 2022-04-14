@@ -1,9 +1,8 @@
 import FormDescription from "../styling/FormDescription";
 import FormInput from "./FormInput";
-import personalDataInputs from "./FormData";
+import { personalDataInputs } from "./FormData";
 import ProfileImageInputs from "./ProfileImageInput";
 import URLInputs from "./URLInputs";
-// import React, { useRef } from "react";
 
 export default function PersonalInfo(props) {
   const formName = "Personal Info";

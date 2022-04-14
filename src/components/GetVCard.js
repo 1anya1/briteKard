@@ -3,9 +3,10 @@ export default function GetVCard() {
   async function getCard() {
     console.log("clicked");
     axios
-      .get("http://localhost:3000/vCards/anna/6256817fd48eb0d8fc6337f7")
+      .get("http://localhost:3000/vCards/anya/62589c32f642c247aa3efea8")
       .then(function (response) {
-        download("dante.VCF", response.data);
+        console.log(response);
+        download(`${response.data[1]}.VCF`, response.data[0]);
       })
       .catch(function (error) {
         // handle error

@@ -1,17 +1,17 @@
 import PersonalInfo from "./formType/PersonalInfo";
-import Profile from "./formType/Profile";
 import SocialLinks from "./formType/SocialLikns";
 import HomeAddress from "./formType/HomeAddress";
 import Chips from "./formType/Chips";
 import React, { useState } from "react";
+import WorkInfo from "./formType/WorkInfo";
 const axios = require("axios");
 export default function Forms() {
   //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
   const [options, setOptions] = useState([
-    [{ name: "Social", toggle: true, id: <SocialLinks /> }],
-    [{ name: "Photos", toggle: true, id: <Profile /> }],
-    [{ name: "Home Address", toggle: true, id: <HomeAddress /> }],
-    [{ name: "About", toggle: true, id: "" }],
+    [{ name: "Social", toggle: true }],
+    [{ name: "Photos", toggle: true }],
+    [{ name: "Home Address", toggle: true }],
+    [{ name: "Work Info", toggle: true }],
   ]);
   const [userInputs, setUserInputs] = useState({
     uid: "",
@@ -80,7 +80,7 @@ export default function Forms() {
     console.log(event);
     console.log(userInputs);
     let username = {
-      username: "banana",
+      username: "anya",
     };
     let body = { ...username, vCard: [userInputs] };
     console.log(body);
@@ -160,8 +160,32 @@ export default function Forms() {
                 imageConvert={imageConvert}
               />
               {options.map((el, idx) => {
-                if (el[0].toggle && el[0].id) {
-                  return <div key={idx}>{el[0].id}</div>;
+                if (el[0].toggle && el[0].name === "Home Address") {
+                  return (
+                    <HomeAddress
+                      key={idx}
+                      handleChange={handleChange}
+                      userInputs={userInputs}
+                    />
+                  );
+                }
+                if (el[0].toggle && el[0].name === "Social") {
+                  return (
+                    <SocialLinks
+                      key={idx}
+                      handleChange={handleChange}
+                      userInputs={userInputs}
+                    />
+                  );
+                }
+                if (el[0].toggle && el[0].name === "Work Info") {
+                  return (
+                    <WorkInfo
+                      key={idx}
+                      handleChange={handleChange}
+                      userInputs={userInputs}
+                    />
+                  );
                 } else {
                   return null;
                 }

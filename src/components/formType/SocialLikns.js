@@ -1,41 +1,72 @@
 import React, { useState } from "react";
-import SocialInputs from "../styling/SocialInputs";
+import URLInputs from "./URLInputs";
 import FormDescription from "../styling/FormDescription";
-export default function SocialLinks() {
+export default function SocialLinks(props) {
+  //info about the form
   const formName = "Social Links";
   const formDescription = "this is my form description";
 
+  //state management of inputs that belong to Social Links
   const [input, setInput] = useState("");
-
   const [site, setSite] = useState([
     {
-      title: "LinkedIn",
+      label: "LinkedIn",
+      type: "text",
+      id: "socialUrls.linkedIn",
+      placeholder: "www.example.com",
     },
     {
-      title: "Facebook",
+      label: "Facebook",
+      type: "text",
+      id: "socialUrls.facebook",
+      placeholder: "www.example.com",
     },
     {
-      title: "Instagram",
+      label: "Twitter",
+      type: "text",
+      id: "socialUrls.twitter",
+      placeholder: "www.example.com",
     },
   ]);
+
+  //Add another social channel
   function addMore(e) {
     e.preventDefault();
-    console.log("please add more");
     const duplicateState = [...site];
-    console.log(duplicateState);
-    duplicateState.push({ title: input });
+    const data = {
+      label: input,
+      type: "text",
+      id: `socialUrls.${input.toLowerCase()}`,
+      placeholder: "www.example.com",
+    };
+    duplicateState.push(data);
     setSite(duplicateState);
   }
-
+  //handle change event in addition of new input field
   function handleChange(e) {
     setInput(e.target.value);
-    setSite("");
   }
   return (
     <div className="md:grid md:grid-cols-3 md:gap-3 py-5">
       <FormDescription formName={formName} formDescription={formDescription} />
-      <SocialInputs site={site} />
-      <div className="col-start-2 col-span-2 flex">
+      {site.map((el, idx) => (
+        <URLInputs
+          key={idx}
+          label={el.label}
+          type={el.type}
+          id={el.id}
+          placeholder={el.placeholder}
+          value={props.userInputs[el.id]}
+          change={props.handleChange}
+        />
+      ))}
+      <div className="col-start-2 col-span-2 pb-4 flex">
+        {/* <label
+          htmlFor="social-media"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Additional Links
+        </label> */}
         <select
           id="social-media"
           name="social-media"
@@ -47,7 +78,7 @@ export default function SocialLinks() {
             Choose
           </option>
           <option>YouTube</option>
-          <option>Twitter</option>
+          <option>Instagram</option>
           <option>Tumblr</option>
           <option>Snapchat</option>
           <option>TikTok</option>
