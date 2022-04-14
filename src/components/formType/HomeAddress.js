@@ -1,11 +1,11 @@
 import FormDescription from "../styling/FormDescription";
 import FormInput from "./FormInput";
-import React, { useState } from "react";
+
 export default function HomeAddress(props) {
   const formName = "Home Address";
   const formDescription = "this is my form description";
 
-  const [country, setCountry] = useState("");
+  // const [country, setCountry] = useState("");
 
   const inputs = [
     {
