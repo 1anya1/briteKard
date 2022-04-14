@@ -10,7 +10,7 @@ export default function Forms() {
   const [options, setOptions] = useState([
     [{ name: "Social", toggle: true, id: <SocialLinks /> }],
     [{ name: "Photos", toggle: true, id: <Profile /> }],
-    [{ name: "Address", toggle: true, id: <HomeAddress /> }],
+    [{ name: "Home Address", toggle: true, id: <HomeAddress /> }],
     [{ name: "About", toggle: true, id: "" }],
   ]);
   const [userInputs, setUserInputs] = useState({
@@ -72,6 +72,7 @@ export default function Forms() {
     },
     workPhone: "",
     workFax: "",
+    qrCode: "",
   });
 
   function handleSubmit(event) {
@@ -79,7 +80,7 @@ export default function Forms() {
     console.log(event);
     console.log(userInputs);
     let username = {
-      username: "anna",
+      username: "banana",
     };
     let body = { ...username, vCard: [userInputs] };
     console.log(body);
@@ -91,18 +92,20 @@ export default function Forms() {
       .then(function (response) {
         const [qr, username, id] = response.data;
         console.log({ qr }, { username }, { id });
-        sendQR(qr, username, id);
+        console.log(response);
+        // sendQR(body.vCard, qr, username, id);
       })
       .catch(function (error) {
         console.log(error);
       });
   }
-  function sendQR(qr, username, id) {
+  function sendQR(body, qr, username, id) {
     axios
       .post(`http://localhost:3000/vCards/${username}`, {
         username: username,
         qr: qr,
         id: id,
+        body: body,
       })
       .then(function (response) {
         console.log(response);
