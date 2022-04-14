@@ -99,21 +99,21 @@ export default function Forms() {
         console.log(error);
       });
   }
-  function sendQR(body, qr, username, id) {
-    axios
-      .post(`http://localhost:3000/vCards/${username}`, {
-        username: username,
-        qr: qr,
-        id: id,
-        body: body,
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+  // function sendQR(body, qr, username, id) {
+  //   axios
+  //     .post(`http://localhost:3000/vCards/${username}`, {
+  //       username: username,
+  //       qr: qr,
+  //       id: id,
+  //       body: body,
+  //     })
+  //     .then(function (response) {
+  //       console.log(response);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }
 
   function imageConvert(base64, type) {
     console.log(base64, type);
