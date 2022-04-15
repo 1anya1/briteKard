@@ -20,7 +20,7 @@ export default function ProfileImageInputs(props) {
       .then((result) => {
         file["base64"] = result;
         const base64URL = file["base64"];
-        const type = file["type"];
+        let type = file["type"];
         props.imageConvert(base64URL, type);
       })
       .catch((err) => {
@@ -28,7 +28,6 @@ export default function ProfileImageInputs(props) {
       });
   }
   const image = props.imageData.url;
-  console.log(image);
   return (
     <div className="col-start-2 col-span-2 pb-4">
       <div className="col-start-2 col-span-2">

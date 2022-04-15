@@ -1,10 +1,11 @@
 const axios = require("axios");
-export default function GetVCard() {
-  async function getCard(props) {
+export default function GetVCard(props) {
+  async function getCard() {
     console.log("clicked");
+    console.log(props.username, props.id);
     axios
       .get(
-        "https://britekard.herokuapp.com/vCards/anya/62589c32f642c247aa3efea8"
+        `https://britekard.herokuapp.com/vCards/${props.username}/${props.id}`
       )
       .then(function (response) {
         console.log(response);

@@ -1,12 +1,4 @@
 export default function Chips(props) {
-  console.log(props);
-  // function clickMe(e) {
-  //   console.log(e);
-  //   const text = e.target.childNodes[0].data;
-  //   const button = e.target.childNodes[1];
-  //   props.click(text, button);
-  // }
-  // console.log(props.on);
   const toggleClass = "bg-transparent text-blue-400";
   function click(event) {
     let idx = event.currentTarget.getAttribute("formid");
@@ -15,7 +7,6 @@ export default function Chips(props) {
   }
 
   return props.options.map((el, idx) => {
-    console.log(el[0]);
     let curr = el[0];
 
     return (
