@@ -82,8 +82,9 @@ export default function Forms() {
     event.preventDefault();
     console.log(event);
     console.log(userInputs);
+    console.log(userInputs);
     let user = {
-      username: username,
+      username: userInputs.firstName,
     };
     let body = { ...user, vCard: [userInputs] };
     console.log(body);
@@ -93,7 +94,8 @@ export default function Forms() {
     axios
       .post("https://britekard.herokuapp.com/vCards", body)
       .then(function (response) {
-        const [username, id] = response.data;
+        const [, username, id] = response.data;
+        console.log(response);
         setUsername(username);
         setId(id);
         console.log(username, id);
@@ -123,7 +125,10 @@ export default function Forms() {
     console.log(base64, type);
     const copyObj = { ...userInputs };
     copyObj.photo.url = base64;
-    copyObj.photo.mediaType = type;
+    if (type.indexOf("image/png") !== -1) {
+      copyObj.photo.mediaType = "PNG";
+    }
+    if (type.indexOf("image/jpeg") !== -1) copyObj.photo.mediaType = "JPEG";
     copyObj.photo.base64 = true;
     setUserInputs(copyObj);
   }
