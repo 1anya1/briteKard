@@ -76,7 +76,7 @@ export default function DisplayCard() {
       ["LinkedIn", linkedIn],
     ];
     return (
-      <div className="grid grid-cols-4 gap-4 place-content-center justify-items-center bg-gray-500 ">
+      <div className="grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500 ">
         <div className=" w-full col-span-5 h-60  relative">
           <div className="h-44 lg:h-52 w-44  lg:w-52 border-white rounded-full overflow-hidden border-12 justify-self-center absolute bottom-[-88px] left-2/4 translate-x-negative-half">
             <img
