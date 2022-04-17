@@ -11,7 +11,6 @@ export default function FormInput(props) {
         type={props.type}
         name={props.id}
         id={props.id}
-        autoComplete="given-name"
         value={props.value}
         placeholder={props.placeholder}
         onChange={(e) => props.change(e)}

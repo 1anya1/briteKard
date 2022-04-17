@@ -12,13 +12,45 @@ export default function DisplayCard() {
   useEffect(() => {
     axios
       .get(
-        `https://britekard.herokuapp.com/vCards/mycard/Anna/62590197d2fd0cc5f3da0121`
+        `https://britekard.herokuapp.com/vCards/mycard/Luna/625bd3a2bc6784d37c421a04`
       )
       .then((response) => {
         const data = response.data;
         setData(data);
       });
   }, []);
+  function getCard() {
+    console.log("here");
+    axios
+      .get(
+        `https://britekard.herokuapp.com/vCards/Luna/625bd3a2bc6784d37c421a04`
+      )
+      .then(function (response) {
+        console.log(response);
+        download(`${response.data[1]}.VCF`, response.data[0]);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  }
+  function download(filename, text) {
+    console.log("here");
+    var element = document.createElement("a");
+    element.setAttribute(
+      "href",
+      "data:text/vcard;charset=utf-8," + encodeURIComponent(text)
+    );
+    console.log(element);
+    element.setAttribute("download", filename);
+
+    element.style.display = "none";
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  }
 
   function formatUSNumber(entry) {
     const match = entry
@@ -78,8 +110,12 @@ export default function DisplayCard() {
     return (
       <div className="grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500 ">
         <div className=" w-full col-span-5 h-60  relative">
-          <div className="h-44 lg:h-52 w-44  lg:w-52 bg-gray-50 border-gray-50 rounded-full overflow-hidden border-8 justify-self-center absolute bottom-[-88px] left-2/4 translate-x-negative-half">
-            <img src={data.photo.url} alt="profile" />
+          <div className=" rounded-full overflow-hidden justify-self-center absolute bottom-[-88px] left-2/4 translate-x-negative-half">
+            <img
+              src={data.photo.url}
+              alt="profile"
+              className="h-36 w-36 lg:h-50 lg:w-50 object-cover border-solid  rounded-full border-gray-50  border-8 relative"
+            />
           </div>
         </div>
         <div className="col-span-5 pt-104 bg-white w-full rounded-t-3xl ">
@@ -107,7 +143,10 @@ export default function DisplayCard() {
               {data.note}
             </p>
             <div className="flex px-4 flex-col">
-              <button className="text-small text-white font-medium pt-4 pb-4 mb-4 w-full bg-gray-500 rounded-2xl hover:bg-opacity-70 ">
+              <button
+                onClick={getCard}
+                className="text-small text-white font-medium pt-4 pb-4 mb-4 w-full bg-gray-500 rounded-2xl hover:bg-opacity-70 "
+              >
                 {"Add To Contacts".toUpperCase()}
               </button>
               <button className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 ">
