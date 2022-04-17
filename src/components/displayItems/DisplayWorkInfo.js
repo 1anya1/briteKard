@@ -1,9 +1,9 @@
 export default function DisplayWorkInfo(props) {
   const workAddressTags = [
     "Company Name",
+    "Company Number",
+    "Company Email",
     "Company Website",
-    "Work Email",
-    "Work Number",
   ];
   console.log(props);
   return (
@@ -14,7 +14,7 @@ export default function DisplayWorkInfo(props) {
           return (
             <div key={idx}>
               <p className="text-gray-400 text-sm  font-medium">{title}</p>
-              <p className="text-gray-700 text-sm pb-4 font-medium">
+              <p className="text-gray-700 text-base pb-4 font-medium">
                 {props.workAddressData[idx]}
               </p>
 
@@ -24,7 +24,7 @@ export default function DisplayWorkInfo(props) {
         })}
         <div>
           <p className="text-gray-400 text-sm  font-medium">Work Address</p>
-          <p className="text-gray-700 text-sm pb-4 font-medium">
+          <p className="text-gray-700 text-base pb-4 font-medium">
             {props.workStreet} <br></br>
             {props.workCity}, {props.workState}
             <br></br>
