@@ -10,7 +10,7 @@ export default function DisplayPersonal(props) {
                 <p className="text-gray-400 text-sm  font-medium">
                   Home Address
                 </p>
-                <p className="text-gray-700 text-sm pb-4 font-medium">
+                <p className="text-gray-700 text-base pb-4 font-medium">
                   {props.houseStreet} <br></br>
                   {props.houseCity} {props.houseState}
                   <br></br>
@@ -22,7 +22,7 @@ export default function DisplayPersonal(props) {
             return (
               <div key={idx}>
                 <p className="text-gray-400 text-sm  font-medium">{el}</p>
-                <p className="text-gray-700 text-sm pb-4 font-medium">
+                <p className="text-gray-700 text-base pb-4 font-medium">
                   {props.personalInfo[idx]}
                 </p>
                 {idx !== props.personalTags.length - 1 && (

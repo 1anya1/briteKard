@@ -7,7 +7,9 @@ export default function DisplaySocial(props) {
           <div className="drop-shadow-md mx-4 border-gray-100 border rounded-2xl  bg-white mb-4">
             <div className="p-4 flex items-center">
               <LinkedInSvg />
-              <p className="text-gray-500 pl-4 ">{el[0]}</p>
+              <p className="text-gray-500 pl-4 text-base font-medium ">
+                {el[0]}
+              </p>
             </div>
           </div>
         </a>
@@ -19,7 +21,9 @@ export default function DisplaySocial(props) {
           <div className="drop-shadow-md mx-4 border-gray-100 border rounded-2xl  bg-white mb-4">
             <div className="p-4 flex items-center">
               <TwitterSVG />
-              <p className="text-gray-500 pl-4 ">{el[0]}</p>
+              <p className="text-gray-500 pl-4  text-base font-medium ">
+                {el[0]}
+              </p>
             </div>
           </div>
         </a>
@@ -31,7 +35,9 @@ export default function DisplaySocial(props) {
           <div className="drop-shadow-md mx-4 border-gray-100 border rounded-2xl  bg-white mb-4">
             <div className="p-4 flex items-center">
               <FacebookSVG />
-              <p className="text-gray-500 pl-4 ">{el[0]}</p>
+              <p className="text-gray-500 pl-4  text-base font-medium ">
+                {el[0]}
+              </p>
             </div>
           </div>
         </a>

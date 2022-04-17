@@ -66,9 +66,9 @@ export default function DisplayCard() {
     ];
     const workAddressData = [
       organization,
-      workUrl,
-      workEmail,
       formatUSNumber(workPhone),
+      workEmail,
+      workUrl,
     ];
     const socialData = [
       ["Facebook", facebook],
@@ -115,7 +115,7 @@ export default function DisplayCard() {
                 {"Add To Contacts".toUpperCase()}
               </button>
               <button className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 ">
-                {"Get QR Code".toUpperCase()}
+                {"Share Card".toUpperCase()}
               </button>
             </div>
           </div>
