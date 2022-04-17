@@ -2,7 +2,7 @@ import PersonalInfo from "./formType/PersonalInfo";
 import SocialLinks from "./formType/SocialLikns";
 import HomeAddress from "./formType/HomeAddress";
 import GetVCard from "./GetVCard";
-import Chips from "./formType/Chips";
+import Chips from "./Chips";
 import React, { useState } from "react";
 import WorkInfo from "./formType/WorkInfo";
 const axios = require("axios");
@@ -50,7 +50,7 @@ export default function Forms() {
     organization: "",
     photo: {
       url: "",
-      mediaType: "",
+      mediaType: "PNG",
       base64: false,
     },
     role: "",
@@ -84,7 +84,7 @@ export default function Forms() {
     console.log(userInputs);
     console.log(userInputs);
     let user = {
-      username: userInputs.firstName,
+      username: userInputs.firstName.trim(),
     };
     let body = { ...user, vCard: [userInputs] };
     console.log(body);
@@ -99,6 +99,7 @@ export default function Forms() {
         setUsername(username);
         setId(id);
         console.log(username, id);
+        console.log(body.vCard);
         // sendQR(body.vCard, qr, username, id);
       })
       .catch(function (error) {
@@ -125,22 +126,19 @@ export default function Forms() {
     console.log(base64, type);
     const copyObj = { ...userInputs };
     copyObj.photo.url = base64;
-    if (type.indexOf("image/png") !== -1) {
-      copyObj.photo.mediaType = "PNG";
-    }
-    if (type.indexOf("image/jpeg") !== -1) copyObj.photo.mediaType = "JPEG";
     copyObj.photo.base64 = true;
     setUserInputs(copyObj);
   }
 
   const handleChange = (event) => {
     const userObj = { ...userInputs };
+    const value = event.target.value;
     let objKey = event.target.getAttribute("id");
     objKey = objKey.split(".");
     if (objKey.length === 1) {
-      userObj[objKey[0]] = event.target.value;
+      userObj[objKey[0]] = value;
     } else {
-      userObj[objKey[0]][objKey[1]] = event.target.value;
+      userObj[objKey[0]][objKey[1]] = value;
     }
 
     setUserInputs(userObj);
@@ -202,7 +200,7 @@ export default function Forms() {
               })}
               <button
                 type="submit"
-                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex justify-center py-2 px-4 border border-blue-400 shadow-sm text-sm font-medium rounded-2xl text-white bg-blue-400 hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
                 Save
               </button>
