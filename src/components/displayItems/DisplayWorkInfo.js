@@ -9,7 +9,7 @@ export default function DisplayWorkInfo(props) {
   return (
     <div className="drop-shadow-md mx-4 border-gray-100 border rounded-2xl  bg-white mb-5">
       <div className="mx-4 pt-4">
-        <p className="text-lg font-medium text-gray-500 pb-4">Work Info</p>
+        <p className="text-lg font-medium text-gray-500 pb-4">Comapny Info</p>
         {workAddressTags.map((title, idx) => {
           return (
             <div key={idx}>
@@ -23,7 +23,7 @@ export default function DisplayWorkInfo(props) {
           );
         })}
         <div>
-          <p className="text-gray-400 text-sm  font-medium">Work Address</p>
+          <p className="text-gray-400 text-sm  font-medium">Company Address</p>
           <p className="text-gray-700 text-base pb-4 font-medium">
             {props.workStreet} <br></br>
             {props.workCity}, {props.workState}
