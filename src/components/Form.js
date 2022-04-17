@@ -5,6 +5,7 @@ import GetVCard from "./GetVCard";
 import Chips from "./Chips";
 import React, { useState } from "react";
 import WorkInfo from "./formType/WorkInfo";
+import Nav from "./Nav";
 const axios = require("axios");
 export default function Forms() {
   //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
@@ -154,6 +155,7 @@ export default function Forms() {
 
   return (
     <div>
+      <Nav />
       <GetVCard username={username} id={id} />
       <div className="flex flex-row flex-nowrap flex-none gap-x-8 overflow-scroll scrollbar-hide my-8">
         <Chips options={options} toggle={toggle} />
