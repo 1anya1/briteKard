@@ -8,7 +8,7 @@ export default function GetVCard(props) {
         `https://britekard.herokuapp.com/vCards/${props.username}/${props.id}`
       )
       .then(function (response) {
-        console.log(response);
+        console.log(response.data[0]);
         download(`${response.data[1]}.VCF`, response.data[0]);
       })
       .catch(function (error) {
@@ -24,6 +24,7 @@ export default function GetVCard(props) {
       "href",
       "data:text/vcard;charset=utf-8," + encodeURIComponent(text)
     );
+    console.log(element);
     element.setAttribute("download", filename);
 
     element.style.display = "none";
