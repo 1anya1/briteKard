@@ -13,7 +13,9 @@ export default function DisplayCard() {
   //component did mount call only once []
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/vCards/mycard/Anna/625d09b3d36a00d058c9aecc`)
+      .get(
+        `https://britekard.herokuapp.com/vCards/mycard/Anna/625d09b3d36a00d058c9aecc`
+      )
       .then((response) => {
         const data = response.data;
         setData(data);
@@ -22,7 +24,9 @@ export default function DisplayCard() {
   function getCard() {
     console.log("here");
     axios
-      .get(`http://localhost:3000/vCards/Anna/625d09b3d36a00d058c9aecc`)
+      .get(
+        `https://britekard.herokuapp.com/vCards/Anna/625d09b3d36a00d058c9aecc`
+      )
       .then(function (response) {
         console.log(response);
         download(`${response.data[1]}.VCF`, response.data[0]);
