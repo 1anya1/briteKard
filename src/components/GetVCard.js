@@ -4,7 +4,9 @@ export default function GetVCard(props) {
     console.log("clicked");
     console.log(props.username, props.id);
     axios
-      .get(`http://localhost:3000/vCards/${props.username}/${props.id}`)
+      .get(
+        `https://britekard.herokuapp.com/vCards/${props.username}/${props.id}`
+      )
       .then(function (response) {
         console.log(response.data[0]);
         download(`${response.data[1]}.VCF`, response.data[0]);

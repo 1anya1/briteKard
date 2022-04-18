@@ -16,7 +16,6 @@ export default function Forms() {
     [{ name: "Work Info", toggle: true }],
     [{ name: "Cover Photo", toggle: true }],
   ]);
-  const [qr, setQr] = useState("");
   const [username, setUsername] = useState("");
   const [id, setId] = useState("");
   const [userInputs, setUserInputs] = useState({
@@ -92,13 +91,14 @@ export default function Forms() {
   }
   const sendData = async (body) => {
     try {
-      const response = await axios.post("http://localhost:3000/vCards", body);
+      const response = await axios.post(
+        "https://britekard.herokuapp.com/vCards",
+        body
+      );
       const [qr, username, id] = response.data;
       console.log(response);
       setUsername(username);
       setId(id);
-      setQr(qr);
-      console.log("updated", { qr });
       sendQR(username, id, qr);
     } catch (error) {
       console.log(error);
@@ -108,7 +108,7 @@ export default function Forms() {
   const sendQR = async (username, id, qr) => {
     try {
       const response = await axios.post(
-        `http://localhost:3000/vCards/mycard/${username}/${id}`,
+        `https://britekard.herokuapp.com/vCards/mycard/${username}/${id}`,
         {
           qrCode: qr,
         }
