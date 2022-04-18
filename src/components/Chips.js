@@ -1,5 +1,5 @@
 export default function Chips(props) {
-  const toggleClass = "bg-transparent text-blue-400";
+  const toggleClass = "bg-transparent text-gray-500";
   function click(event) {
     let idx = event.currentTarget.getAttribute("formid");
 
@@ -15,8 +15,8 @@ export default function Chips(props) {
         key={idx}
         formid={idx}
         className={
-          "cursor-pointer px-3 py-2 rounded-full flex-none text-white font-semibold text-xs flex align-center w-max  active:opacity-70 transition duration-300 ease border border-blue-400 " +
-          (curr["toggle"] ? "bg-blue-400" : toggleClass)
+          "cursor-pointer px-3 py-2 rounded-full flex-none font-semibold text-xs flex align-center w-max  active:opacity-70 transition duration-300 ease border border-gray-500 " +
+          (curr["toggle"] ? "bg-gray-500 text-white" : toggleClass)
         }
       >
         {curr.name}

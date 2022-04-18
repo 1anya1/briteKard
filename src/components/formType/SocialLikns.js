@@ -32,7 +32,10 @@ export default function SocialLinks(props) {
   //Add another social channel
   function addMore(e) {
     e.preventDefault();
+    console.log("were here");
+    console.log(e);
     const duplicateState = [...site];
+    console.log(duplicateState);
     const data = {
       label: input,
       type: "text",
@@ -40,7 +43,9 @@ export default function SocialLinks(props) {
       placeholder: "www.example.com",
     };
     duplicateState.push(data);
+    console.log(duplicateState);
     setSite(duplicateState);
+    console.log(site);
   }
   //handle change event in addition of new input field
   function handleChange(e) {

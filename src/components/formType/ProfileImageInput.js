@@ -21,7 +21,7 @@ export default function ProfileImageInputs(props) {
         file["base64"] = result;
         const base64URL = file["base64"];
         let type = file["type"];
-        props.imageConvert(base64URL, type);
+        props.imageConvert(base64URL, type, "photo");
       })
       .catch((err) => {
         console.log(err);

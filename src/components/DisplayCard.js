@@ -4,16 +4,16 @@ import DisplayPersonal from "./displayItems/DisplayPersonal";
 import DisplaySocial from "./displayItems/DisplaySocial";
 import DisplayWorkInfo from "./displayItems/DisplayWorkInfo";
 import { PhoneIcon, MailIcon, ChatAltIcon } from "@heroicons/react/solid";
+import QRmodal from "./QRmodal";
 
 const axios = require("axios");
 export default function DisplayCard() {
   const [data, setData] = useState(null);
+  const [qrToggle, setQrToggle] = useState(false);
   //component did mount call only once []
   useEffect(() => {
     axios
-      .get(
-        `https://britekard.herokuapp.com/vCards/mycard/Luna/625bd3a2bc6784d37c421a04`
-      )
+      .get(`http://localhost:3000/vCards/mycard/Anna/625d09b3d36a00d058c9aecc`)
       .then((response) => {
         const data = response.data;
         setData(data);
@@ -22,9 +22,7 @@ export default function DisplayCard() {
   function getCard() {
     console.log("here");
     axios
-      .get(
-        `https://britekard.herokuapp.com/vCards/Luna/625bd3a2bc6784d37c421a04`
-      )
+      .get(`http://localhost:3000/vCards/Anna/625d09b3d36a00d058c9aecc`)
       .then(function (response) {
         console.log(response);
         download(`${response.data[1]}.VCF`, response.data[0]);
@@ -50,6 +48,11 @@ export default function DisplayCard() {
     element.click();
 
     document.body.removeChild(element);
+  }
+
+  function shareCard() {
+    setQrToggle(!qrToggle);
+    console.log("here");
   }
 
   function formatUSNumber(entry) {
@@ -85,6 +88,7 @@ export default function DisplayCard() {
       socialUrls: { twitter },
       socialUrls: { linkedIn },
       url,
+      qrCode,
     } = data;
     const myName = `${firstName} ${lastName}`;
 
@@ -110,15 +114,20 @@ export default function DisplayCard() {
     return (
       <div className="grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500 ">
         <div className=" w-full col-span-5 h-60  relative">
-          <div className=" rounded-full overflow-hidden justify-self-center absolute bottom-[-88px] left-2/4 translate-x-negative-half">
+          <img
+            className="object-cover overflow-hiddenr w-full col-span-5 h-64 object-center"
+            src={data.logo.url}
+            alt="logo"
+          />
+          <div className=" rounded-full overflow-hidden justify-self-center absolute bottom-[-88px] left-2/4 translate-x-negative-half z-20 ">
             <img
               src={data.photo.url}
               alt="profile"
-              className="h-36 w-36 lg:h-50 lg:w-50 object-cover border-solid  rounded-full border-gray-50  border-8 relative"
+              className="h-36 w-36 lg:h-50 lg:w-50 object-cover border-solid  rounded-full border-gray-50  border-8 relative "
             />
           </div>
         </div>
-        <div className="col-span-5 pt-104 bg-white w-full rounded-t-3xl ">
+        <div className="col-span-5 pt-104 bg-white w-full rounded-t-3xl z-10">
           <div>
             <p className="text-2xl font-medium text-gray-700 tracking-wide text-center">
               {data.firstName} {data.lastName}
@@ -149,9 +158,17 @@ export default function DisplayCard() {
               >
                 {"Add To Contacts".toUpperCase()}
               </button>
-              <button className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 ">
+              <button
+                onClick={shareCard}
+                className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 "
+              >
                 {"Share Card".toUpperCase()}
               </button>
+              <QRmodal
+                qrToggle={qrToggle}
+                qrCode={qrCode}
+                shareCard={shareCard}
+              />
             </div>
           </div>
           <DisplayPersonal
