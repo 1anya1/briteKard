@@ -9,8 +9,10 @@ export default function App() {
 
   return (
     <div className="2xl:container 2xl:mx-auto">
+      <Nav />
+
       <Routes>
-        <Route path="/" element={<Nav />} />
+        <Route path="/" element={""} />
         <Route path="form" element={<Form />} />
         <Route path="mycard" element={<DisplayCard />} />
       </Routes>

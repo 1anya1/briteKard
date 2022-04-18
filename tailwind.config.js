@@ -60,6 +60,9 @@ module.exports = {
       width: {
         "fourty-tw0": "42%",
       },
+      height: {
+        "h-110": "110%",
+      },
       translate: {
         "negative-half": "-50%",
       },

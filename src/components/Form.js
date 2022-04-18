@@ -5,7 +5,7 @@ import GetVCard from "./GetVCard";
 import Chips from "./Chips";
 import React, { useState } from "react";
 import WorkInfo from "./formType/WorkInfo";
-import Nav from "./Nav";
+import CoverPhoto from "./formType/CoverPhoto";
 const axios = require("axios");
 export default function Forms() {
   //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
@@ -14,6 +14,7 @@ export default function Forms() {
     [{ name: "Photos", toggle: true }],
     [{ name: "Home Address", toggle: true }],
     [{ name: "Work Info", toggle: true }],
+    [{ name: "Cover Photo", toggle: true }],
   ]);
   const [username, setUsername] = useState("");
   const [id, setId] = useState("");
@@ -81,9 +82,6 @@ export default function Forms() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(event);
-    console.log(userInputs);
-    console.log(userInputs);
     let user = {
       username: userInputs.firstName.trim(),
     };
@@ -91,44 +89,48 @@ export default function Forms() {
     console.log(body);
     sendData(body);
   }
-  function sendData(body) {
-    axios
-      .post("https://britekard.herokuapp.com/vCards", body)
-      .then(function (response) {
-        const [, username, id] = response.data;
-        console.log(response);
-        setUsername(username);
-        setId(id);
-        console.log(username, id);
-        console.log(body.vCard);
-        // sendQR(body.vCard, qr, username, id);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-  // function sendQR(body, qr, username, id) {
-  //   axios
-  //     .post(`http://localhost:3000/vCards/${username}`, {
-  //       username: username,
-  //       qr: qr,
-  //       id: id,
-  //       body: body,
-  //     })
-  //     .then(function (response) {
-  //       console.log(response);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
+  const sendData = async (body) => {
+    try {
+      const response = await axios.post(
+        "https://britekard.herokuapp.com/vCards",
+        body
+      );
+      const [qr, username, id] = response.data;
+      console.log(response);
+      setUsername(username);
+      setId(id);
+      sendQR(username, id, qr);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  function imageConvert(base64, type) {
+  const sendQR = async (username, id, qr) => {
+    try {
+      const response = await axios.post(
+        `https://britekard.herokuapp.com/vCards/mycard/${username}/${id}`,
+        {
+          qrCode: qr,
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  function imageConvert(base64, type, id) {
     console.log(base64, type);
     const copyObj = { ...userInputs };
-    copyObj.photo.url = base64;
-    copyObj.photo.base64 = true;
-    setUserInputs(copyObj);
+    if (id === "photo") {
+      copyObj.photo.url = base64;
+      copyObj.photo.base64 = true;
+      setUserInputs(copyObj);
+    } else {
+      copyObj.logo.url = base64;
+      copyObj.logo.base64 = true;
+      setUserInputs(copyObj);
+    }
   }
 
   const handleChange = (event) => {
@@ -155,7 +157,6 @@ export default function Forms() {
 
   return (
     <div>
-      <Nav />
       <GetVCard username={username} id={id} />
       <div className="flex flex-row flex-nowrap flex-none gap-x-8 overflow-scroll scrollbar-hide my-8">
         <Chips options={options} toggle={toggle} />
@@ -196,6 +197,9 @@ export default function Forms() {
                       userInputs={userInputs}
                     />
                   );
+                }
+                if (el[0].toggle && el[0].name === "Cover Photo") {
+                  return <CoverPhoto key={idx} imageConvert={imageConvert} />;
                 } else {
                   return null;
                 }
