@@ -14,8 +14,7 @@ export default function DisplayCard() {
   useEffect(() => {
     axios
       .get(
-        // `https://britekard.herokuapp.com/vCards/mycard/Anna/625d09b3d36a00d058c9aecc`
-        `http://localhost:3000/vCards/mycard/Lunka/625ddbb51e6675056451f391`
+        `https://britekard.herokuapp.com/vCards/mycard/Anna/625de7ae3c1a7e43c02d5989`
       )
       .then((response) => {
         console.log(response);
@@ -27,8 +26,7 @@ export default function DisplayCard() {
     console.log("here");
     axios
       .get(
-        // `https://britekard.herokuapp.com/vCards/Anna/625d09b3d36a00d058c9aecc`
-        `http://localhost:3000/vCards/Lunka/625ddbb51e6675056451f391`
+        `https://britekard.herokuapp.com/vCards/Anna/625de7ae3c1a7e43c02d5989`
       )
       .then(function (response) {
         console.log(response);

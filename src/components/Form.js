@@ -219,7 +219,17 @@ export default function Forms() {
           </div>
         </div>
       )}
-      {submission && <GetVCard username={username} id={id} />}
+      {submission && (
+        <div className=" max-w-screen-sm mx-auto ">
+          <GetVCard username={username} id={id} />
+          <button className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 ">
+            View Digital Business Card
+          </button>
+          <button className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 ">
+            Create New Business Card
+          </button>
+        </div>
+      )}
     </div>
   );
 }
