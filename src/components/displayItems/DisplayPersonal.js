@@ -6,29 +6,34 @@ export default function DisplayPersonal(props) {
         {props.personalTags.map((el, idx) => {
           if (el === "Home Address") {
             return (
-              <div key={idx}>
-                <p className="text-gray-400 text-sm  font-medium">
-                  Home Address
-                </p>
-                <p className="text-gray-700 text-base pb-4 font-medium">
-                  {props.houseStreet} <br></br>
-                  {props.houseCity} {props.houseState}
-                  <br></br>
-                  {props.housezip}
-                </p>
-              </div>
+              props.houseStreet && (
+                <div key={idx}>
+                  <p className="text-gray-400 text-sm  font-medium">
+                    Home Address
+                  </p>
+                  <p className="text-gray-700 text-base pb-4 font-medium capitalize ">
+                    {props.houseStreet} <br></br>
+                    {props.houseCity} {props.houseState}
+                    <br></br>
+                    {props.housezip}
+                  </p>
+                </div>
+              )
             );
           } else {
             return (
-              <div key={idx}>
-                <p className="text-gray-400 text-sm  font-medium">{el}</p>
-                <p className="text-gray-700 text-base pb-4 font-medium">
-                  {props.personalInfo[idx]}
-                </p>
-                {idx !== props.personalTags.length - 1 && (
-                  <div className="bg-gray-200 h-px w-full mb-4"></div>
-                )}
-              </div>
+              props.personalInfo[idx] && (
+                <div key={idx}>
+                  <p className="text-gray-400 text-sm  font-medium">{el}</p>
+                  <p className="text-gray-700 text-base pb-4 font-medium">
+                    {props.personalInfo[idx]}
+                  </p>
+
+                  {idx !== props.personalTags.length - 1 && (
+                    <div className="bg-gray-200 h-px w-full mb-4"></div>
+                  )}
+                </div>
+              )
             );
           }
         })}

@@ -14,9 +14,10 @@ export default function DisplayCard() {
   useEffect(() => {
     axios
       .get(
-        `https://britekard.herokuapp.com/vCards/mycard/Anna/625d09b3d36a00d058c9aecc`
+        `https://britekard.herokuapp.com/vCards/mycard/Anna/625de7ae3c1a7e43c02d5989`
       )
       .then((response) => {
+        console.log(response);
         const data = response.data;
         setData(data);
       });
@@ -25,7 +26,7 @@ export default function DisplayCard() {
     console.log("here");
     axios
       .get(
-        `https://britekard.herokuapp.com/vCards/Anna/625d09b3d36a00d058c9aecc`
+        `https://britekard.herokuapp.com/vCards/Anna/625de7ae3c1a7e43c02d5989`
       )
       .then(function (response) {
         console.log(response);
@@ -71,7 +72,7 @@ export default function DisplayCard() {
   }
 
   if (data) {
-    const {
+    let {
       cellPhone,
       email,
       lastName,
@@ -91,12 +92,27 @@ export default function DisplayCard() {
       socialUrls: { facebook },
       socialUrls: { twitter },
       socialUrls: { linkedIn },
+      socialUrls: { github },
+      socialUrls: { youtube },
+      socialUrls: { snapchat },
+      socialUrls: { tumblr },
+      socialUrls: { tiktok },
+      socialUrls: { meetup },
+      socialUrls: { twitch },
+      socialUrls: { instagram },
       url,
       qrCode,
     } = data;
     const myName = `${firstName} ${lastName}`;
+    let workAddressData = [organization, workPhone, workEmail, workUrl];
+    if (cellPhone) {
+      cellPhone = formatUSNumber(cellPhone);
+    }
+    if (workPhone) {
+      workPhone = formatUSNumber(workPhone);
+    }
 
-    const personalInfo = [myName, formatUSNumber(cellPhone), email, url];
+    const personalInfo = [myName, cellPhone, email, url];
     const personalTags = [
       "Name",
       "Phone Number",
@@ -104,94 +120,103 @@ export default function DisplayCard() {
       "Personal Website",
       "Home Address",
     ];
-    const workAddressData = [
-      organization,
-      formatUSNumber(workPhone),
-      workEmail,
-      workUrl,
-    ];
+
     const socialData = [
+      ["Github", github],
+      ["Youtube", youtube],
+      ["Snapchat", snapchat],
+      ["Tumblr", tumblr],
+      ["TikTok", tiktok],
+      ["Meetup", meetup],
+      ["Twitch", twitch],
+      ["Instagram", instagram],
       ["Facebook", facebook],
       ["Twitter", twitter],
       ["LinkedIn", linkedIn],
     ];
     return (
-      <div className="grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500 ">
-        <div className=" w-full col-span-5 h-60  relative">
-          <img
-            className="object-cover overflow-hiddenr w-full col-span-5 h-64 object-center"
-            src={data.logo.url}
-            alt="logo"
-          />
-          <div className=" rounded-full overflow-hidden justify-self-center absolute bottom-[-88px] left-2/4 translate-x-negative-half z-20 ">
+      <div className="bg-gray-200 w-full h-full sm:py-16">
+        <div className="grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500  sm:bg-white max-w-screen-sm mx-auto sm:pb-12 sm:px-9 sm:rounded-3xl">
+          <div className=" w-full col-span-5 h-60  sm:h-64 relative sm:pt-12 sm:pb-104">
             <img
-              src={data.photo.url}
-              alt="profile"
-              className="h-36 w-36 lg:h-50 lg:w-50 object-cover border-solid  rounded-full border-gray-50  border-8 relative "
+              className="object-cover overflow-hiddenr w-full h-64 object-center sm:rounded-3xl"
+              src={data.logo.url}
+              alt="logo"
             />
-          </div>
-        </div>
-        <div className="col-span-5 pt-104 bg-white w-full rounded-t-3xl z-10">
-          <div>
-            <p className="text-2xl font-medium text-gray-700 tracking-wide text-center">
-              {data.firstName} {data.lastName}
-            </p>
-            <p className="text-lg text-gray-600 font-light text-center">
-              {data.title} @ {data.organization}
-            </p>
-          </div>
-          <div className="flex gap-4 pt-4 justify-center">
-            <div className="h-12 w-12 rounded-full border-gray-500 border-2 bg-white  flex justify-center items-center hover:bg-gray-500">
-              <PhoneIcon className="fill-gray-500  h-7 w-7 hover:fill-white" />
-            </div>
-            <div className="h-12 w-12 rounded-full border-gray-500 border-2 bg-white flex justify-center items-center hover:bg-gray-500">
-              <ChatAltIcon className="fill-gray-500    h-7 w-7 hover:fill-white" />
-            </div>
-            <div className="h-12 w-12 rounded-full border-gray-500 border-2 bg-white flex justify-center items-center hover:bg-gray-500">
-              <MailIcon className="fill-gray-500   h-7 w-7 hover:fill-white" />
-            </div>
-          </div>
-          <div>
-            <p className="text-base text-gray-600 pt-9 pb-8 text-center">
-              {data.note}
-            </p>
-            <div className="flex px-4 flex-col">
-              <button
-                onClick={getCard}
-                className="text-small text-white font-medium pt-4 pb-4 mb-4 w-full bg-gray-500 rounded-2xl hover:bg-opacity-70 "
-              >
-                {"Add To Contacts".toUpperCase()}
-              </button>
-              <button
-                onClick={shareCard}
-                className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 "
-              >
-                {"Share Card".toUpperCase()}
-              </button>
-              <QRmodal
-                qrToggle={qrToggle}
-                qrCode={qrCode}
-                shareCard={shareCard}
+            <div className=" rounded-full overflow-hidden justify-self-center absolute bottom-[-88px] sm:bottom-[-124px] left-2/4 translate-x-negative-half z-20">
+              <img
+                src={data.photo.url}
+                alt="profile"
+                className="h-36 w-36 sm:h-40 sm:w-40 object-cover border-solid  rounded-full border-gray-50  border-8 relative "
               />
             </div>
           </div>
-          <DisplayPersonal
-            personalInfo={personalInfo}
-            personalTags={personalTags}
-            houseCity={houseCity}
-            houseState={houseState}
-            houseStreet={houseStreet}
-            housezip={housezip}
-          />
+          <div className="col-span-5 pt-104  sm:pt-0 sm:mt-[146px] bg-white w-full rounded-t-3xl z-10">
+            <div>
+              <p className="text-2xl font-medium text-gray-700 tracking-wide text-center capitalize ">
+                {data.firstName} {data.lastName}
+              </p>
+              {data.title && (
+                <p className="text-lg text-gray-600 font-light text-center capitalize ">
+                  {data.title} @ {data.organization}
+                </p>
+              )}
+            </div>
+            <div className="flex gap-4 pt-4 justify-center pb-9 ">
+              <div className="h-12 w-12 rounded-full border-gray-500 border-2 bg-white  flex justify-center items-center hover:bg-gray-500">
+                <PhoneIcon className="fill-gray-500  h-7 w-7 hover:fill-white" />
+              </div>
+              <div className="h-12 w-12 rounded-full border-gray-500 border-2 bg-white flex justify-center items-center hover:bg-gray-500">
+                <ChatAltIcon className="fill-gray-500    h-7 w-7 hover:fill-white" />
+              </div>
+              <div className="h-12 w-12 rounded-full border-gray-500 border-2 bg-white flex justify-center items-center hover:bg-gray-500">
+                <MailIcon className="fill-gray-500   h-7 w-7 hover:fill-white" />
+              </div>
+            </div>
+            <div>
+              {data.note && (
+                <p className="text-base text-gray-600 pb-8 text-center">
+                  {data.note}
+                </p>
+              )}
+              <div className="flex px-4 flex-col">
+                <button
+                  onClick={getCard}
+                  className="text-small text-white font-medium pt-4 pb-4 mb-4 w-full bg-gray-500 rounded-2xl hover:bg-opacity-70 "
+                >
+                  {"Add To Contacts".toUpperCase()}
+                </button>
+                <button
+                  onClick={shareCard}
+                  className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 "
+                >
+                  {"Share Card".toUpperCase()}
+                </button>
+                <QRmodal
+                  qrToggle={qrToggle}
+                  qrCode={qrCode}
+                  shareCard={shareCard}
+                />
+              </div>
+            </div>
+            <DisplayPersonal
+              personalInfo={personalInfo}
+              personalTags={personalTags}
+              houseCity={houseCity}
+              houseState={houseState}
+              houseStreet={houseStreet}
+              housezip={housezip}
+            />
 
-          <DisplayWorkInfo
-            workCity={workCity}
-            workState={workState}
-            workStreet={workStreet}
-            workzip={workzip}
-            workAddressData={workAddressData}
-          />
-          <DisplaySocial socialData={socialData} />
+            <DisplayWorkInfo
+              workCity={workCity}
+              workState={workState}
+              workStreet={workStreet}
+              workzip={workzip}
+              workAddressData={workAddressData}
+            />
+            <DisplaySocial socialData={socialData} />
+          </div>
         </div>
       </div>
     );

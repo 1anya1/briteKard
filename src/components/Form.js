@@ -9,6 +9,7 @@ import CoverPhoto from "./formType/CoverPhoto";
 const axios = require("axios");
 export default function Forms() {
   //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
+  const [submission, setSubmission] = useState(false);
   const [options, setOptions] = useState([
     [{ name: "Social", toggle: true }],
     [{ name: "Photos", toggle: true }],
@@ -100,6 +101,7 @@ export default function Forms() {
       setUsername(username);
       setId(id);
       sendQR(username, id, qr);
+      setSubmission(true);
     } catch (error) {
       console.log(error);
     }
@@ -157,63 +159,77 @@ export default function Forms() {
 
   return (
     <div>
-      <GetVCard username={username} id={id} />
-      <div className="flex flex-row flex-nowrap flex-none gap-x-8 overflow-scroll scrollbar-hide my-8">
-        <Chips options={options} toggle={toggle} />
-      </div>
-      <div className="container mx-auto pb-8">
-        <div className="md:grid md:grid-cols-3 md:gap-6">
-          <div className="mt-5 md:mt-0 md:col-span-3">
-            <form onSubmit={handleSubmit}>
-              <PersonalInfo
-                handleChange={handleChange}
-                userInputs={userInputs}
-                imageConvert={imageConvert}
-              />
-              {options.map((el, idx) => {
-                if (el[0].toggle && el[0].name === "Home Address") {
-                  return (
-                    <HomeAddress
-                      key={idx}
-                      handleChange={handleChange}
-                      userInputs={userInputs}
-                    />
-                  );
-                }
-                if (el[0].toggle && el[0].name === "Social") {
-                  return (
-                    <SocialLinks
-                      key={idx}
-                      handleChange={handleChange}
-                      userInputs={userInputs}
-                    />
-                  );
-                }
-                if (el[0].toggle && el[0].name === "Work Info") {
-                  return (
-                    <WorkInfo
-                      key={idx}
-                      handleChange={handleChange}
-                      userInputs={userInputs}
-                    />
-                  );
-                }
-                if (el[0].toggle && el[0].name === "Cover Photo") {
-                  return <CoverPhoto key={idx} imageConvert={imageConvert} />;
-                } else {
-                  return null;
-                }
-              })}
-              <button
-                type="submit"
-                className="inline-flex justify-center py-2 px-4 border border-blue-400 shadow-sm text-sm font-medium rounded-2xl text-white bg-blue-400 hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Save
-              </button>
-            </form>
+      {!submission && (
+        <div className="flex flex-row flex-nowrap flex-none gap-x-8 overflow-scroll scrollbar-hide my-8">
+          <Chips options={options} toggle={toggle} />
+        </div>
+      )}
+      {!submission && (
+        <div className="container mx-auto pb-8">
+          <div className="md:grid md:grid-cols-3 md:gap-6">
+            <div className="mt-5 md:mt-0 md:col-span-3">
+              <form onSubmit={handleSubmit}>
+                <PersonalInfo
+                  handleChange={handleChange}
+                  userInputs={userInputs}
+                  imageConvert={imageConvert}
+                />
+                {options.map((el, idx) => {
+                  if (el[0].toggle && el[0].name === "Home Address") {
+                    return (
+                      <HomeAddress
+                        key={idx}
+                        handleChange={handleChange}
+                        userInputs={userInputs}
+                      />
+                    );
+                  }
+                  if (el[0].toggle && el[0].name === "Social") {
+                    return (
+                      <SocialLinks
+                        key={idx}
+                        handleChange={handleChange}
+                        userInputs={userInputs}
+                      />
+                    );
+                  }
+                  if (el[0].toggle && el[0].name === "Work Info") {
+                    return (
+                      <WorkInfo
+                        key={idx}
+                        handleChange={handleChange}
+                        userInputs={userInputs}
+                      />
+                    );
+                  }
+                  if (el[0].toggle && el[0].name === "Cover Photo") {
+                    return <CoverPhoto key={idx} imageConvert={imageConvert} />;
+                  } else {
+                    return null;
+                  }
+                })}
+                <button
+                  type="submit"
+                  className="inline-flex justify-center py-2 px-4 border border-blue-400 shadow-sm text-sm font-medium rounded-2xl text-white bg-blue-400 hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Save
+                </button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+      {submission && (
+        <div className=" max-w-screen-sm mx-auto ">
+          <GetVCard username={username} id={id} />
+          <button className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 ">
+            View Digital Business Card
+          </button>
+          <button className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 ">
+            Create New Business Card
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -35,5 +35,12 @@ export default function GetVCard(props) {
     document.body.removeChild(element);
   }
 
-  return <button onClick={getCard}>Get My Card</button>;
+  return (
+    <button
+      className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 "
+      onClick={getCard}
+    >
+      Download VCard
+    </button>
+  );
 }

@@ -8,9 +8,8 @@ export default function App() {
   // const [on, setOn] = useState(false);
 
   return (
-    <div className="2xl:container 2xl:mx-auto">
+    <div>
       <Nav />
-
       <Routes>
         <Route path="/" element={""} />
         <Route path="form" element={<Form />} />
