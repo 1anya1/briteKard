@@ -92,7 +92,6 @@ export default function DisplayCard() {
       socialUrls: { facebook },
       socialUrls: { twitter },
       socialUrls: { linkedIn },
-      socialUrls: { flickr },
       socialUrls: { github },
       socialUrls: { youtube },
       socialUrls: { snapchat },
