@@ -60,14 +60,18 @@ module.exports = {
       width: {
         "fourty-tw0": "42%",
       },
-      height: {
-        "h-110": "110%",
-      },
       translate: {
         "negative-half": "-50%",
       },
       padding: {
         104: "104px",
+      },
+      margin: {
+        104: "104px",
+        204: "204px",
+      },
+      screens: {
+        sm: "600px",
       },
     },
   },
