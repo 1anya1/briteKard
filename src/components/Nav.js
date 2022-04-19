@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-export default function Nav() {
+export default function Nav(props) {
   return (
     <nav className="flex sm:justify-center space-x-4">
       {[
         ["Home", "/"],
-        ["Form", "/form"],
-        ["Cards", "/mycard"],
+        ["New Card", "/form"],
+        ["My Cards", `/myCards/${props.username}`],
       ].map(([title, url]) => (
         <Link
           to={url}

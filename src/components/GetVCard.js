@@ -1,6 +1,6 @@
 const axios = require("axios");
 export default function GetVCard(props) {
-  async function getCard() {
+  function getCard() {
     console.log("clicked");
     console.log(props.username, props.id);
     axios
@@ -9,7 +9,7 @@ export default function GetVCard(props) {
       )
       .then(function (response) {
         console.log(response.data[0]);
-        download(`${response.data[1]}.VCF`, response.data[0]);
+        download(`${props.username}.VCF`, response.data[0]);
       })
       .catch(function (error) {
         // handle error
