@@ -6,8 +6,9 @@ import Chips from "./Chips";
 import React, { useState } from "react";
 import WorkInfo from "./formType/WorkInfo";
 import CoverPhoto from "./formType/CoverPhoto";
+import { Link } from "react-router-dom";
 const axios = require("axios");
-export default function Forms() {
+export default function Forms(props) {
   //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
   const [submission, setSubmission] = useState(false);
   const [options, setOptions] = useState([
@@ -20,6 +21,8 @@ export default function Forms() {
   const [username, setUsername] = useState("");
   const [id, setId] = useState("");
   const [userInputs, setUserInputs] = useState({
+    cardName: "",
+    colorScheme: "",
     uid: "",
     birthday: "",
     cellPhone: "",
@@ -93,11 +96,14 @@ export default function Forms() {
   const sendData = async (body) => {
     try {
       const response = await axios.post(
-        "https://britekard.herokuapp.com/vCards",
+        "https://britekard.herokuapp.com/vCards/",
         body
       );
-      const [qr, username, id] = response.data;
       console.log(response);
+      const [qr, username, id] = response.data;
+
+      props.setUsername(username);
+      props.setId(id);
       setUsername(username);
       setId(id);
       sendQR(username, id, qr);
@@ -158,78 +164,82 @@ export default function Forms() {
   }
 
   return (
-    <div>
+    <>
       {!submission && (
-        <div className="flex flex-row flex-nowrap flex-none gap-x-8 overflow-scroll scrollbar-hide my-8">
-          <Chips options={options} toggle={toggle} />
-        </div>
-      )}
-      {!submission && (
-        <div className="container mx-auto pb-8">
-          <div className="md:grid md:grid-cols-3 md:gap-6">
-            <div className="mt-5 md:mt-0 md:col-span-3">
-              <form onSubmit={handleSubmit}>
-                <PersonalInfo
-                  handleChange={handleChange}
-                  userInputs={userInputs}
-                  imageConvert={imageConvert}
-                />
-                {options.map((el, idx) => {
-                  if (el[0].toggle && el[0].name === "Home Address") {
-                    return (
-                      <HomeAddress
-                        key={idx}
-                        handleChange={handleChange}
-                        userInputs={userInputs}
-                      />
-                    );
-                  }
-                  if (el[0].toggle && el[0].name === "Social") {
-                    return (
-                      <SocialLinks
-                        key={idx}
-                        handleChange={handleChange}
-                        userInputs={userInputs}
-                      />
-                    );
-                  }
-                  if (el[0].toggle && el[0].name === "Work Info") {
-                    return (
-                      <WorkInfo
-                        key={idx}
-                        handleChange={handleChange}
-                        userInputs={userInputs}
-                      />
-                    );
-                  }
-                  if (el[0].toggle && el[0].name === "Cover Photo") {
-                    return <CoverPhoto key={idx} imageConvert={imageConvert} />;
-                  } else {
-                    return null;
-                  }
-                })}
-                <button
-                  type="submit"
-                  className="inline-flex justify-center py-2 px-4 border border-blue-400 shadow-sm text-sm font-medium rounded-2xl text-white bg-blue-400 hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                  Save
-                </button>
-              </form>
+        <>
+          <div className="flex flex-row flex-nowrap flex-none gap-x-8 overflow-scroll scrollbar-hide my-8">
+            <Chips options={options} toggle={toggle} />
+          </div>
+          <div className="container mx-auto pb-8">
+            <div className="md:grid md:grid-cols-3 md:gap-6">
+              <div className="mt-5 md:mt-0 md:col-span-3">
+                <form onSubmit={handleSubmit}>
+                  <PersonalInfo
+                    handleChange={handleChange}
+                    userInputs={userInputs}
+                    imageConvert={imageConvert}
+                  />
+                  {options.map((el, idx) => {
+                    if (el[0].toggle && el[0].name === "Home Address") {
+                      return (
+                        <HomeAddress
+                          key={idx}
+                          handleChange={handleChange}
+                          userInputs={userInputs}
+                        />
+                      );
+                    }
+                    if (el[0].toggle && el[0].name === "Social") {
+                      return (
+                        <SocialLinks
+                          key={idx}
+                          handleChange={handleChange}
+                          userInputs={userInputs}
+                        />
+                      );
+                    }
+                    if (el[0].toggle && el[0].name === "Work Info") {
+                      return (
+                        <WorkInfo
+                          key={idx}
+                          handleChange={handleChange}
+                          userInputs={userInputs}
+                        />
+                      );
+                    }
+                    if (el[0].toggle && el[0].name === "Cover Photo") {
+                      return (
+                        <CoverPhoto key={idx} imageConvert={imageConvert} />
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
+                  <button
+                    type="submit"
+                    className="inline-flex justify-center py-2 px-4 border border-blue-400 shadow-sm text-sm font-medium rounded-2xl text-white bg-blue-400 hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  >
+                    Save
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
       {submission && (
         <div className=" max-w-screen-sm mx-auto ">
           <GetVCard username={username} id={id} />
           <button className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 ">
-            View Digital Business Card
+            <Link to={`/mycard/${username}/${id}`}>
+              View Digital Business Card
+            </Link>
           </button>
           <button className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 ">
             Create New Business Card
           </button>
         </div>
       )}
-    </div>
+    </>
   );
 }

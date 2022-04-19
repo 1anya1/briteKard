@@ -4,33 +4,31 @@ import DisplayPersonal from "./displayItems/DisplayPersonal";
 import DisplaySocial from "./displayItems/DisplaySocial";
 import DisplayWorkInfo from "./displayItems/DisplayWorkInfo";
 import { PhoneIcon, MailIcon, ChatAltIcon } from "@heroicons/react/solid";
+import { useParams } from "react-router-dom";
 import QRmodal from "./QRmodal";
 
 const axios = require("axios");
-export default function DisplayCard() {
+export default function DisplayCard(props) {
+  let { username, id } = useParams();
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
   //component did mount call only once []
   useEffect(() => {
     axios
-      .get(
-        `https://britekard.herokuapp.com/vCards/mycard/Anna/625de7ae3c1a7e43c02d5989`
-      )
+      .get(`https://britekard.herokuapp.com/vCards/mycard/${username}/${id}`)
       .then((response) => {
         console.log(response);
         const data = response.data;
         setData(data);
       });
-  }, []);
+  }, [username, id]);
   function getCard() {
     console.log("here");
     axios
-      .get(
-        `https://britekard.herokuapp.com/vCards/Anna/625de7ae3c1a7e43c02d5989`
-      )
+      .get(`https://britekard.herokuapp.com/vCards/${username}/${id}`)
       .then(function (response) {
         console.log(response);
-        download(`${response.data[1]}.VCF`, response.data[0]);
+        download(`${username}.VCF`, response.data[0]);
       })
       .catch(function (error) {
         // handle error
