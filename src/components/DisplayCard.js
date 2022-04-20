@@ -22,7 +22,7 @@ export default function DisplayCard(props) {
         const data = response.data;
         setData(data);
       });
-  }, []);
+  }, [id, username]);
   function getCard() {
     console.log("here");
     axios
