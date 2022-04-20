@@ -26,7 +26,10 @@ export default function AllCards(props) {
       <div>
         {id.map((card, id) => {
           return (
-            <button className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 ">
+            <button
+              key={id}
+              className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 "
+            >
               <Link to={`/mycard/${props.username}/${card}`}>Card</Link>
             </button>
           );

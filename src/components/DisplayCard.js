@@ -10,6 +10,7 @@ import QRmodal from "./QRmodal";
 const axios = require("axios");
 export default function DisplayCard(props) {
   let { username, id } = useParams();
+  console.log("Im in display cards", { username }, { id });
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
   //component did mount call only once []
@@ -21,7 +22,7 @@ export default function DisplayCard(props) {
         const data = response.data;
         setData(data);
       });
-  }, [username, id]);
+  }, [id, username]);
   function getCard() {
     console.log("here");
     axios
