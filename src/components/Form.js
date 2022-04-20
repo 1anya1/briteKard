@@ -3,7 +3,7 @@ import SocialLinks from "./formType/SocialLikns";
 import HomeAddress from "./formType/HomeAddress";
 import GetVCard from "./GetVCard";
 import Chips from "./Chips";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import WorkInfo from "./formType/WorkInfo";
 import CoverPhoto from "./formType/CoverPhoto";
 import { Link } from "react-router-dom";
@@ -18,8 +18,8 @@ export default function Forms(props) {
     [{ name: "Work Info", toggle: true }],
     [{ name: "Cover Photo", toggle: true }],
   ]);
-  const [username, setUsername] = useState("");
   const [id, setId] = useState("");
+  const [qr, setQR] = useState(0);
   const [userInputs, setUserInputs] = useState({
     cardName: "",
     colorScheme: "",
@@ -86,46 +86,57 @@ export default function Forms(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    let user = {
-      username: userInputs.firstName.trim(),
-    };
-    let body = { ...user, vCard: [userInputs] };
+
+    let body = { username: props.username, vCard: [userInputs] };
+    console.log("step one complete send body");
     console.log(body);
     sendData(body);
   }
-  const sendData = async (body) => {
-    try {
-      const response = await axios.post(
-        "https://britekard.herokuapp.com/vCards/",
-        body
-      );
-      console.log(response);
-      const [qr, username, id] = response.data;
+  function sendData(body) {
+    axios
+      .post("https://britekard.herokuapp.com/vCards", body)
+      .then((response) => {
+        const [qr, username, id] = response.data;
+        console.log(qr, username, id);
+        props.setId(id);
+        setId(id);
+        setQR(qr);
+      })
+      .then(() => {
+        console.log("im here");
 
-      props.setUsername(username);
-      props.setId(id);
-      setUsername(username);
-      setId(id);
-      sendQR(username, id, qr);
-      setSubmission(true);
-    } catch (error) {
-      console.log(error);
+        // sendQR(props.id, qr);
+        // getId();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  useEffect(() => {
+    if (id && id) {
+      console.log(qr, id);
+      sendQR(id, qr);
     }
-  };
+  });
+  // function getId() {
+  //   console.log("my id is " + id);
+  // }
 
-  const sendQR = async (username, id, qr) => {
-    try {
-      const response = await axios.post(
-        `https://britekard.herokuapp.com/vCards/mycard/${username}/${id}`,
+  function sendQR(id, qr) {
+    console.log("now im here");
+    axios
+      .post(
+        `https://britekard.herokuapp.com/vCards/mycard/${props.username}/${id}`,
         {
           qrCode: qr,
         }
-      );
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      )
+      .then((res) => {
+        console.log("succesfull stuff to be done here");
+        setSubmission(true);
+      })
+      .catch((err) => console.error(err));
+  }
 
   function imageConvert(base64, type, id) {
     console.log(base64, type);
@@ -229,9 +240,9 @@ export default function Forms(props) {
       )}
       {submission && (
         <div className=" max-w-screen-sm mx-auto ">
-          <GetVCard username={username} id={id} />
+          <GetVCard username={props.username} id={props.id} />
           <button className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 ">
-            <Link to={`/mycard/${username}/${id}`}>
+            <Link to={`/mycard/${props.username}/${props.id}`}>
               View Digital Business Card
             </Link>
           </button>

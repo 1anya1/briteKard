@@ -9,7 +9,7 @@ import React, { useState } from "react";
 export default function App() {
   // const [on, setOn] = useState(false);
   // const [username, setUsername] = useState("");
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("Anna");
   const [id, setId] = useState("");
 
   return (
@@ -19,7 +19,7 @@ export default function App() {
         <Route path="/" element={""} />
         <Route
           path="form"
-          element={<Form setUsername={setUsername} setId={setId} id={id} />}
+          element={<Form username={username} setId={setId} id={id} />}
         />
         <Route
           path={`mycard/:username/:id`}
