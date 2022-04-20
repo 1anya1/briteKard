@@ -28,7 +28,21 @@ export default function PersonalInfo(props) {
               change={props.handleChange}
             />
           );
-        else {
+
+        if (el.id === "firstName" || el.id === "cellPhone") {
+          return (
+            <FormInput
+              key={idx}
+              label={el.label}
+              type={el.type}
+              id={el.id}
+              placeholder={el.placeholder}
+              value={props.userInputs[el.id]}
+              change={props.handleChange}
+              required={"required"}
+            />
+          );
+        } else {
           return (
             <FormInput
               key={idx}

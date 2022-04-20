@@ -79,7 +79,7 @@ export default function SocialLinks(props) {
           autoComplete="social-media"
           className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-2xl shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
-          <option slected="true" disabled>
+          <option slected="false" disabled>
             Choose
           </option>
           <option>YouTube</option>
@@ -89,6 +89,7 @@ export default function SocialLinks(props) {
           <option>TikTok</option>
           <option>Meetup</option>
           <option>Twitch</option>
+          <option>GitHub</option>
         </select>
         <button
           onClick={addMore}
