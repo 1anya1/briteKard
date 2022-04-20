@@ -9,7 +9,7 @@ import React, { useState } from "react";
 export default function App() {
   // const [on, setOn] = useState(false);
   // const [username, setUsername] = useState("");
-  const [username, setUsername] = useState("Anna");
+  const [username] = useState("Anna");
   const [id, setId] = useState("");
 
   return (
