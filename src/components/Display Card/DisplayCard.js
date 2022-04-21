@@ -134,7 +134,7 @@ export default function DisplayCard(props) {
       ["LinkedIn", linkedIn],
     ];
     return (
-      <div className="bg-gray-100 w-full h-full sm:py-16">
+      <div className=" w-full h-full sm:py-16">
         <div className="grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500  sm:bg-white max-w-screen-sm mx-auto sm:pb-12 sm:px-9 sm:rounded-3xl">
           <div className=" w-full col-span-5 h-60  sm:h-64 relative sm:pt-12 sm:pb-104">
             {data.logo.url && (

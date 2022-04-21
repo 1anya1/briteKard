@@ -5,6 +5,7 @@ import DisplayCard from "./components/Display Card/DisplayCard";
 import Form from "./components/Form/Form";
 import AllCards from "./components/Display All Card/AllCards";
 import React, { useState } from "react";
+import UpdateForm from "./components/Form/UpdateForm";
 
 export default function App() {
   // const [on, setOn] = useState(false);
@@ -13,7 +14,7 @@ export default function App() {
   const [id, setId] = useState("");
 
   return (
-    <div>
+    <div className="bg-gray-200 min-h-screen">
       <Nav username={username} />
       <Routes>
         <Route path="/" element={""} />
@@ -29,6 +30,10 @@ export default function App() {
           path={`myCards/${username}`}
           element={<AllCards username={username} />}
         />
+        <Route
+          path={`mycard/update/:username/:id`}
+          element={<UpdateForm username={username} id={id} />}
+        ></Route>
       </Routes>
     </div>
   );
