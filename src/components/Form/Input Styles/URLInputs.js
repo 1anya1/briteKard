@@ -12,7 +12,7 @@ export default function URLInputs(props) {
           https://
         </span>
         <input
-          type={props.type}
+          type="text"
           name={props.id}
           id={props.id}
           value={props.value}

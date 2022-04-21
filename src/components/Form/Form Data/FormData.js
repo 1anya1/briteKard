@@ -36,7 +36,7 @@ const personalDataInputs = [
     label: "Portfolio Site",
     type: "url",
     id: "url",
-    placeholder: "www.MyPortfolio.com",
+    placeholder: "MyPortfolio.com",
   },
 ];
 

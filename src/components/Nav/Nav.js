@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 export default function Nav(props) {
   return (
-    <nav className="flex sm:justify-center space-x-4">
+    <nav className="flex sm:justify-center space-x-4 bg-gray-200">
       {[
         ["Home", "/"],
         ["New Card", "/form"],

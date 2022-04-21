@@ -15,7 +15,7 @@ export default function Chips(props) {
         key={idx}
         formid={idx}
         className={
-          "cursor-pointer px-3 py-2 rounded-full flex-none font-semibold text-xs flex align-center w-max  active:opacity-70 transition duration-300 ease border border-gray-500 " +
+          "cursor-pointer px-3 py-2 rounded-full flex-none font-bold text-xs flex align-center w-max  active:opacity-70 transition duration-300 ease  border border-gray-500 " +
           (curr["toggle"] ? "bg-gray-500 text-white" : toggleClass)
         }
       >

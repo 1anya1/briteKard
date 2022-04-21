@@ -10,7 +10,7 @@ import {
   TubmlrSVG,
   SnapChatSVG,
   GitHubSVG,
-} from "../SocialIcons";
+} from "../../Form/Icons/SocialIcons";
 export default function DisplaySocial(props) {
   const socialData = {
     Github: <GitHubSVG />,
@@ -29,7 +29,12 @@ export default function DisplaySocial(props) {
   return props.socialData.map((socialLink, idx) => {
     if (socialLink[1]) {
       return (
-        <a href={socialLink[1]} key={idx}>
+        <a
+          href={socialLink[1]}
+          key={idx}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <div className="drop-shadow-md mx-4 border-gray-100 border rounded-2xl  bg-white mb-4">
             <div className="p-4 flex items-center">
               {socialData[`${socialLink[0]}`]}
