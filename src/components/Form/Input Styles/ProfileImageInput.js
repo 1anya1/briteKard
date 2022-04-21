@@ -52,9 +52,10 @@ export default function ProfileImageInputs(props) {
           </span>
           <label
             htmlFor="file-upload"
-            className="ml-5 relative cursor-pointer bg-blue-400 rounded-2xl py-2 px-3 border border-blue-400 font-xs text-white hover:opacity-70 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
+            className="ml-5 relative cursor-pointer bg-gray-500 rounded-2xl py-2 px-3 border border-gray-500  text-white hover:opacity-70 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-gray-500"
           >
-            File Input
+            <p className="leading-relaxed text-xs font-medium"> File Input</p>
+
             <input
               id="file-upload"
               name="file-upload"

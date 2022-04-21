@@ -10,7 +10,7 @@ import {
   TubmlrSVG,
   SnapChatSVG,
   GitHubSVG,
-} from "../SocialIcons";
+} from "../../Form/Icons/SocialIcons";
 export default function DisplaySocial(props) {
   const socialData = {
     Github: <GitHubSVG />,

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { RotatingLines } from "react-loader-spinner";
-import DisplayPersonal from "./displayItems/DisplayPersonal";
-import DisplaySocial from "./displayItems/DisplaySocial";
-import DisplayWorkInfo from "./displayItems/DisplayWorkInfo";
+import DisplayPersonal from "./Display Sections/DisplayPersonal";
+import DisplaySocial from "./Display Sections/DisplaySocial";
+import DisplayWorkInfo from "./Display Sections/DisplayWorkInfo";
 import { PhoneIcon, MailIcon, ChatAltIcon } from "@heroicons/react/solid";
 import { useParams } from "react-router-dom";
-import QRmodal from "./QRmodal";
+import QRmodal from "./Display Sections/Display Functions/QRmodal";
 
 const axios = require("axios");
 export default function DisplayCard(props) {
@@ -134,7 +134,7 @@ export default function DisplayCard(props) {
       ["LinkedIn", linkedIn],
     ];
     return (
-      <div className="bg-gray-200 w-full h-full sm:py-16">
+      <div className="bg-gray-100 w-full h-full sm:py-16">
         <div className="grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500  sm:bg-white max-w-screen-sm mx-auto sm:pb-12 sm:px-9 sm:rounded-3xl">
           <div className=" w-full col-span-5 h-60  sm:h-64 relative sm:pt-12 sm:pb-104">
             {data.logo.url && (

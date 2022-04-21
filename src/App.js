@@ -1,9 +1,9 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Nav from "./components/Nav";
-import DisplayCard from "./components/DisplayCard";
-import Form from "./components/Form";
-import AllCards from "./components/AllCards";
+import Nav from "./components/Nav/Nav";
+import DisplayCard from "./components/Display Card/DisplayCard";
+import Form from "./components/Form/Form";
+import AllCards from "./components/Display All Card/AllCards";
 import React, { useState } from "react";
 
 export default function App() {
