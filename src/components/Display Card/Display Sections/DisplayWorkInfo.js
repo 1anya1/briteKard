@@ -49,7 +49,7 @@ export default function DisplayWorkInfo(props) {
                 )}
                 {title === "Company Website" && (
                   <a
-                    href={`${currSectionData}`}
+                    href={`https://${currSectionData}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
