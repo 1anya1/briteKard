@@ -1,16 +1,16 @@
 import PersonalInfo from "./Form Sections/PersonalInfo";
 import SocialLinks from "./Form Sections/SocialLikns";
 import HomeAddress from "./Form Sections/HomeAddress";
-import GetVCard from "../Display Card/Display Sections/Display Functions/GetVCard";
 import Chips from "./Form Sections/Chips";
 import React, { useEffect, useState } from "react";
 import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const axios = require("axios");
 export default function Forms(props) {
   //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
-  const [submission, setSubmission] = useState(false);
+
+  const navigate = useNavigate();
   const [options, setOptions] = useState([
     [{ name: "Home Address", toggle: false }],
     [{ name: "Work Info", toggle: false }],
@@ -100,12 +100,6 @@ export default function Forms(props) {
         setId(id);
         setQR(qr);
       })
-      .then(() => {
-        console.log("im here");
-
-        // sendQR(props.id, qr);
-        // getId();
-      })
       .catch(function (error) {
         console.log(error);
       });
@@ -126,8 +120,7 @@ export default function Forms(props) {
         }
       )
       .then((res) => {
-        console.log("succesfull stuff to be done here");
-        setSubmission(true);
+        navigate(`/myCards/${props.username}`);
       })
       .catch((err) => console.error(err));
   }
@@ -149,13 +142,16 @@ export default function Forms(props) {
   const handleChange = (event) => {
     const userObj = { ...userInputs };
     const value = event.target.value;
+    console.log(value);
     let objKey = event.target.getAttribute("id");
+    console.log(objKey);
     objKey = objKey.split(".");
     if (objKey.length === 1) {
       userObj[objKey[0]] = value;
     } else {
       userObj[objKey[0]][objKey[1]] = value;
     }
+    userObj[objKey] = value;
 
     setUserInputs(userObj);
   };
@@ -169,81 +165,64 @@ export default function Forms(props) {
   }
 
   return (
-    <>
-      {!submission && (
-        <div className="container mx-auto gap-2 max-w-4xl m-auto">
-          <div className="container mx-auto sm:px-4">
-            <p className="text-center font-medium text-gray-600 text-xl pt-8 ">
-              Create New Business Card
-            </p>
-            <div className="flex flex-row flex-nowrap overflow-scroll scrollbar-hide my-8 pl-4 sm:pl-0 container mx-auto gap-2">
-              <Chips options={options} toggle={toggle} />
-            </div>
-          </div>
-          <div className="container mx-auto px-4">
-            <form onSubmit={handleSubmit}>
-              <PersonalInfo
-                handleChange={handleChange}
-                userInputs={userInputs}
-                imageConvert={imageConvert}
-              />
-              {options.map((el, idx) => {
-                if (el[0].toggle && el[0].name === "Home Address") {
-                  return (
-                    <HomeAddress
-                      key={idx}
-                      handleChange={handleChange}
-                      userInputs={userInputs}
-                    />
-                  );
-                }
-                if (el[0].toggle && el[0].name === "Social Links") {
-                  return (
-                    <SocialLinks
-                      key={idx}
-                      handleChange={handleChange}
-                      userInputs={userInputs}
-                    />
-                  );
-                }
-                if (el[0].toggle && el[0].name === "Work Info") {
-                  return (
-                    <WorkInfo
-                      key={idx}
-                      handleChange={handleChange}
-                      userInputs={userInputs}
-                    />
-                  );
-                }
-                if (el[0].toggle && el[0].name === "Cover Photo") {
-                  return <CoverPhoto key={idx} imageConvert={imageConvert} />;
-                } else {
-                  return null;
-                }
-              })}
-              <button
-                type="submit"
-                className=" w-full sm:w-44 inline-flex justify-center py-2 px-4 border border-gray-500 shadow-sm text-sm font-medium rounded-2xl text-white bg-gray-500 hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mb-8"
-              >
-                <p className="leading-relaxed text-sm">Create Card</p>
-              </button>
-            </form>
-          </div>
+    <div className="container mx-auto gap-2 max-w-4xl m-auto">
+      <div className="container mx-auto sm:px-4">
+        <p className="text-center font-medium text-gray-600 text-xl pt-8 ">
+          Create New Business Card
+        </p>
+        <div className="flex flex-row flex-nowrap overflow-scroll scrollbar-hide my-8 pl-4 sm:pl-0 container mx-auto gap-2">
+          <Chips options={options} toggle={toggle} />
         </div>
-      )}
-      {submission && (
-        <div className=" max-w-screen-sm mx-auto ">
-          <GetVCard username={props.username} id={props.id} />
-          <button className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-800 rounded-2xl  hover:bg-opacity-70 ">
-            <Link to={`/mycard/${props.username}/${props.id}`}>
-              View Digital Business Card
-            </Link>
+      </div>
+      <div className="container mx-auto px-4">
+        <form onSubmit={handleSubmit}>
+          <PersonalInfo
+            handleChange={handleChange}
+            userInputs={userInputs}
+            imageConvert={imageConvert}
+          />
+          {options.map((el, idx) => {
+            if (el[0].toggle && el[0].name === "Home Address") {
+              return (
+                <HomeAddress
+                  key={idx}
+                  handleChange={handleChange}
+                  userInputs={userInputs}
+                />
+              );
+            }
+            if (el[0].toggle && el[0].name === "Social Links") {
+              return (
+                <SocialLinks
+                  key={idx}
+                  handleChange={handleChange}
+                  userInputs={userInputs}
+                />
+              );
+            }
+            if (el[0].toggle && el[0].name === "Work Info") {
+              return (
+                <WorkInfo
+                  key={idx}
+                  handleChange={handleChange}
+                  userInputs={userInputs}
+                />
+              );
+            }
+            if (el[0].toggle && el[0].name === "Cover Photo") {
+              return <CoverPhoto key={idx} imageConvert={imageConvert} />;
+            } else {
+              return null;
+            }
+          })}
+          <button
+            type="submit"
+            className=" w-full sm:w-44 inline-flex justify-center py-2 px-4 border border-gray-500 shadow-sm text-sm font-medium rounded-2xl text-white bg-gray-500 hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mb-8"
+          >
+            <p className="leading-relaxed text-sm">Create Card</p>
           </button>
-          <button className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-gray-500">
-            Create New Business Card
-          </button>
-        </div>
-      )}
-    </>
+        </form>
+      </div>
+    </div>
   );
 }

@@ -13,18 +13,21 @@ export default function SocialLinks(props) {
       type: "text",
       id: "socialUrls.linkedIn",
       placeholder: "example.com",
+      value: ["socialUrls", "linkedIn"],
     },
     {
       label: "Facebook",
       type: "text",
       id: "socialUrls.facebook",
       placeholder: "example.com",
+      value: ["socialUrls", "facebook"],
     },
     {
       label: "Twitter",
       type: "text",
       id: "socialUrls.twitter",
       placeholder: "example.com",
+      value: ["socialUrls", "twitter"],
     },
   ]);
 
@@ -40,6 +43,7 @@ export default function SocialLinks(props) {
       type: "text",
       id: `socialUrls.${input.toLowerCase()}`,
       placeholder: "example.com",
+      value: ["socialUrls", `${input.toLowerCase()}`],
     };
     duplicateState.push(data);
     console.log(duplicateState);
@@ -61,17 +65,11 @@ export default function SocialLinks(props) {
             type={el.type}
             id={el.id}
             placeholder={el.placeholder}
-            value={props.userInputs[el.id]}
+            value={props.userInputs[el.value[0]][el.value[1]]}
             change={props.handleChange}
           />
         ))}
         <div className="col-start-2 col-span-2 pb-4 flex">
-          {/* <label
-          htmlFor="social-media"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Additional Links
-        </label> */}
           <select
             id="social-media"
             name="social-media"

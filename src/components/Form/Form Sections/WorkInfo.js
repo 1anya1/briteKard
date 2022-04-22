@@ -21,6 +21,7 @@ export default function WorkInfo(props) {
       label: "Street Address",
       type: "text",
       id: "workAddress.street",
+      value: ["workAddress", "street"],
       placeholder: "123 Main Street",
     },
     {
@@ -28,17 +29,20 @@ export default function WorkInfo(props) {
       type: "text",
       id: "workAddress.city",
       placeholder: "San Francisco",
+      value: ["workAddress", "city"],
     },
     {
       label: "State / Province",
       type: "text",
       id: "workAddress.stateProvince",
       placeholder: "California",
+      value: ["workAddress", "stateProvince"],
     },
     {
       label: "ZIP / Postal code",
       type: "text",
       id: "workAddress.postalCode",
+      value: ["workAddress", "postalCode"],
       placeholder: "92115",
     },
     {
@@ -78,6 +82,19 @@ export default function WorkInfo(props) {
                 change={props.handleChange}
               />
             );
+          }
+          if (el.value) {
+            return (
+              <FormInput
+                key={idx}
+                label={el.label}
+                type={el.type}
+                id={el.id}
+                placeholder={el.placeholder}
+                value={props.userInputs[el.value[0]][el.value[1]]}
+                change={props.handleChange}
+              />
+            );
           } else {
             return (
               <FormInput
@@ -100,10 +117,11 @@ export default function WorkInfo(props) {
             Country
           </label>
           <select
-            id="homeAddress.postalCode"
+            id="workAddress.countryRegion"
             name="country"
             autoComplete="country-name"
             onChange={props.handleChange}
+            value={props.userInputs["workAddress"]["countryRegion"]}
             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             <option>United States</option>
