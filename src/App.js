@@ -27,7 +27,7 @@ export default function App() {
           element={<DisplayCard username={username} id={id} />}
         />
         <Route
-          path={`myCards/${username}`}
+          path={`myCards/:username`}
           element={<AllCards username={username} />}
         />
         <Route

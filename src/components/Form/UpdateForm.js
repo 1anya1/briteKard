@@ -1,19 +1,21 @@
 import PersonalInfo from "./Form Sections/PersonalInfo";
 import SocialLinks from "./Form Sections/SocialLikns";
 import HomeAddress from "./Form Sections/HomeAddress";
-import GetVCard from "../Display Card/Display Sections/Display Functions/GetVCard";
 import Chips from "./Form Sections/Chips";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
-import { Link } from "react-router-dom";
+import DeleteFormModal from "./Input Styles/DeleteFormModal";
+
 const axios = require("axios");
 export default function UpdateForm(props) {
-  let { username, id } = useParams();
-  console.log(username, id);
+  const navigate = useNavigate();
+  const { username, id } = useParams();
+  const [deleteMe, setDeleteMe] = useState(false);
+
   //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
-  const [submission, setSubmission] = useState(false);
+
   const [options, setOptions] = useState([
     [{ name: "Home Address", toggle: false }],
     [{ name: "Work Info", toggle: false }],
@@ -52,10 +54,26 @@ export default function UpdateForm(props) {
         console.log(response);
       })
       .then(() => {
-        console.log("im here");
+        navigate(-1);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  function deleteCard() {
+    console.log("imhere");
+    setDeleteMe(!deleteMe);
+  }
 
-        // sendQR(props.id, qr);
-        // getId();
+  function cardDeletion() {
+    axios
+      .delete(
+        `https://britekard.herokuapp.com/vCards/mycard/delete/${username}/${id}`
+      )
+      .then((response) => {
+        setDeleteMe(!deleteMe);
+        // setSuccessfuleDeletion(true);
+        navigate(-1);
       })
       .catch(function (error) {
         console.log(error);
@@ -79,13 +97,13 @@ export default function UpdateForm(props) {
     const userObj = { ...userInputs };
     const value = event.target.value;
     let objKey = event.target.getAttribute("id");
+    console.log(objKey);
     objKey = objKey.split(".");
     if (objKey.length === 1) {
       userObj[objKey[0]] = value;
     } else {
       userObj[objKey[0]][objKey[1]] = value;
     }
-
     setUserInputs(userObj);
   };
   function toggle(e) {
@@ -97,67 +115,82 @@ export default function UpdateForm(props) {
     setOptions(newOptions);
   }
 
-  if (userInputs && !submission) {
+  if (userInputs) {
     return (
-      <div className="container mx-auto gap-2 max-w-4xl m-auto">
-        <div className="container mx-auto sm:px-4">
-          <p className="text-center font-medium text-gray-600 text-xl pt-8 ">
-            Update Business Card
-          </p>
-          <div className="flex flex-row flex-nowrap overflow-scroll scrollbar-hide my-8 pl-4 sm:pl-0 container mx-auto gap-2">
-            <Chips options={options} toggle={toggle} />
+      <>
+        <DeleteFormModal
+          deleteMe={deleteMe}
+          setDeleteMe={setDeleteMe}
+          deleteCard={deleteCard}
+          cardDeletion={cardDeletion}
+          username={username}
+        />
+        <div className="container mx-auto gap-2 max-w-4xl m-auto">
+          <div className="container mx-auto sm:px-4">
+            <p className="text-center font-medium text-gray-600 text-xl pt-8 ">
+              Update Business Card
+            </p>
+            <div className="flex flex-row flex-nowrap overflow-scroll scrollbar-hide my-8 pl-4 sm:pl-0 container mx-auto gap-2">
+              <Chips options={options} toggle={toggle} />
+            </div>
+          </div>
+          <div className="container mx-auto px-4">
+            <form onSubmit={handleSubmit}>
+              <PersonalInfo
+                handleChange={handleChange}
+                userInputs={userInputs}
+                imageConvert={imageConvert}
+              />
+              {options.map((el, idx) => {
+                if (el[0].toggle && el[0].name === "Home Address") {
+                  return (
+                    <HomeAddress
+                      key={idx}
+                      handleChange={handleChange}
+                      userInputs={userInputs}
+                    />
+                  );
+                }
+                if (el[0].toggle && el[0].name === "Social Links") {
+                  return (
+                    <SocialLinks
+                      key={idx}
+                      handleChange={handleChange}
+                      userInputs={userInputs}
+                    />
+                  );
+                }
+                if (el[0].toggle && el[0].name === "Work Info") {
+                  return (
+                    <WorkInfo
+                      key={idx}
+                      handleChange={handleChange}
+                      userInputs={userInputs}
+                    />
+                  );
+                }
+                if (el[0].toggle && el[0].name === "Cover Photo") {
+                  return <CoverPhoto key={idx} imageConvert={imageConvert} />;
+                } else {
+                  return null;
+                }
+              })}
+              <button
+                type="submit"
+                className=" sm:mr-4 w-full sm:w-44 inline-flex justify-center py-2 px-4 border border-gray-500 shadow-sm text-sm font-medium rounded-2xl text-white bg-gray-500 hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mb-4"
+              >
+                <p className="leading-relaxed text-sm">Update Card</p>
+              </button>
+            </form>
+            <button
+              onClick={deleteCard}
+              className=" w-full sm:w-44 inline-flex justify-center py-2 px-4 border border-red  shadow-sm text-sm font-medium rounded-2xl text-red  hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mb-8"
+            >
+              Delete
+            </button>
           </div>
         </div>
-        <div className="container mx-auto px-4">
-          <form onSubmit={handleSubmit}>
-            <PersonalInfo
-              handleChange={handleChange}
-              userInputs={userInputs}
-              imageConvert={imageConvert}
-            />
-            {options.map((el, idx) => {
-              if (el[0].toggle && el[0].name === "Home Address") {
-                return (
-                  <HomeAddress
-                    key={idx}
-                    handleChange={handleChange}
-                    userInputs={userInputs}
-                  />
-                );
-              }
-              if (el[0].toggle && el[0].name === "Social Links") {
-                return (
-                  <SocialLinks
-                    key={idx}
-                    handleChange={handleChange}
-                    userInputs={userInputs}
-                  />
-                );
-              }
-              if (el[0].toggle && el[0].name === "Work Info") {
-                return (
-                  <WorkInfo
-                    key={idx}
-                    handleChange={handleChange}
-                    userInputs={userInputs}
-                  />
-                );
-              }
-              if (el[0].toggle && el[0].name === "Cover Photo") {
-                return <CoverPhoto key={idx} imageConvert={imageConvert} />;
-              } else {
-                return null;
-              }
-            })}
-            <button
-              type="submit"
-              className=" w-full sm:w-44 inline-flex justify-center py-2 px-4 border border-gray-500 shadow-sm text-sm font-medium rounded-2xl text-white bg-gray-500 hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mb-8"
-            >
-              <p className="leading-relaxed text-sm">Update Card</p>
-            </button>
-          </form>
-        </div>
-      </div>
+      </>
     );
   }
 }

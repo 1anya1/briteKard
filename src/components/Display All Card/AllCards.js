@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import UpdateForm from "../Form/UpdateForm";
-
 import { DuplicateIcon, DocumentTextIcon } from "@heroicons/react/solid";
+import { useParams, useNavigate } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
 
 const axios = require("axios");
 export default function AllCards(props) {
-  const [data, setData] = useState(null);
-
+  const navigate = useNavigate();
+  const { username } = useParams();
+  const [data, setData] = useState(false);
+  console.log(username);
   const displayCard = [];
   //   const username = props.username;
   useEffect(() => {
     axios
-      .get(`https://britekard.herokuapp.com/vCards/${props.username}`)
+      .get(`https://britekard.herokuapp.com/vCards/${username}`)
       .then((response) => {
         const data = response.data[0].vCard;
         setData(data);
       });
-  }, [props.username]);
+  }, [username]);
 
   for (let card in data) {
     const {
@@ -39,6 +40,7 @@ export default function AllCards(props) {
     displayCard.push(display);
   }
   console.log(displayCard);
+
   if (displayCard.length > 0) {
     return (
       <div className="sm:grid grid-cols-2 gap-6 max-w-4xl m-auto p-4 ">
@@ -60,17 +62,21 @@ export default function AllCards(props) {
                 )}
                 <div className="flex gap-2">
                   <div>
-                    <button className="bg-white hover:bg-gray-500 hover:text-white text-gray-500 border-gray-500 border px-3 py-1 text-xs font-medium rounded-xl ">
-                      <Link to={`/mycard/update/${props.username}/${card.id}`}>
-                        Edit
-                      </Link>
+                    <button
+                      onClick={() =>
+                        navigate(`/mycard/update/${username}/${card.id}`)
+                      }
+                      className="bg-white hover:bg-gray-500 hover:text-white text-gray-500 border-gray-500 border px-3 py-1 text-xs font-medium rounded-xl "
+                    >
+                      Edit
                     </button>
                   </div>
                   <div>
-                    <button className="bg-white hover:bg-gray-500 hover:text-white text-gray-500 border-gray-500 border px-3 py-1 text-xs font-medium rounded-xl">
-                      <Link to={`/mycard/${props.username}/${card.id}`}>
-                        View
-                      </Link>
+                    <button
+                      onClick={() => navigate(`/mycard/${username}/${card.id}`)}
+                      className="bg-white hover:bg-gray-500 hover:text-white text-gray-500 border-gray-500 border px-3 py-1 text-xs font-medium rounded-xl"
+                    >
+                      View
                     </button>
                   </div>
                 </div>
@@ -97,6 +103,18 @@ export default function AllCards(props) {
             </div>
           );
         })}
+      </div>
+    );
+  } else if (!data) {
+    console.log("here");
+    return (
+      <div className="flex justify-center items-center h-screen w-screen">
+        <ThreeDots
+          color="#3e404d"
+          height={110}
+          width={110}
+          ariaLabel="three-circles-rotating"
+        />
       </div>
     );
   } else {
