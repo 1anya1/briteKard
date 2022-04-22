@@ -30,7 +30,7 @@ export default function DisplaySocial(props) {
     if (socialLink[1]) {
       return (
         <a
-          href={socialLink[1]}
+          href={`https://${socialLink[1]}`}
           key={idx}
           target="_blank"
           rel="noopener noreferrer"
@@ -38,6 +38,7 @@ export default function DisplaySocial(props) {
           <div className="drop-shadow-md mx-4 border-gray-100 border rounded-2xl  bg-white mb-4">
             <div className="p-4 flex items-center">
               {socialData[`${socialLink[0]}`]}
+              {console.log(socialLink[1])}
               <p className="text-gray-500 pl-4 text-base font-medium ">
                 {socialLink[0]}
               </p>

@@ -59,7 +59,7 @@ export default function DisplayPersonal(props) {
                   )}
                   {el === "Personal Website" && (
                     <a
-                      href={props.personalInfo[idx]}
+                      href={`https://${props.personalInfo[idx]}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
