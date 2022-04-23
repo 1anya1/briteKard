@@ -1,35 +1,14 @@
 import React, { useState } from "react";
 import URLInputs from "../Input Styles/URLInputs";
 import FormDescription from "../Input Styles/FormDescription";
+import { socialLinksInputs } from "../Form Data/FormData";
 export default function SocialLinks(props) {
   //info about the form
   const formName = "Social Links";
 
   //state management of inputs that belong to Social Links
   const [input, setInput] = useState("");
-  const [site, setSite] = useState([
-    {
-      label: "LinkedIn",
-      type: "text",
-      id: "socialUrls.linkedIn",
-      placeholder: "example.com",
-      value: ["socialUrls", "linkedIn"],
-    },
-    {
-      label: "Facebook",
-      type: "text",
-      id: "socialUrls.facebook",
-      placeholder: "example.com",
-      value: ["socialUrls", "facebook"],
-    },
-    {
-      label: "Twitter",
-      type: "text",
-      id: "socialUrls.twitter",
-      placeholder: "example.com",
-      value: ["socialUrls", "twitter"],
-    },
-  ]);
+  const [site, setSite] = useState(socialLinksInputs);
 
   //Add another social channel
   function addMore(e) {
@@ -75,10 +54,10 @@ export default function SocialLinks(props) {
             name="social-media"
             onChange={handleChange}
             autoComplete="social-media"
-            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-2xl shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full py-2 px-3 border text-gray-500 border-gray-300 bg-white leading-none rounded-2xl shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
           >
-            <option slected="false" disabled>
-              Choose
+            <option value="" disabled defaultValue>
+              Please choose an option
             </option>
             <option>YouTube</option>
             <option>Instagram</option>
@@ -91,7 +70,7 @@ export default function SocialLinks(props) {
           </select>
           <button
             onClick={addMore}
-            className="ml-5 w-3/12 bg-white py-2 px-3 border border-blue-500 rounded-2xl shadow-sm text-xs leading-4 font-medium text-blue-500 hover:blue-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="  justify-center mt-1 py-2 px-4 border  text-xs font-medium rounded-2xl text-white bg-gray-500 hover:opacity-70 active:opacity-70 ml-3"
           >
             Add
           </button>
