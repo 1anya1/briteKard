@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { DuplicateIcon, DocumentTextIcon } from "@heroicons/react/solid";
 import { useParams, useNavigate } from "react-router-dom";
-import { ThreeDots } from "react-loader-spinner";
 import LoadingScreen from "../LoadingScreen";
 
 const axios = require("axios");
