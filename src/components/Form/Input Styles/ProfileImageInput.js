@@ -1,33 +1,31 @@
+import { getBase64, checkFileSize } from "../Form Functions/imageFunctions";
+import { useState } from "react";
 export default function ProfileImageInputs(props) {
-  function getBase64(file) {
-    return new Promise((resolve) => {
-      let baseURL = "";
-      // Make new FileReader
-      let reader = new FileReader();
-      // Convert the file to base64 text
-      reader.readAsDataURL(file);
-      // on reader load somthing...
-      reader.onload = () => {
-        // Make a fileInfo Object
-        baseURL = reader.result;
-        resolve(baseURL);
-      };
-    });
-  }
+  const [image, setImage] = useState(props.imageData.url);
+  const [error, setError] = useState(false);
+
   function handleFileInputChange(e) {
     const file = e.target.files[0];
-    getBase64(file)
-      .then((result) => {
-        file["base64"] = result;
-        const base64URL = file["base64"];
-        let type = file["type"];
-        props.imageConvert(base64URL, type, "photo");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const size = checkFileSize(e.target.files[0].size);
+    if (size < 2) {
+      getBase64(file)
+        .then((result) => {
+          file["base64"] = result;
+          const base64URL = file["base64"];
+          let type = file["type"];
+          props.imageConvert(base64URL, type, "photo");
+          setImage(base64URL);
+          setError(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setError(true);
+      setImage(null);
+    }
   }
-  const image = props.imageData.url;
+
   return (
     <div className="col-start-2 col-span-2 pb-4">
       <div className="col-start-2 col-span-2">
@@ -35,11 +33,7 @@ export default function ProfileImageInputs(props) {
         <div className="mt-1 flex items-center">
           <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
             {image ? (
-              <img
-                src={image}
-                alt="profile"
-                className="bg-cover bg-center h-full"
-              />
+              <img src={image} alt="profile" className="" />
             ) : (
               <svg
                 className="h-full w-full text-gray-300"
@@ -52,7 +46,7 @@ export default function ProfileImageInputs(props) {
           </span>
           <label
             htmlFor="file-upload"
-            className="ml-5 relative cursor-pointer bg-gray-500 rounded-2xl py-2 px-3 border border-gray-500  text-white hover:opacity-70 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-gray-500"
+            className="ml-5 relative cursor-pointer bg-gray-500 rounded-2xl py-2 px-3 border border-gray-500  text-white hover:opacity-70 focus:ring-gray-500 focus:border-gray-500"
           >
             <p className="leading-relaxed text-xs font-medium"> File Input</p>
 
@@ -66,6 +60,11 @@ export default function ProfileImageInputs(props) {
             />
           </label>
         </div>
+        {error && (
+          <span className="text-xs text-red" id="logo">
+            Your file is too large. Please make sure the image is 2MG or less.
+          </span>
+        )}
       </div>
     </div>
   );

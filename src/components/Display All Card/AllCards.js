@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { DuplicateIcon, DocumentTextIcon } from "@heroicons/react/solid";
 import { useParams, useNavigate } from "react-router-dom";
-import { ThreeDots } from "react-loader-spinner";
+import LoadingScreen from "../LoadingScreen";
 
 const axios = require("axios");
 export default function AllCards(props) {
@@ -106,17 +106,7 @@ export default function AllCards(props) {
       </div>
     );
   } else if (!data) {
-    console.log("here");
-    return (
-      <div className="flex justify-center items-center h-screen w-screen">
-        <ThreeDots
-          color="#3e404d"
-          height={110}
-          width={110}
-          ariaLabel="three-circles-rotating"
-        />
-      </div>
-    );
+    return <LoadingScreen />;
   } else {
     return (
       <>

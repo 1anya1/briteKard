@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { RotatingLines } from "react-loader-spinner";
+
 import DisplayPersonal from "./Display Sections/DisplayPersonal";
 import DisplaySocial from "./Display Sections/DisplaySocial";
 import DisplayWorkInfo from "./Display Sections/DisplayWorkInfo";
 import { PhoneIcon, MailIcon, ChatAltIcon } from "@heroicons/react/solid";
 import { useParams } from "react-router-dom";
 import QRmodal from "./Display Sections/Display Functions/QRmodal";
+import LoadingScreen from "../LoadingScreen";
 
 const axios = require("axios");
 export default function DisplayCard(props) {
@@ -59,17 +60,6 @@ export default function DisplayCard(props) {
     console.log("here");
   }
 
-  function formatUSNumber(entry) {
-    const match = entry
-      .replace(/\D+/g, "")
-      .replace(/^1/, "")
-      .match(/([^\d]*\d[^\d]*){1,10}$/)[0];
-    const part1 = match.length > 2 ? `(${match.substring(0, 3)})` : match;
-    const part2 = match.length > 3 ? ` ${match.substring(3, 6)}` : "";
-    const part3 = match.length > 6 ? `-${match.substring(6, 10)}` : "";
-    return `${part1}${part2}${part3}`;
-  }
-
   if (data) {
     let {
       cellPhone,
@@ -104,12 +94,6 @@ export default function DisplayCard(props) {
     } = data;
     const myName = `${firstName} ${lastName}`;
     let workAddressData = [organization, workPhone, workEmail, workUrl];
-    if (cellPhone) {
-      cellPhone = formatUSNumber(cellPhone);
-    }
-    if (workPhone) {
-      workPhone = formatUSNumber(workPhone);
-    }
 
     const personalInfo = [myName, cellPhone, email, url];
     const personalTags = [
@@ -252,16 +236,6 @@ export default function DisplayCard(props) {
       </div>
     );
   } else {
-    return (
-      <div className=" h-screen w-screen bg-white flex justify-center items-center">
-        <RotatingLines
-          color="gray"
-          height={200}
-          width={200}
-          ariaLabel="three-circles-rotating"
-          className="flex"
-        />
-      </div>
-    );
+    return <LoadingScreen />;
   }
 }

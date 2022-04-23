@@ -7,6 +7,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
 import DeleteFormModal from "./Input Styles/DeleteFormModal";
+import LoadingScreen from "../LoadingScreen";
 
 const axios = require("axios");
 export default function UpdateForm(props) {
@@ -24,6 +25,7 @@ export default function UpdateForm(props) {
   ]);
 
   const [userInputs, setUserInputs] = useState(null);
+  const [submittedUpdate, setSubmittedUpdate] = useState(false);
 
   useEffect(() => {
     axios
@@ -31,7 +33,6 @@ export default function UpdateForm(props) {
         `https://britekard.herokuapp.com/vCards/mycard/update/${username}/${id}`
       )
       .then((response) => {
-        console.log(response.data.vCard[0]);
         setUserInputs(response.data.vCard[0]);
       })
       .catch(function (error) {
@@ -41,19 +42,16 @@ export default function UpdateForm(props) {
   function handleSubmit(event) {
     event.preventDefault();
     let body = userInputs;
-    console.log(body);
     sendData(body);
   }
   function sendData(body) {
+    setSubmittedUpdate(true);
     axios
       .post(
         `https://britekard.herokuapp.com/vCards/mycard/update/${username}/${id}`,
         body
       )
       .then((response) => {
-        console.log(response);
-      })
-      .then(() => {
         navigate(-1);
       })
       .catch(function (error) {
@@ -92,12 +90,30 @@ export default function UpdateForm(props) {
       setUserInputs(copyObj);
     }
   }
+  function formatUSNumber(entry) {
+    console.log(entry);
+    if (entry.length < 1) {
+      return entry;
+    }
+    const match = entry.replace(/\D+/g, "").match(/([^\d]*\d[^\d]*){1,10}$/)[0];
+    const part1 = match.length > 2 ? `${match.substring(0, 3)}` : match;
+    const part2 = match.length > 3 ? `-${match.substring(3, 6)}` : "";
+    const part3 = match.length > 6 ? `-${match.substring(6, 10)}` : "";
+    return `${part1}${part2}${part3}`;
+  }
 
   const handleChange = (event) => {
     const userObj = { ...userInputs };
-    const value = event.target.value;
+    let value = event.target.value;
     let objKey = event.target.getAttribute("id");
-    console.log(objKey);
+    if (
+      (objKey === "cellPhone" && objKey.length > 0) ||
+      (objKey === "workPhone" && objKey.length > 0) ||
+      (objKey === "workFax" && objKey.length > 0)
+    ) {
+      value = formatUSNumber(value);
+    }
+
     objKey = objKey.split(".");
     if (objKey.length === 1) {
       userObj[objKey[0]] = value;
@@ -107,15 +123,14 @@ export default function UpdateForm(props) {
     setUserInputs(userObj);
   };
   function toggle(e) {
-    //creating a new instance of our state
     let newOptions = [...options];
-    //updating specific value according to click value
     newOptions[e][0].toggle = !newOptions[e][0].toggle;
-    //set new state with update components will automatically update our child component
     setOptions(newOptions);
   }
 
-  if (userInputs) {
+  if (submittedUpdate || !userInputs) {
+    return <LoadingScreen />;
+  } else if (userInputs) {
     return (
       <>
         <DeleteFormModal
@@ -170,23 +185,29 @@ export default function UpdateForm(props) {
                   );
                 }
                 if (el[0].toggle && el[0].name === "Cover Photo") {
-                  return <CoverPhoto key={idx} imageConvert={imageConvert} />;
+                  return (
+                    <CoverPhoto
+                      key={idx}
+                      imageConvert={imageConvert}
+                      logo={userInputs.logo.url}
+                    />
+                  );
                 } else {
                   return null;
                 }
               })}
               <button
                 type="submit"
-                className=" sm:mr-4 w-full sm:w-44 inline-flex justify-center py-2 px-4 border border-gray-500 shadow-sm text-sm font-medium rounded-2xl text-white bg-gray-500 hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mb-4"
+                className=" w-full sm:w-44 inline-flex justify-center py-2 px-4 border border-gray-500 shadow-sm text-sm font-medium rounded-2xl text-white bg-gray-500 hover:opacity-70 active:opacity-70 mt-8 mb-4"
               >
                 <p className="leading-relaxed text-sm">Update Card</p>
               </button>
             </form>
             <button
               onClick={deleteCard}
-              className=" w-full sm:w-44 inline-flex justify-center py-2 px-4 border border-red  shadow-sm text-sm font-medium rounded-2xl text-red  hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mb-8"
+              className=" w-full sm:w-44 inline-flex justify-center py-2 px-4 border border-red shadow-sm text-sm font-medium rounded-2xl text-red  hover:opacity-70 active:opacity-70 mb-8"
             >
-              Delete
+              Delete Card
             </button>
           </div>
         </div>

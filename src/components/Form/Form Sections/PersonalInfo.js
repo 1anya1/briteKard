@@ -3,6 +3,7 @@ import FormInput from "../Input Styles/FormInput";
 import { personalDataInputs } from "../Form Data/FormData";
 import ProfileImageInputs from "../Input Styles/ProfileImageInput";
 import URLInputs from "../Input Styles/URLInputs";
+
 export default function PersonalInfo(props) {
   const formName = "Personal Info";
 
@@ -28,7 +29,7 @@ export default function PersonalInfo(props) {
               />
             );
 
-          if (el.id === "firstName" || el.id === "cellPhone") {
+          if (el.id === "cellPhone") {
             return (
               <FormInput
                 key={idx}
@@ -67,7 +68,7 @@ export default function PersonalInfo(props) {
               id="note"
               name="about"
               rows={3}
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-2xl"
+              className="shadow-sm focus:ring-gray-600 focus:border-gray-600 mt-1 block w-full sm:text-sm border border-gray-300 rounded-2xl"
               placeholder="Write something about yourself"
               defaultValue={""}
               onChange={(e) => props.handleChange(e)}

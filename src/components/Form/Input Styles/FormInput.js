@@ -14,7 +14,7 @@ export default function FormInput(props) {
         value={props.value}
         placeholder={props.placeholder}
         onChange={(e) => props.change(e)}
-        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-2xl"
+        className="mt-1 focus:ring-gray-500 focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-2xl"
         required={props.required}
       />
     </div>
