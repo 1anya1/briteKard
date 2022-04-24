@@ -6,6 +6,7 @@ import {
 } from "@heroicons/react/solid";
 import { useParams, useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
+import { Buffer } from "buffer";
 
 const axios = require("axios");
 export default function AllCards(props) {
@@ -40,17 +41,19 @@ export default function AllCards(props) {
       firstName,
       lastName,
       title,
-      photo: { url },
+      photo: { url, mediaType },
     } = data[card];
+    const b64 = new Buffer.from(url).toString("base64");
+
+    const imageConvert = `data:${mediaType};base64,${b64}`;
 
     const name = `${firstName} ${lastName}`;
 
     const display = {
       id: _id,
       name: name,
-
       jobTitle: title,
-      image: url,
+      image: imageConvert,
     };
     displayCard.push(display);
   }
@@ -73,7 +76,7 @@ export default function AllCards(props) {
                       alt="profile"
                     />
                   )}
-                  {!card.image && (
+                  {card.image === "data:;base64," && (
                     <div className="object-cover bg-gray-200 w-full h-full flex items-center justify-center">
                       <UserCircleIcon className="h-2/3 w-2/3 fill-gray-300" />
                     </div>

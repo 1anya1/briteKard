@@ -1,17 +1,23 @@
 import { getBase64, checkFileSize } from "../Form Functions/imageFunctions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Buffer } from "buffer";
+
 export default function ProfileImageInputs(props) {
-  const [image, setImage] = useState(props.imageData.url);
+  const [image, setImage] = useState(null);
   const [error, setError] = useState(false);
 
+  useEffect(() => {
+    if (props.imageData.url) {
+      const b64 = new Buffer.from(props.imageData.url).toString("base64");
+      setImage(`data:${props.imageData.mediaType};base64,${b64}`);
+    }
+  }, [props.imageData.mediaType, props.imageData.url]);
   function handleFileInputChange(e) {
     const file = e.target.files[0];
-    console.log(file);
     const size = checkFileSize(e.target.files[0].size);
     if (size) {
       getBase64(file)
         .then((result) => {
-          console.log(result);
           file["base64"] = result;
           const base64URL = file["base64"];
           let type = file["type"];

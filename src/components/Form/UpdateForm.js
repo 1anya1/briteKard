@@ -8,9 +8,10 @@ import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
 import DeleteFormModal from "./Input Styles/DeleteFormModal";
 import LoadingScreen from "../LoadingScreen";
+import { Buffer } from "buffer";
 
 const axios = require("axios");
-export default function UpdateForm(props) {
+export default function UpdateForm() {
   const navigate = useNavigate();
   const { username, id } = useParams();
   const [deleteMe, setDeleteMe] = useState(false);
@@ -59,7 +60,6 @@ export default function UpdateForm(props) {
       });
   }
   function deleteCard() {
-    console.log("imhere");
     setDeleteMe(!deleteMe);
   }
 
@@ -78,20 +78,24 @@ export default function UpdateForm(props) {
       });
   }
   function imageConvert(base64, type, id) {
-    console.log(base64, type);
     const copyObj = { ...userInputs };
     if (id === "photo") {
-      copyObj.photo.url = base64;
+      const img = base64.split(",");
+      const fileContents = new Buffer.from(img[1], "base64");
+      copyObj.photo.url = fileContents;
+      copyObj.photo.mediaType = type;
       copyObj.photo.base64 = true;
       setUserInputs(copyObj);
     } else {
-      copyObj.logo.url = base64;
+      const img = base64.split(",");
+      const fileContents = new Buffer.from(img[1], "base64");
+      copyObj.logo.url = fileContents;
+      copyObj.logo.mediaType = type;
       copyObj.logo.base64 = true;
       setUserInputs(copyObj);
     }
   }
   function formatUSNumber(entry) {
-    console.log(entry);
     if (entry.length < 1) {
       return entry;
     }
@@ -190,6 +194,7 @@ export default function UpdateForm(props) {
                       key={idx}
                       imageConvert={imageConvert}
                       logo={userInputs.logo.url}
+                      nediaType={userInputs.logo.mediaType}
                     />
                   );
                 } else {
