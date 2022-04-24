@@ -9,7 +9,7 @@ export default function CoverPhoto(props) {
   function handleFileInputChange(e) {
     const file = e.target.files[0];
     const size = checkFileSize(e.target.files[0].size);
-    if (size < 2) {
+    if (size) {
       getBase64(file)
         .then((result) => {
           file["base64"] = result;
@@ -23,6 +23,7 @@ export default function CoverPhoto(props) {
           console.log(err);
         });
     } else {
+      console.log(size);
       setImage(null);
       setError(true);
     }

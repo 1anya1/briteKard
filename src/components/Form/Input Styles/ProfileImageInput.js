@@ -6,10 +6,12 @@ export default function ProfileImageInputs(props) {
 
   function handleFileInputChange(e) {
     const file = e.target.files[0];
+    console.log(file);
     const size = checkFileSize(e.target.files[0].size);
-    if (size < 2) {
+    if (size) {
       getBase64(file)
         .then((result) => {
+          console.log(result);
           file["base64"] = result;
           const base64URL = file["base64"];
           let type = file["type"];
