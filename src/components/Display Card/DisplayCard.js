@@ -7,25 +7,42 @@ import { PhoneIcon, MailIcon, ChatAltIcon } from "@heroicons/react/solid";
 import { useParams } from "react-router-dom";
 import QRmodal from "./Display Sections/Display Functions/QRmodal";
 import LoadingScreen from "../LoadingScreen";
+import { Buffer } from "buffer";
+// import ProfileImageInputs from "../Form/Input Styles/ProfileImageInput";
 
 const axios = require("axios");
-export default function DisplayCard(props) {
+export default function DisplayCard() {
   let { username, id } = useParams();
   console.log("Im in display cards", { username }, { id });
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
+  const [image, setImage] = useState(null);
+  const [background, setBackground] = useState(null);
+  const [qr, setQR] = useState(null);
   //component did mount call only once []
   useEffect(() => {
     axios
       .get(`https://britekard.herokuapp.com/vCards/mycard/${username}/${id}`)
       .then((response) => {
-        console.log(response);
         const data = response.data;
         setData(data);
+        if (data.photo.url.data.length > 0) {
+          const b64 = new Buffer.from(data.photo.url).toString("base64");
+          setImage(`data:${data.photo.mediaType};base64,${b64}`);
+        }
+        if (data.logo.url.data.length > 0) {
+          const backgroundb64 = new Buffer.from(data.logo.url).toString(
+            "base64"
+          );
+          setBackground(`data:${data.logo.mediaType};base64,${backgroundb64}`);
+        }
+
+        const qrB64 = new Buffer.from(data.qrCode).toString("base64");
+        setQR(`data:image/png;base64,${qrB64}`);
       });
-  }, [id, username]);
+  }, [id, qr, username]);
+
   function getCard() {
-    console.log("here");
     axios
       .get(`https://britekard.herokuapp.com/vCards/${username}/${id}`)
       .then(function (response) {
@@ -33,7 +50,6 @@ export default function DisplayCard(props) {
         download(`${username}.VCF`, response.data[0]);
       })
       .catch(function (error) {
-        // handle error
         console.log(error);
       });
   }
@@ -57,7 +73,6 @@ export default function DisplayCard(props) {
 
   function shareCard() {
     setQrToggle(!qrToggle);
-    console.log("here");
   }
 
   if (data) {
@@ -90,7 +105,6 @@ export default function DisplayCard(props) {
       socialUrls: { twitch },
       socialUrls: { instagram },
       url,
-      qrCode,
     } = data;
     const myName = `${firstName} ${lastName}`;
     let workAddressData = [organization, workPhone, workEmail, workUrl];
@@ -117,31 +131,33 @@ export default function DisplayCard(props) {
       ["Twitter", twitter],
       ["LinkedIn", linkedIn],
     ];
+
+    console.log(image);
     return (
       <div className=" w-full h-full sm:py-16">
         <div className="grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500  sm:bg-white max-w-screen-sm mx-auto sm:pb-12 sm:px-9 sm:rounded-3xl">
           <div className=" w-full col-span-5 h-60  sm:h-64 relative sm:pt-12 sm:pb-104">
-            {data.logo.url && (
+            {background && (
               <img
                 className="object-cover overflow-hiddenr w-full h-64 object-center sm:rounded-3xl"
-                src={data.logo.url}
+                src={background}
                 alt="logo"
               />
             )}
-            {!data.logo.url && (
+            {!background && (
               <div className="object-cover overflow-hiddenr w-full h-64 object-center sm:rounded-3xl bg-gray-500"></div>
             )}
 
-            {data.photo.url && (
+            {image && (
               <div className=" rounded-full overflow-hidden justify-self-center absolute bottom-[-88px] sm:bottom-[-124px] left-2/4 translate-x-negative-half z-20">
                 <img
-                  src={data.photo.url}
+                  src={image}
                   alt="profile"
                   className="h-36 w-36 sm:h-40 sm:w-40 object-cover border-solid  rounded-full border-gray-50  border-8 relative "
                 />
               </div>
             )}
-            {!data.photo.url && (
+            {!image && (
               <div className=" rounded-full overflow-hidden justify-self-center absolute bottom-[-88px] sm:bottom-[-124px] left-2/4 translate-x-negative-half z-20">
                 <div
                   alt="profile"
@@ -209,7 +225,7 @@ export default function DisplayCard(props) {
                 </button>
                 <QRmodal
                   qrToggle={qrToggle}
-                  qrCode={qrCode}
+                  qrCode={qr}
                   shareCard={shareCard}
                 />
               </div>

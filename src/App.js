@@ -6,6 +6,7 @@ import Form from "./components/Form/Form";
 import AllCards from "./components/Display All Card/AllCards";
 import React, { useState } from "react";
 import UpdateForm from "./components/Form/UpdateForm";
+import Home from "./components/Home";
 
 export default function App() {
   // const [on, setOn] = useState(false);
@@ -17,7 +18,7 @@ export default function App() {
     <div className="bg-gray-200 min-h-screen">
       <Nav username={username} />
       <Routes>
-        <Route path="/" element={""} />
+        <Route path="/" element={<Home />} />
         <Route
           path="form"
           element={<Form username={username} setId={setId} id={id} />}

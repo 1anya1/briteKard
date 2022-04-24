@@ -1,16 +1,31 @@
 import { useEffect, useState } from "react";
-import { DuplicateIcon, DocumentTextIcon } from "@heroicons/react/solid";
+import {
+  DuplicateIcon,
+  DocumentTextIcon,
+  UserCircleIcon,
+} from "@heroicons/react/solid";
 import { useParams, useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
+import { Buffer } from "buffer";
 
 const axios = require("axios");
 export default function AllCards(props) {
   const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const [idx, setIDX] = useState(null);
   const { username } = useParams();
   const [data, setData] = useState(false);
-  console.log(username);
+
   const displayCard = [];
-  //   const username = props.username;
+
+  useEffect(() => {
+    const timeId = setTimeout(() => {
+      setShow(false);
+    }, 1000);
+    return () => {
+      clearTimeout(timeId);
+    };
+  }, [show]);
   useEffect(() => {
     axios
       .get(`https://britekard.herokuapp.com/vCards/${username}`)
@@ -26,8 +41,11 @@ export default function AllCards(props) {
       firstName,
       lastName,
       title,
-      photo: { url },
+      photo: { url, mediaType },
     } = data[card];
+    const b64 = new Buffer.from(url).toString("base64");
+
+    const imageConvert = `data:${mediaType};base64,${b64}`;
 
     const name = `${firstName} ${lastName}`;
 
@@ -35,11 +53,10 @@ export default function AllCards(props) {
       id: _id,
       name: name,
       jobTitle: title,
-      image: url,
+      image: imageConvert,
     };
     displayCard.push(display);
   }
-  console.log(displayCard);
 
   if (displayCard.length > 0) {
     return (
@@ -50,16 +67,22 @@ export default function AllCards(props) {
               key={id}
               className="drop-shadow-md  border-gray-100 border h-52 sm:h-60 w-full sm:w-full text-small text-gray-500 font-medium mb-4 sm:mb-0 bg-white rounded-2xl  flex flex-col justify-between p-6 sm:p-10 "
             >
-              <div className="flex justify-between items-center">
-                {card.image && (
-                  <div className="h-16 w-16 rounded-full overflow-hidden">
+              <div className="flex justify-between items-center pb-4">
+                <div className="h-14 w-14 rounded-full overflow-hidden">
+                  {card.image && (
                     <img
-                      className="object-cover"
+                      className="object-cover h-full"
                       src={card.image}
                       alt="profile"
                     />
-                  </div>
-                )}
+                  )}
+                  {card.image === "data:;base64," && (
+                    <div className="object-cover bg-gray-200 w-full h-full flex items-center justify-center">
+                      <UserCircleIcon className="h-2/3 w-2/3 fill-gray-300" />
+                    </div>
+                  )}
+                </div>
+
                 <div className="flex gap-2">
                   <div>
                     <button
@@ -83,10 +106,10 @@ export default function AllCards(props) {
               </div>
 
               <div>
-                <p className="text-2xl">{card.name}</p>
-                <p>{card.jobTitle}</p>
-                <div className="flex">
-                  <p className="text-sm truncate pt-2 w-3/4">
+                <p className="text-2xl text-gray-700">{card.name}</p>
+                <p className="text-gray-600">{card.jobTitle}</p>
+                <div className="flex items-center pt-3">
+                  <p className="text-sm truncate w-3/4">
                     https://britekard.netlify.app/mycard/{props.username}/
                     {card.id}
                   </p>
@@ -96,8 +119,18 @@ export default function AllCards(props) {
                       navigator.clipboard.writeText(
                         `https://britekard.netlify.app/mycard/${props.username}/${card.id}`
                       );
+                      setShow(true);
+                      setIDX(id);
                     }}
                   />
+                  {show && idx === id && (
+                    <p
+                      className=" text-xs text-gray-700 font-medium pl-2"
+                      id={id}
+                    >
+                      Copied!
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

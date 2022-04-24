@@ -1,15 +1,22 @@
 import FormDescription from "../Input Styles/FormDescription";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getBase64, checkFileSize } from "../Form Functions/imageFunctions";
+import { Buffer } from "buffer";
 export default function CoverPhoto(props) {
   const [image, setImage] = useState(props.logo);
   const [error, setError] = useState(false);
   const formName = "Background Image";
 
+  useEffect(() => {
+    const b64 = new Buffer.from(props.logo).toString("base64");
+    setImage(`data:${props.mediaType};base64,${b64}`);
+  }, [props.mediaType, props.logo]);
+
   function handleFileInputChange(e) {
     const file = e.target.files[0];
     const size = checkFileSize(e.target.files[0].size);
-    if (size < 2) {
+
+    if (size) {
       getBase64(file)
         .then((result) => {
           file["base64"] = result;

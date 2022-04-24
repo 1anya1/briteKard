@@ -1,5 +1,6 @@
 function getBase64(file) {
   return new Promise((resolve) => {
+    console.log(file);
     let baseURL = "";
     let reader = new FileReader();
     reader.readAsDataURL(file);
@@ -11,8 +12,8 @@ function getBase64(file) {
 }
 
 function checkFileSize(size) {
-  if (size >= 1048576) {
-    return (size / 1048576).toFixed(1);
+  if (size < 2097152) {
+    return true;
   }
 }
 

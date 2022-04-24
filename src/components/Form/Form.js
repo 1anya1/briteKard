@@ -7,6 +7,7 @@ import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
+import { Buffer } from "buffer";
 const axios = require("axios");
 export default function Forms(props) {
   //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
@@ -57,7 +58,7 @@ export default function Forms(props) {
     organization: "",
     photo: {
       url: "",
-      mediaType: "PNG",
+      mediaType: "",
       base64: false,
     },
     role: "",
@@ -88,8 +89,6 @@ export default function Forms(props) {
   function handleSubmit(event) {
     event.preventDefault();
     let body = { username: props.username, vCard: [userInputs] };
-    console.log("step one complete send body");
-    console.log(body);
     sendData(body);
   }
   function sendData(body) {
@@ -100,8 +99,9 @@ export default function Forms(props) {
         const [qr, username, id] = response.data;
         console.log(qr, username, id);
         props.setId(id);
+        const tobuff = qr.split(",");
+        setQR(new Buffer.from(tobuff[1], "base64"));
         setId(id);
-        setQR(qr);
       })
       .catch(function (error) {
         console.log(error);
@@ -109,12 +109,10 @@ export default function Forms(props) {
   }
   useEffect(() => {
     if (id && id) {
-      console.log(qr, id);
       sendQR(id, qr);
     }
   });
   function sendQR(id, qr) {
-    console.log("now im here");
     axios
       .post(
         `https://britekard.herokuapp.com/vCards/mycard/${props.username}/${id}`,
@@ -131,17 +129,24 @@ export default function Forms(props) {
   function imageConvert(base64, type, id) {
     const copyObj = { ...userInputs };
     if (id === "photo") {
-      copyObj.photo.url = base64;
+      const img = base64.split(",");
+      const fileContents = new Buffer.from(img[1], "base64");
+
+      copyObj.photo.url = fileContents;
+      copyObj.photo.mediaType = type;
       copyObj.photo.base64 = true;
       setUserInputs(copyObj);
     } else {
-      copyObj.logo.url = base64;
+      const img = base64.split(",");
+      const fileContents = new Buffer.from(img[1], "base64");
+
+      copyObj.logo.url = fileContents;
+      copyObj.logo.mediaType = type;
       copyObj.logo.base64 = true;
       setUserInputs(copyObj);
     }
   }
   function formatUSNumber(entry) {
-    console.log(entry);
     if (entry.length < 1) {
       return entry;
     }
