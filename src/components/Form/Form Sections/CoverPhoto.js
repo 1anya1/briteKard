@@ -11,6 +11,7 @@ export default function CoverPhoto(props) {
     const b64 = new Buffer.from(props.logo).toString("base64");
     setImage(`data:${props.mediaType};base64,${b64}`);
   }, [props.mediaType, props.logo]);
+  console.log(image);
 
   function handleFileInputChange(e) {
     const file = e.target.files[0];
@@ -43,7 +44,7 @@ export default function CoverPhoto(props) {
         </label>
         <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md max-w-md m-auto">
           <div className="space-y-1 text-center">
-            {!image && (
+            {image === "data:undefined;base64," ? (
               <svg
                 className="mx-auto h-12 w-12 text-gray-400"
                 stroke="currentColor"
@@ -58,8 +59,7 @@ export default function CoverPhoto(props) {
                   strokeLinejoin="round"
                 />
               </svg>
-            )}
-            {image && (
+            ) : (
               <div className=" pb-4 ">
                 <img src={image} alt="uploaded" />
               </div>

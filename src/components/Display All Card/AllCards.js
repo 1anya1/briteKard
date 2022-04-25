@@ -27,14 +27,15 @@ export default function AllCards(props) {
     };
   }, [show]);
   useEffect(() => {
+    console.log("here");
     axios
       .get(`https://britekard.herokuapp.com/vCards/${username}`)
       .then((response) => {
-        const data = response.data[0].vCard;
-        setData(data);
+        console.log(response);
+        setData(response.data);
       });
   }, [username]);
-
+  console.log(data);
   for (let card in data) {
     const {
       _id,
@@ -69,17 +70,16 @@ export default function AllCards(props) {
             >
               <div className="flex justify-between items-center pb-4">
                 <div className="h-14 w-14 rounded-full overflow-hidden">
-                  {card.image && (
-                    <img
-                      className="object-cover h-full"
-                      src={card.image}
-                      alt="profile"
-                    />
-                  )}
-                  {card.image === "data:;base64," && (
+                  {card.image === "data:;base64," ? (
                     <div className="object-cover bg-gray-200 w-full h-full flex items-center justify-center">
                       <UserCircleIcon className="h-2/3 w-2/3 fill-gray-300" />
                     </div>
+                  ) : (
+                    <img
+                      className="object-cover"
+                      src={card.image}
+                      alt="profile"
+                    />
                   )}
                 </div>
 

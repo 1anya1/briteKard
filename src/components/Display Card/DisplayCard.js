@@ -24,7 +24,7 @@ export default function DisplayCard() {
     axios
       .get(`https://britekard.herokuapp.com/vCards/mycard/${username}/${id}`)
       .then((response) => {
-        const data = response.data;
+        const data = response.data[0];
         setData(data);
         if (data.photo.url.data.length > 0) {
           const b64 = new Buffer.from(data.photo.url).toString("base64");
@@ -74,6 +74,7 @@ export default function DisplayCard() {
   function shareCard() {
     setQrToggle(!qrToggle);
   }
+  console.log(data);
 
   if (data) {
     let {
