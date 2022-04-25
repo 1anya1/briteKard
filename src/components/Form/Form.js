@@ -23,6 +23,7 @@ export default function Forms(props) {
   const [id, setId] = useState("");
   const [qr, setQR] = useState(0);
   const [userInputs, setUserInputs] = useState({
+    username: "Anna",
     cardName: "",
     colorScheme: "",
     uid: "",
@@ -88,14 +89,17 @@ export default function Forms(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    let body = { username: props.username, vCard: [userInputs] };
+    let body = userInputs;
+
     sendData(body);
   }
   function sendData(body) {
     setSubmittedUpdate(true);
+    console.log(body);
     axios
       .post("https://britekard.herokuapp.com/vCards", body)
       .then((response) => {
+        console.log(response);
         const [qr, username, id] = response.data;
         console.log(qr, username, id);
         props.setId(id);
