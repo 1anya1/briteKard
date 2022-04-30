@@ -13,22 +13,28 @@ export default function App() {
   // const [on, setOn] = useState(false);
   // const [username, setUsername] = useState("");
 
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState("Anna");
   const [loggedIn, setLoggedIn] = useState(false);
   const [id, setId] = useState("");
 
-  useEffect(() => {
-    if (localStorage.token) {
-      axios
-        .get("https://britekard.herokuapp.com/user/verify" + localStorage.token)
-        .then((response) => {
-          setLoggedIn(true);
-          setUsername(response.data.username);
-        });
-    } else {
-      this.setState({ isLoggedIn: false });
-    }
-  });
+  // useEffect(() => {
+  //   if (localStorage.token) {
+  //     axios
+  //       .get("https://britekard.herokuapp.com/user/verify" + localStorage.token)
+  //       .then((response) => {
+  //         setLoggedIn(true);
+  //         setUsername(response.data.username);
+  //       });
+  //   } else {
+  //     setLoggedIn(false);
+  //   }
+  // }, []);
+  // const handleLogOut = (e) => {
+  //   e.preventDefault();
+  //   localStorage.clear();
+  //   setLoggedIn(false);
+  //   setUsername("");
+  // };
 
   return (
     <div className="bg-gray-200 min-h-screen">

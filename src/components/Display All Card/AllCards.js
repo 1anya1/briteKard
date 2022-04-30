@@ -71,12 +71,12 @@ export default function AllCards(props) {
               <div className="flex justify-between items-center pb-4">
                 <div className="h-14 w-14 rounded-full overflow-hidden">
                   {card.image === "data:;base64," ? (
-                    <div className="object-cover bg-gray-200 w-full h-full flex items-center justify-center">
+                    <div className=" bg-gray-200 w-full h-full flex items-center justify-center">
                       <UserCircleIcon className="h-2/3 w-2/3 fill-gray-300" />
                     </div>
                   ) : (
                     <img
-                      className="object-cover"
+                      className="object-cover h-14 w-14"
                       src={card.image}
                       alt="profile"
                     />
