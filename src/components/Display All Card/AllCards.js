@@ -35,7 +35,7 @@ export default function AllCards(props) {
         setData(response.data);
       });
   }, [username]);
-  console.log(data);
+
   for (let card in data) {
     const {
       _id,

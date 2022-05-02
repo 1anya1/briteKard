@@ -11,12 +11,11 @@ export default function CoverPhoto(props) {
     const b64 = new Buffer.from(props.logo).toString("base64");
     setImage(`data:${props.mediaType};base64,${b64}`);
   }, [props.mediaType, props.logo]);
-  console.log(image);
 
   function handleFileInputChange(e) {
     const file = e.target.files[0];
     const size = checkFileSize(e.target.files[0].size);
-    console.log(size);
+
     if (size) {
       getBase64(file)
         .then((result) => {

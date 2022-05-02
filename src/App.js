@@ -13,7 +13,7 @@ export default function App() {
   // const [on, setOn] = useState(false);
   // const [username, setUsername] = useState("");
 
-  const [username, setUsername] = useState("Anna");
+  const [username, setUsername] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [id, setId] = useState("");
 
