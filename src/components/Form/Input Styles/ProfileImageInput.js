@@ -39,9 +39,13 @@ export default function ProfileImageInputs(props) {
       <div className="col-start-2 col-span-2">
         <label className="block text-sm font-medium text-gray-700">Photo</label>
         <div className="mt-1 flex items-center">
-          <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+          <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100 bg-cover">
             {image ? (
-              <img src={image} alt="profile" className="" />
+              <img
+                src={image}
+                alt="profile"
+                className="object-cover h-12 w-12"
+              />
             ) : (
               <svg
                 className="h-full w-full text-gray-300"
