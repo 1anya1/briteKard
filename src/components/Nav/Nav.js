@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+
 // export default function Nav(props) {
 //   return (
 //     <nav className="flex sm:justify-center space-x-4 bg-gray-200">
@@ -19,7 +20,7 @@ import { Link } from "react-router-dom";
 //   );
 // }
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
@@ -34,11 +35,27 @@ function classNames(...classes) {
 }
 
 export default function Nav(props) {
-  const navigation = [
+  const [navigation, setNavigation] = useState([
     { name: "Home", loc: "/", current: true },
     { name: "New Card", loc: "/form", current: false },
-    { name: "My Cards", loc: `/myCards/${props.username}`, current: false },
-  ];
+    {
+      name: "My Cards",
+      loc: `/myCards/${props.username}`,
+      current: false,
+    },
+  ]);
+  const myEvent = (event) => {
+    const target = event.target.innerHTML;
+    const data = [...navigation];
+    for (let el in data) {
+      if (data[el]["name"] === target) {
+        data[el]["current"] = true;
+      } else {
+        data[el]["current"] = false;
+      }
+    }
+    setNavigation(data);
+  };
   return (
     <Disclosure as="nav" className="bg-gray-700">
       {({ open }) => (
@@ -75,6 +92,7 @@ export default function Nav(props) {
                       <Link
                         key={item.name}
                         to={item.loc}
+                        onClick={myEvent}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"
