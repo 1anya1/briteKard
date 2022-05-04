@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // export default function Nav(props) {
 //   return (
@@ -46,14 +46,11 @@ export default function Nav(props) {
   ]);
   const myEvent = (event) => {
     const target = event.target.innerHTML;
-
     const data = [...navigation];
     for (let el in data) {
       if (data[el]["name"] === target) {
-        console.log("here");
         data[el]["current"] = true;
       } else {
-        console.log("ther rest");
         data[el]["current"] = false;
       }
     }
