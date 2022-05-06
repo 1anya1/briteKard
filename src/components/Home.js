@@ -2,6 +2,7 @@
 
 import Feature from "./FeatureSection";
 import CTA from "./CTA";
+import "../images/home.svg";
 
 // const navigation = [
 //   { name: "Product", href: "#" },
