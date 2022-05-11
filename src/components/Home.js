@@ -2,6 +2,7 @@
 
 import Feature from "./FeatureSection";
 import CTA from "./CTA";
+import LogIn from "./LogIn";
 import "../images/home.svg";
 
 // const navigation = [
@@ -55,6 +56,7 @@ export default function Home() {
         </div>
       </div>
       <CTA />
+      <LogIn />
 
       <Feature />
     </>
