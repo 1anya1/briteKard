@@ -47,5 +47,29 @@ export default function SignUp() {
       email: null,
     },
   ]);
-  return <p>Hello</p>;
+  function handleChange(event) {
+    const inputs = { ...userInput };
+    const val = event.target.value;
+    const objKey = event.target.getAttribute("id");
+    inputs[objKey] = val;
+    setUserInput(inputs);
+  }
+  return (
+    <>
+      {data.map((el, idx) => {
+        return (
+          <FormInput
+            key={idx}
+            label={el.label}
+            type={el.type}
+            id={el.id}
+            placeholder={el.placeholder}
+            value={userInput[el.id] || ""}
+            change={handleChange}
+            required={"required"}
+          />
+        );
+      })}
+    </>
+  );
 }
