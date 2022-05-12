@@ -2,8 +2,9 @@
 
 import Feature from "./FeatureSection";
 import CTA from "./CTA";
+import LogIn from "./LogIn";
 import "../images/home.svg";
-
+import SignUp from "./SingUp";
 // const navigation = [
 //   { name: "Product", href: "#" },
 //   { name: "Features", href: "#" },
@@ -55,7 +56,8 @@ export default function Home() {
         </div>
       </div>
       <CTA />
-
+      <LogIn />
+      <SignUp />
       <Feature />
     </>
   );
