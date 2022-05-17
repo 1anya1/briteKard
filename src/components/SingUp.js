@@ -1,5 +1,6 @@
 import FormInput from "./Form/Input Styles/FormInput";
 import { useState } from "react";
+import axios from "axios";
 const data = [
   {
     label: "Username",
@@ -54,23 +55,34 @@ export default function SignUp() {
     inputs[objKey] = val;
     setUserInput(inputs);
   }
+  function formSubmit(e) {
+    e.preventDefault();
+    axios
+      .post("https://britekard.herokuapp.com/user/signup", userInput)
+      .then((response) => {
+        console.log(response);
+      });
+  }
   return (
     <>
       <h1>SignUp</h1>
-      {data.map((el, idx) => {
-        return (
-          <FormInput
-            key={idx}
-            label={el.label}
-            type={el.type}
-            id={el.id}
-            placeholder={el.placeholder}
-            value={userInput[el.id] || ""}
-            change={handleChange}
-            required={"required"}
-          />
-        );
-      })}
+      <form onSubmit={formSubmit}>
+        {data.map((el, idx) => {
+          return (
+            <FormInput
+              key={idx}
+              label={el.label}
+              type={el.type}
+              id={el.id}
+              placeholder={el.placeholder}
+              value={userInput[el.id] || ""}
+              change={handleChange}
+              required={"required"}
+            />
+          );
+        })}
+        <button type="submit">Submit</button>
+      </form>
     </>
   );
 }

@@ -38,7 +38,11 @@ export default function LogIn() {
         password: userInputs.password,
       })
       .then((response) => {
-        console.log(response);
+        console.log(response.data.token);
+        localStorage.token = response.data.token;
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }
 
