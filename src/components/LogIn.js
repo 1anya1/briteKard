@@ -51,7 +51,6 @@ export default function LogIn() {
       <h1>LogIn</h1>
       <form onSubmit={handleSubmit}>
         {data.map((el, idx) => {
-          console.log(userInputs[el.id]);
           return (
             <FormInput
               key={idx}

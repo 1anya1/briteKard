@@ -8,12 +8,13 @@ function classNames(...classes) {
 }
 
 export default function Nav(props) {
+  console.log(props.username);
   const [navigation, setNavigation] = useState([
     { name: "Home", loc: "/", current: true },
     { name: "New Card", loc: "/form", current: false },
     {
       name: "My Cards",
-      loc: `/myCards/${props.username}`,
+      loc: "/myCards/" + props.username,
       current: false,
     },
   ]);
