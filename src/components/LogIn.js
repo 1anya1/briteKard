@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import FormInput from "./Form/Input Styles/FormInput";
 const data = [
@@ -29,24 +30,39 @@ export default function LogIn() {
     userObj[objKey] = value;
     setUserInputs(userObj);
   }
+  function handleSubmit(e) {
+    e.preventDefault();
+    axios
+      .post("https://britekard.herokuapp.com/user/login", {
+        username: userInputs.username,
+        password: userInputs.password,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  }
 
   return (
     <>
-      {data.map((el, idx) => {
-        console.log(userInputs[el.id]);
-        return (
-          <FormInput
-            key={idx}
-            label={el.label}
-            type={el.type}
-            id={el.id}
-            placeholder={el.placeholder}
-            value={userInputs[el.id] || ""}
-            change={handleChange}
-            required={"required"}
-          />
-        );
-      })}
+      <h1>LogIn</h1>
+      <form onSubmit={handleSubmit}>
+        {data.map((el, idx) => {
+          console.log(userInputs[el.id]);
+          return (
+            <FormInput
+              key={idx}
+              label={el.label}
+              type={el.type}
+              id={el.id}
+              placeholder={el.placeholder}
+              value={userInputs[el.id] || ""}
+              change={handleChange}
+              required={"required"}
+            />
+          );
+        })}
+        <button type="submit">Submit</button>
+      </form>
     </>
   );
 }

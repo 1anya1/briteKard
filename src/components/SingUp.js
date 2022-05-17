@@ -56,6 +56,7 @@ export default function SignUp() {
   }
   return (
     <>
+      <h1>SignUp</h1>
       {data.map((el, idx) => {
         return (
           <FormInput
