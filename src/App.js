@@ -11,12 +11,13 @@ import Home from "./components/Home";
 import axios from "axios";
 
 export default function App() {
-  const [on, setOn] = useState(false);
+  // const [on, setOn] = useState(false);
   const [username, setUsername] = useState("");
 
   // const [username] = useState("Anna");
   const [loggedIn, setLoggedIn] = useState(false);
   const [id, setId] = useState("");
+  console.log(loggedIn);
 
   useEffect(() => {
     console.log(localStorage.token);
@@ -37,12 +38,12 @@ export default function App() {
     }
   }, [username]);
   console.log(username);
-  const handleLogOut = (e) => {
-    e.preventDefault();
-    localStorage.clear();
-    setLoggedIn(false);
-    setUsername("");
-  };
+  // const handleLogOut = (e) => {
+  //   e.preventDefault();
+  //   localStorage.clear();
+  //   setLoggedIn(false);
+  //   setUsername("");
+  // };
 
   return (
     <div className="bg-gray-200 min-h-screen">
