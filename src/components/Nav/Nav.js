@@ -15,15 +15,18 @@ export default function Nav(props) {
     setUsername(props.username);
   }, [props.username]);
   console.log(username, props.username);
-  const [navigation, setNavigation] = useState([
-    { name: "Home", loc: "/", current: true },
-    { name: "New Card", loc: "/form", current: false },
-    {
-      name: "My Cards",
-      loc: `/myCards/${username}`,
-      current: false,
-    },
-  ]);
+  const [navigation, setNavigation] = useState(
+    [
+      { name: "Home", loc: "/", current: true },
+      { name: "New Card", loc: "/form", current: false },
+      {
+        name: "My Cards",
+        loc: "/myCards/" + username,
+        current: false,
+      },
+    ],
+    props.username
+  );
   const myEvent = (event) => {
     const target = event.target.innerHTML;
     const data = [...navigation];
@@ -34,6 +37,7 @@ export default function Nav(props) {
         data[el]["current"] = false;
       }
     }
+    console.log(data);
     setNavigation(data);
   };
   return (

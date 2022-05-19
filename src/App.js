@@ -17,7 +17,6 @@ export default function App() {
   // const [username] = useState("Anna");
   const [loggedIn, setLoggedIn] = useState(false);
   const [id, setId] = useState("");
-  console.log(loggedIn);
 
   useEffect(() => {
     console.log(localStorage.token);
