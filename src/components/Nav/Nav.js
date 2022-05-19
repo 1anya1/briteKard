@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
@@ -9,12 +9,18 @@ function classNames(...classes) {
 
 export default function Nav(props) {
   console.log(props.username);
+  const [username, setUsername] = useState(null);
+
+  useEffect(() => {
+    setUsername(props.username);
+  }, [props.username]);
+  console.log(username, props.username);
   const [navigation, setNavigation] = useState([
     { name: "Home", loc: "/", current: true },
     { name: "New Card", loc: "/form", current: false },
     {
       name: "My Cards",
-      loc: "/myCards/" + props.username,
+      loc: `/myCards/${username}`,
       current: false,
     },
   ]);
