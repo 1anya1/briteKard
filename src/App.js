@@ -18,6 +18,7 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [id, setId] = useState("");
 
+  console.log(loggedIn);
   useEffect(() => {
     console.log(localStorage.token);
     if (localStorage.token) {
