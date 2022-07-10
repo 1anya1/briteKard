@@ -18,7 +18,7 @@ export default function AllCards(props) {
   // console.log(username);
   const username = props.username;
   const [data, setData] = useState(false);
-
+  console.log(useParams);
   const displayCard = [];
 
   useEffect(() => {
