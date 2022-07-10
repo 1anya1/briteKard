@@ -10,12 +10,15 @@ import { Buffer } from "buffer";
 
 const axios = require("axios");
 export default function AllCards(props) {
+  console.log(props);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [idx, setIDX] = useState(null);
-  const { username } = useParams();
+  // const { username } = useParams();
+  // console.log(username);
+  const username = props.username;
   const [data, setData] = useState(false);
-
+  console.log(useParams);
   const displayCard = [];
 
   useEffect(() => {
@@ -36,6 +39,7 @@ export default function AllCards(props) {
       });
   }, [username]);
 
+  console.log(username);
   for (let card in data) {
     const {
       _id,
