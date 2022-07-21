@@ -22,6 +22,8 @@ export default function Forms(props) {
   ]);
   const [id, setId] = useState("");
   const [qr, setQR] = useState(0);
+
+  console.log(props.username, "inside the form");
   const [userInputs, setUserInputs] = useState({
     username: "",
     cardName: "",
@@ -89,7 +91,9 @@ export default function Forms(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
+    userInputs.username = props.username;
     let body = userInputs;
+    console.log("inside handle submit", { body });
 
     sendData(body);
   }
@@ -100,6 +104,7 @@ export default function Forms(props) {
       .post("https://britekard.herokuapp.com/vCards", body)
       .then((response) => {
         console.log(response);
+        console.log(body);
         const [qr, username, id] = response.data;
         console.log(qr, username, id);
         props.setId(id);
