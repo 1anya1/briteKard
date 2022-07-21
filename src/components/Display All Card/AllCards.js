@@ -17,6 +17,7 @@ export default function AllCards(props) {
   // const { username } = useParams();
   // console.log(username);
   const username = props.username;
+  console.log(props.username);
   const [data, setData] = useState(false);
   console.log(useParams);
   const displayCard = [];
@@ -31,12 +32,14 @@ export default function AllCards(props) {
   }, [show]);
   useEffect(() => {
     console.log("here");
-    axios
-      .get(`https://britekard.herokuapp.com/vCards/${username}`)
-      .then((response) => {
-        console.log(response);
-        setData(response.data);
-      });
+    if (username) {
+      axios
+        .get(`https://britekard.herokuapp.com/vCards/${username}`)
+        .then((response) => {
+          console.log(response);
+          setData(response.data);
+        });
+    }
   }, [username]);
 
   console.log(username);
@@ -63,6 +66,7 @@ export default function AllCards(props) {
     displayCard.push(display);
   }
 
+  console.log(displayCard);
   if (displayCard.length > 0) {
     return (
       <div className="sm:grid grid-cols-2 gap-6 max-w-4xl m-auto p-4 ">
@@ -142,7 +146,7 @@ export default function AllCards(props) {
         })}
       </div>
     );
-  } else if (!data) {
+  } else if (!data && username) {
     return <LoadingScreen />;
   } else {
     return (

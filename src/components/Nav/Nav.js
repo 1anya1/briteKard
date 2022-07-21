@@ -8,25 +8,24 @@ function classNames(...classes) {
 }
 
 export default function Nav(props) {
-  console.log(props.username);
-  const [username, setUsername] = useState(null);
+  const username = props.username;
 
-  useEffect(() => {
-    setUsername(props.username);
-  }, [props.username]);
   console.log(username, props.username);
-  const [navigation, setNavigation] = useState(
-    [
+  const [navigation, setNavigation] = useState(null);
+  useEffect(() => {
+    console.log("in use effect in vab");
+
+    setNavigation([
       { name: "Home", loc: "/", current: true },
       { name: "New Card", loc: "/form", current: false },
       {
         name: "My Cards",
-        loc: "/myCards/" + username,
+        loc: `/myCards/${username}`,
         current: false,
       },
-    ],
-    props.username
-  );
+    ]);
+  }, [props.username, username]);
+  console.log(navigation);
   const myEvent = (event) => {
     const target = event.target.innerHTML;
     const data = [...navigation];
@@ -40,6 +39,7 @@ export default function Nav(props) {
     console.log(data);
     setNavigation(data);
   };
+
   return (
     <Disclosure as="nav" className="bg-gray-700">
       {({ open }) => (
@@ -72,22 +72,29 @@ export default function Nav(props) {
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.loc}
-                        onClick={myEvent}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "px-3 py-2 rounded-md text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
+                    {navigation !== null &&
+                      navigation.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.loc}
+                          onClick={myEvent}
+                          className={classNames(
+                            item.current
+                              ? "bg-gray-900 text-white"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "px-3 py-2 rounded-md text-sm font-medium"
+                          )}
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    <button
+                      class="transition duration-150 ease-in-out ..."
+                      onClick={props.handleLogOut}
+                    >
+                      {username ? "Log Out" : "Log In"}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -96,22 +103,23 @@ export default function Nav(props) {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.loc}
-                  onClick={myEvent}
-                  className={classNames(
-                    item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block px-3 py-2 rounded-md text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navigation &&
+                navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.loc}
+                    onClick={myEvent}
+                    className={classNames(
+                      item.current
+                        ? "bg-gray-900 text-white"
+                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                      "block px-3 py-2 rounded-md text-base font-medium"
+                    )}
+                    aria-current={item.current ? "page" : undefined}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
             </div>
           </Disclosure.Panel>
         </>

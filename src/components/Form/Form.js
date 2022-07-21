@@ -23,7 +23,7 @@ export default function Forms(props) {
   const [id, setId] = useState("");
   const [qr, setQR] = useState(0);
   const [userInputs, setUserInputs] = useState({
-    username: "Anna",
+    username: "",
     cardName: "",
     colorScheme: "",
     uid: "",

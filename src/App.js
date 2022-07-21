@@ -18,7 +18,7 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [id, setId] = useState("");
 
-  console.log(loggedIn);
+  console.log(loggedIn, { username });
   useEffect(() => {
     console.log(localStorage.token);
     if (localStorage.token) {
@@ -38,18 +38,20 @@ export default function App() {
     }
   }, [username]);
   console.log(username);
-  // const handleLogOut = (e) => {
-  //   e.preventDefault();
-  //   localStorage.clear();
-  //   setLoggedIn(false);
-  //   setUsername("");
-  // };
-
+  const handleLogOut = (e) => {
+    console.log(e);
+    e.preventDefault();
+    localStorage.clear();
+    setLoggedIn(false);
+    setUsername("");
+  };
+  console.log(username);
   return (
     <div className="bg-gray-200 min-h-screen">
-      <Nav username={username} />
+      <Nav username={username} handleLogOut={handleLogOut} />
       <Routes>
         <Route path="/" element={<Home />} />
+
         <Route
           path="form"
           element={<Form username={username} setId={setId} id={id} />}
