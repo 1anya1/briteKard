@@ -22,6 +22,9 @@ export default function App() {
   useEffect(() => {
     console.log(localStorage.token);
     if (localStorage.token) {
+      {
+        console.log("im here");
+      }
       axios
         .get(
           "https://britekard.herokuapp.com/user/verify/" + localStorage.token
@@ -29,6 +32,7 @@ export default function App() {
         .then((response) => {
           setLoggedIn(true);
           setUsername(response.data.username);
+          console.log(username);
         })
         .catch((error) => {
           console.log(error);
