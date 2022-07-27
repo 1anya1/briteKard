@@ -5,19 +5,23 @@ module.exports = {
       sans: ["Graphik", "sans-serif"],
       serif: ["Merriweather", "serif"],
     },
-    container: {
-      padding: {
-        xs: "1rem",
-        sm: "1rem",
-        lg: "2rem",
-        xl: "3rem",
-        DEFAULT: "1rem",
-      },
+
+    borderWidth: {
+      DEFAULT: "1px",
+      0: "0",
+      2: "2px",
+      3: "3px",
+      4: "4px",
+      6: "6px",
+      8: "8px",
+      12: "12px",
     },
     colors: {
       transparent: "transparent",
       current: "currentColor",
-      white: "#f7fafb",
+      white: "#f9faf9",
+      truewhite: "#ffffff",
+      red: "#F22800",
       blue: {
         50: "#f7fafb",
         100: "#e6f2fc",
@@ -43,12 +47,35 @@ module.exports = {
         900: "#191921",
       },
     },
-    fill: ({ theme }) => ({
-      teal: theme("colors.blue.500"),
-      hover: theme("colors.blue.400"),
-      gray: theme("colors.blue.500"),
-    }),
-    extend: {},
+    // fill: ({ theme }) => ({
+    //   teal: theme("colors.blue.500"),
+    //   hover: theme("colors.blue.400"),
+    //   gray: theme("colors.gray.500"),
+    // }),
+    extend: {
+      insert: {
+        "half-down": "-88px",
+      },
+      height: {
+        "fourty-two": "42%",
+      },
+      width: {
+        "fourty-tw0": "42%",
+      },
+      translate: {
+        "negative-half": "-50%",
+      },
+      padding: {
+        104: "104px",
+      },
+      margin: {
+        104: "104px",
+        204: "204px",
+      },
+      screens: {
+        sm: "600px",
+      },
+    },
   },
   plugins: [require("@tailwindcss/forms"), require("tailwind-scrollbar-hide")],
 };

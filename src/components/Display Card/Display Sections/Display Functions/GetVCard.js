@@ -1,13 +1,15 @@
 const axios = require("axios");
-export default function GetVCard() {
-  async function getCard() {
+export default function GetVCard(props) {
+  function getCard() {
     console.log("clicked");
+    console.log(props.username, props.id);
     axios
       .get(
-        "https://britekard.herokuapp.com/vCards/Map/6250d30d4ff4877952abf798"
+        `https://britekard.herokuapp.com/vCards/${props.username}/${props.id}`
       )
       .then(function (response) {
-        download("dante.VCF", response.data);
+        console.log(response.data[0]);
+        download(`${props.username}.VCF`, response.data[0]);
       })
       .catch(function (error) {
         // handle error
@@ -22,6 +24,7 @@ export default function GetVCard() {
       "href",
       "data:text/vcard;charset=utf-8," + encodeURIComponent(text)
     );
+    console.log(element);
     element.setAttribute("download", filename);
 
     element.style.display = "none";
@@ -32,5 +35,12 @@ export default function GetVCard() {
     document.body.removeChild(element);
   }
 
-  return <button onClick={getCard}>Get My Card</button>;
+  return (
+    <button
+      className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 "
+      onClick={getCard}
+    >
+      Download VCard
+    </button>
+  );
 }
