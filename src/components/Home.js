@@ -57,7 +57,7 @@ export default function Home(props) {
         </div>
       </div>
       <CTA />
-      <LogIn />
+      <LogIn setUsername={props.setUsername} />
       <SignUp />
       <Feature />
     </>

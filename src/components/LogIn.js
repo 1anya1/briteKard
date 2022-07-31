@@ -17,12 +17,13 @@ const data = [
     value: "",
   },
 ];
-export default function LogIn() {
+export default function LogIn(props) {
   const [userInputs, setUserInputs] = useState([
     { username: null },
     { password: null },
     { error: false },
   ]);
+  console.log(userInputs);
   function handleChange(event) {
     const userObj = { ...userInputs };
     let value = event.target.value;
@@ -38,8 +39,12 @@ export default function LogIn() {
         password: userInputs.password,
       })
       .then((response) => {
+        console.log(response);
         console.log(response.data.token);
         localStorage.token = response.data.token;
+        if (response.data.token) {
+          props.setUsername(userInputs.username);
+        }
       })
       .catch((error) => {
         console.log(error);

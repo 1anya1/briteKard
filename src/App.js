@@ -16,15 +16,13 @@ export default function App() {
 
   // const [username] = useState("Anna");
   const [loggedIn, setLoggedIn] = useState(false);
+  console.log({ loggedIn });
   const [id, setId] = useState("");
 
   console.log(loggedIn, { username });
   useEffect(() => {
     console.log(localStorage.token);
     if (localStorage.token) {
-      {
-        console.log("im here");
-      }
       axios
         .get(
           "https://britekard.herokuapp.com/user/verify/" + localStorage.token
@@ -54,7 +52,7 @@ export default function App() {
     <div className="bg-gray-200 min-h-screen">
       <Nav username={username} handleLogOut={handleLogOut} />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home setUsername={setUsername} />} />
 
         <Route
           path="form"
