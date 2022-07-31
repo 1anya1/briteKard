@@ -17,12 +17,13 @@ const data = [
     value: "",
   },
 ];
-export default function LogIn() {
+export default function LogIn(props) {
   const [userInputs, setUserInputs] = useState([
     { username: null },
     { password: null },
     { error: false },
   ]);
+  console.log(userInputs);
   function handleChange(event) {
     const userObj = { ...userInputs };
     let value = event.target.value;
@@ -38,8 +39,12 @@ export default function LogIn() {
         password: userInputs.password,
       })
       .then((response) => {
+        console.log(response);
         console.log(response.data.token);
         localStorage.token = response.data.token;
+        if (response.data.token) {
+          props.setUsername(userInputs.username);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -47,7 +52,7 @@ export default function LogIn() {
   }
 
   return (
-    <>
+    <div class="sm:container md:mx-auto md:px-10">
       <h1>LogIn</h1>
       <form onSubmit={handleSubmit}>
         {data.map((el, idx) => {
@@ -64,8 +69,10 @@ export default function LogIn() {
             />
           );
         })}
-        <button type="submit">Submit</button>
+        <button className="px-5 py-3 bg-gray-500 rounded-2xl" type="submit">
+          Submit
+        </button>
       </form>
-    </>
+    </div>
   );
 }

@@ -12,7 +12,8 @@ import SignUp from "./SingUp";
 //   { name: "Company", href: "#" },
 // ];
 
-export default function Home() {
+export default function Home(props) {
+  console.log(props.loginVerification);
   return (
     <>
       <div className="relative bg-gray-200 overflow-hidden">
@@ -56,7 +57,7 @@ export default function Home() {
         </div>
       </div>
       <CTA />
-      <LogIn />
+      <LogIn setUsername={props.setUsername} />
       <SignUp />
       <Feature />
     </>

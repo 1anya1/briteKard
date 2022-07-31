@@ -16,6 +16,7 @@ export default function App() {
 
   // const [username] = useState("Anna");
   const [loggedIn, setLoggedIn] = useState(false);
+  console.log({ loggedIn });
   const [id, setId] = useState("");
 
   console.log(loggedIn, { username });
@@ -29,6 +30,7 @@ export default function App() {
         .then((response) => {
           setLoggedIn(true);
           setUsername(response.data.username);
+          console.log(username);
         })
         .catch((error) => {
           console.log(error);
@@ -50,7 +52,7 @@ export default function App() {
     <div className="bg-gray-200 min-h-screen">
       <Nav username={username} handleLogOut={handleLogOut} />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home setUsername={setUsername} />} />
 
         <Route
           path="form"
