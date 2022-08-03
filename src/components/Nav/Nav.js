@@ -14,16 +14,19 @@ export default function Nav(props) {
   const [navigation, setNavigation] = useState(null);
   useEffect(() => {
     console.log("in use effect in vab");
-
-    setNavigation([
-      { name: "Home", loc: "/", current: true },
-      { name: "New Card", loc: "/form", current: false },
-      {
-        name: "My Cards",
-        loc: `/myCards/${username}`,
-        current: false,
-      },
-    ]);
+    if (username) {
+      setNavigation([
+        { name: "Home", loc: "/", current: true },
+        { name: "New Card", loc: "/form", current: false },
+        {
+          name: "My Cards",
+          loc: `/myCards/${username}`,
+          current: false,
+        },
+      ]);
+    } else {
+      setNavigation([{ name: "Home", loc: "/", current: true }]);
+    }
   }, [props.username, username]);
   console.log(navigation);
   const myEvent = (event) => {
