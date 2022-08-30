@@ -93,7 +93,7 @@ export default function Nav(props) {
                         </Link>
                       ))}
                     <button
-                      class="transition duration-150 ease-in-out ..."
+                      className="transition duration-150 ease-in-out ..."
                       onClick={props.handleLogOut}
                     >
                       {username ? "Log Out" : "Log In"}

@@ -52,7 +52,7 @@ export default function LogIn(props) {
   }
 
   return (
-    <div class="sm:container md:mx-auto md:px-10">
+    <div className="sm:container md:mx-auto md:px-10">
       <h1>LogIn</h1>
       <form onSubmit={handleSubmit}>
         {data.map((el, idx) => {
