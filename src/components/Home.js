@@ -12,6 +12,7 @@ import SignUp from "./SingUp";
 // ];
 
 export default function Home(props) {
+  const { loggedIn } = props;
   console.log(props.loginVerification);
   return (
     <>
@@ -56,8 +57,13 @@ export default function Home(props) {
         </div>
       </div>
       <CTA />
-      <LogIn setUsername={props.setUsername} />
-      <SignUp />
+      {!loggedIn && (
+        <div className="p-20 bg-white">
+          <LogIn setUsername={props.setUsername} />
+          <SignUp />
+        </div>
+      )}
+
       <Feature />
     </>
   );

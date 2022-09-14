@@ -19,7 +19,6 @@ export default function App() {
   console.log({ loggedIn });
   const [id, setId] = useState("");
 
-  console.log(loggedIn, { username });
   useEffect(() => {
     console.log(localStorage.token);
     if (localStorage.token) {
@@ -47,12 +46,15 @@ export default function App() {
     setLoggedIn(false);
     setUsername("");
   };
-  console.log(username);
+
   return (
     <div className="bg-gray-200 min-h-screen">
       <Nav username={username} handleLogOut={handleLogOut} />
       <Routes>
-        <Route path="/" element={<Home setUsername={setUsername} />} />
+        <Route
+          path="/"
+          element={<Home setUsername={setUsername} loggedIn={loggedIn} />}
+        />
 
         <Route
           path="form"

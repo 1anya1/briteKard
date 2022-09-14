@@ -64,7 +64,7 @@ export default function SignUp() {
       });
   }
   return (
-    <>
+    <div className="sm:container md:mx-auto md:px-10 py-10 px-4  bg-gray-200 rounded-xl">
       <h1>SignUp</h1>
       <form onSubmit={formSubmit}>
         {data.map((el, idx) => {
@@ -81,8 +81,10 @@ export default function SignUp() {
             />
           );
         })}
-        <button type="submit">Submit</button>
+        <button className="px-5 py-3 bg-gray-400 rounded-2xl" type="submit">
+          Submit
+        </button>
       </form>
-    </>
+    </div>
   );
 }

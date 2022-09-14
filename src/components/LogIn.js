@@ -52,7 +52,7 @@ export default function LogIn(props) {
   }
 
   return (
-    <div className="sm:container md:mx-auto md:px-10">
+    <div className="sm:container md:mx-auto md:px-10 py-10 px-4  bg-gray-200 rounded-xl mb-10">
       <h1>LogIn</h1>
       <form onSubmit={handleSubmit}>
         {data.map((el, idx) => {
@@ -69,7 +69,7 @@ export default function LogIn(props) {
             />
           );
         })}
-        <button className="px-5 py-3 bg-gray-500 rounded-2xl" type="submit">
+        <button className="px-5 py-3 bg-gray-400 rounded-2xl" type="submit">
           Submit
         </button>
       </form>
