@@ -48,7 +48,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-gray-200 min-h-screen">
+    <div className="bg-white min-h-screen">
       <Nav username={username} handleLogOut={handleLogOut} />
       <Routes>
         <Route

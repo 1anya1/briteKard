@@ -4,6 +4,8 @@ import LogIn from "./LogIn";
 import "../images/home.svg";
 import homeSplash from "../images/home-splash.png";
 import SignUp from "./SingUp";
+import { useState } from "react";
+import Benefits from "./Benefits";
 // const navigation = [
 //   { name: "Product", href: "#" },
 //   { name: "Features", href: "#" },
@@ -14,6 +16,10 @@ import SignUp from "./SingUp";
 export default function Home(props) {
   const { loggedIn } = props;
   console.log(props.loginVerification);
+  const [view, setChangeView] = useState(false);
+  const profile = () => {
+    setChangeView(!view);
+  };
   return (
     <>
       <div className="relative bg-gray-200 overflow-hidden">
@@ -56,11 +62,32 @@ export default function Home(props) {
           />
         </div>
       </div>
-      <CTA />
+      <CTA view={view} />
+      <Benefits />
       {!loggedIn && (
-        <div className="p-20 bg-white">
-          <LogIn setUsername={props.setUsername} />
-          <SignUp />
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8  bg-white">
+          {view ? <LogIn setUsername={props.setUsername} /> : <SignUp />}
+          <button
+            onClick={profile}
+            className="px-5 py-3 border-gray-400 border-2  rounded-2xl flex flex-row mr-0 ml-auto mt-4"
+          >
+            <p className="mr-4">{view ? "Sign Up" : "Login"}</p>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+              />
+            </svg>
+          </button>
         </div>
       )}
 
