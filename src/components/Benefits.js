@@ -6,6 +6,7 @@ import {
   QRLogo,
   DesignLogo,
 } from "../images/icons/All-Logos";
+import CardFlow from "./CardFlow";
 export default function Benefits() {
   return (
     <div className="bg-white">
@@ -70,6 +71,7 @@ export default function Benefits() {
           </div>
         </div>
       </div>
+      <CardFlow />
     </div>
   );
 }
