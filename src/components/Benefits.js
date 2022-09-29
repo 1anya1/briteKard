@@ -71,7 +71,7 @@ export default function Benefits() {
           </div>
         </div>
       </div>
-      <CardFlow />
+      {/* <CardFlow /> */}
     </div>
   );
 }

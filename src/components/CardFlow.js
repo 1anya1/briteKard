@@ -1,7 +1,6 @@
 const CardFlow = () => {
   return (
     <div>
-      <div></div>
       <div className="flex flex-row gap-4 items-center  text-3xl">
         <div className="bg-gray-200 rounded-full w-14 h-14 flex text-2xl text-gray-700 justify-center items-center justify-items-center font-bold">
           1
@@ -25,7 +24,7 @@ const CardFlow = () => {
       </div>
       <div className="flex flex-row gap-4 items-center  text-3xl">
         <div className="bg-gray-200 rounded-full w-14 h-14 flex text-3xl text-gray-700 justify-center items-center justify-items-center font-bold">
-          2
+          3
         </div>
         <div className="font-bold  text-xl text-gray-700">
           Connect Build more connections vCard Plus makes saving a contact fast
@@ -36,7 +35,7 @@ const CardFlow = () => {
       </div>
       <div className="flex flex-row gap-4 items-center  text-3xl">
         <div className="bg-gray-200 rounded-full w-14 h-14 flex text-3xl text-gray-700 justify-center items-center justify-items-center font-bold">
-          2
+          4
         </div>
         <div className="font-bold  text-xl text-gray-700">
           Multipurpose and versatile You can include a vCard Plus QR code at
