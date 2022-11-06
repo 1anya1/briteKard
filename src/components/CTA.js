@@ -1,8 +1,5 @@
-import Benefits from "./Benefits";
-
 /* This example requires Tailwind CSS v2.0+ */
 export default function CTA(props) {
-  const { view } = props;
   return (
     <div className="bg-gray-50">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
