@@ -66,7 +66,11 @@ export default function Home(props) {
       <Benefits />
       {!loggedIn && (
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8  bg-white">
-          {view ? <LogIn setUsername={props.setUsername} /> : <SignUp />}
+          {view ? (
+            <LogIn setUsername={props.setUsername} />
+          ) : (
+            <SignUp setUsername={props.setUsername} />
+          )}
           <button
             onClick={profile}
             className="px-5 py-3 border-gray-400 border-2  rounded-2xl flex flex-row mr-0 ml-auto mt-4"

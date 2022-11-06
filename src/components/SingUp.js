@@ -38,7 +38,7 @@ const data = [
     value: "",
   },
 ];
-export default function SignUp() {
+export default function SignUp(props) {
   const [userInput, setUserInput] = useState([
     {
       username: null,
@@ -60,7 +60,22 @@ export default function SignUp() {
     axios
       .post("https://britekard.herokuapp.com/user/signup", userInput)
       .then((response) => {
-        console.log(response);
+        axios
+          .post("https://britekard.herokuapp.com/user/login", {
+            username: userInput.username,
+            password: userInput.password,
+          })
+          .then((response) => {
+            console.log(response);
+            console.log(response.data.token);
+            localStorage.token = response.data.token;
+            if (response.data.token) {
+              props.setUsername(userInput.username);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       });
   }
   return (
