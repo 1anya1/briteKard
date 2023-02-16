@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
+import Logo from "../../Logo";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -10,22 +11,26 @@ function classNames(...classes) {
 export default function Nav(props) {
   const username = props.username;
 
-  console.log(username, props.username);
+
+
   const [navigation, setNavigation] = useState(null);
   useEffect(() => {
-    console.log("in use effect in vab");
     if (username) {
       setNavigation([
         { name: "Home", loc: "/", current: true },
         { name: "New Card", loc: "/form", current: false },
         {
           name: "My Cards",
-          loc: `/myCards/${username}`,
+          loc: `/myCards`,
           current: false,
         },
       ]);
     } else {
-      setNavigation([{ name: "Home", loc: "/", current: true }]);
+      // setNavigation([{ name: "Home", loc: "/", current: true }]);
+      setNavigation([
+        { name: "Log In", loc: "/login", current: false },
+        { name: "Sign Up", loc: "/signup", current: false },
+      ]);
     }
   }, [props.username, username]);
   console.log(navigation);
@@ -44,14 +49,14 @@ export default function Nav(props) {
   };
 
   return (
-    <Disclosure as="nav" className="bg-gray-700">
+    <Disclosure as="nav" className="bg-gray-100">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <Disclosure.Button className="inline-flex justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -60,22 +65,15 @@ export default function Nav(props) {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex-shrink-0 flex items-center">
-                  {/* <img
-                    className="block lg:hidden h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                    alt="Workflow"
-                  /> */}
-                  {/* <img
-                    className="hidden lg:block h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                    alt="Workflow"
-                  /> */}
-                  <p className="text-2xl font-extrabold tracking-tight text-gray-200 sm:text-3xl">
+              <div className="flex-1 flex items-center justify-center sm:justify-between sm:items-stretch ">
+                <Link to='/'>
+                <div className="flex-shrink-0 flex items-center gap-2">
+                  <Logo height={"34px"} width={"auto"} />
+                  <p className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl ">
                     BriteKard
                   </p>
                 </div>
+                </Link>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     {navigation !== null &&
@@ -86,8 +84,8 @@ export default function Nav(props) {
                           onClick={myEvent}
                           className={classNames(
                             item.current
-                              ? "bg-gray-900 text-white"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                              ? "bg-purple-400 text-white"
+                              : "text-gray-900 hover:bg-gray-700 hover:text-white",
                             "px-3 py-2 rounded-md text-sm font-medium"
                           )}
                           aria-current={item.current ? "page" : undefined}
@@ -99,7 +97,7 @@ export default function Nav(props) {
                       className="transition duration-150 ease-in-out ..."
                       onClick={props.handleLogOut}
                     >
-                      {username ? "Log Out" : "Log In"}
+                      {username && "Log Out"}
                     </button>
                   </div>
                 </div>

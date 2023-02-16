@@ -2,20 +2,33 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
+import axios from "axios";
 
 export default function DeleteFormModal(props) {
-  let open = props.deleteMe;
-  console.log(open);
+ const{open, setOpen, card, username}=props
 
   const cancelButtonRef = useRef(null);
 
+  function cardDeletion() {
+    axios
+      .delete(
+        `https://britekard.herokuapp.com/vCards/mycard/delete/${username}/${card.id}`
+      )
+      .then((response) => {
+        setOpen(false)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={props.deleteCard}
+        onClose={setOpen}
       >
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -76,7 +89,7 @@ export default function DeleteFormModal(props) {
                 <button
                   type="button"
                   className=" rounded-2xl w-full inline-flex justify-center  border border-red shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-red hover:opacity-70 focus:outline-none focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                  onClick={props.cardDeletion}
+                  onClick={()=>cardDeletion(username,card)}
                 >
                   Delete Card
                 </button>
@@ -84,7 +97,7 @@ export default function DeleteFormModal(props) {
                 <button
                   type="button"
                   className=" rounded-2xl mt-3 w-full inline-flex justify-center  border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none  focus:ring-gray-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                  onClick={() => props.setDeleteMe(!open)}
+                  onClick={() => setOpen(false)}
                   ref={cancelButtonRef}
                 >
                   Cancel

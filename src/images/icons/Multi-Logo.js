@@ -6,7 +6,7 @@ const MultiLogo = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="md:w-12 md:h-12 w-10 h-10 stroke-gray-600"
+      className="md:w-12 md:h-12 w-10 h-10 stroke-gray-900 group-hover:stroke-purple-400 group-hover:animate-bounce"
     >
       <path
         strokeLinecap="round"

@@ -39,12 +39,12 @@ export default function ProfileImageInputs(props) {
       <div className="col-start-2 col-span-2">
         <label className="block text-sm font-medium text-gray-700">Photo</label>
         <div className="mt-1 flex items-center">
-          <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100 bg-cover">
+          <span className="inline-block h-20 w-20 lg:h-36  sm:w-28 sm:h-28 lg:w-36 rounded-full overflow-hidden bg-gray-100 bg-cover">
             {image ? (
               <img
                 src={image}
                 alt="profile"
-                className="object-cover h-12 w-12"
+                className="object-cover h-20 w-20 lg:h-36  sm:w-28 sm:h-28 lg:w-36 "
               />
             ) : (
               <svg
@@ -58,7 +58,7 @@ export default function ProfileImageInputs(props) {
           </span>
           <label
             htmlFor="file-upload"
-            className="ml-5 relative cursor-pointer bg-gray-500 rounded-2xl py-2 px-3 border border-gray-500  text-white hover:opacity-70 focus:ring-gray-500 focus:border-gray-500"
+            className="ml-5 relative cursor-pointer bg-gray-500 rounded-md py-2 px-3 border border-gray-500  text-white hover:opacity-70 focus:ring-gray-500 focus:border-gray-500"
           >
             <p className="leading-relaxed text-xs font-medium"> File Input</p>
 

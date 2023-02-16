@@ -1,23 +1,22 @@
 import { useEffect, useState } from "react";
-import {
-  DuplicateIcon,
-  DocumentTextIcon,
-  UserCircleIcon,
-} from "@heroicons/react/solid";
+import { DocumentTextIcon, UserCircleIcon } from "@heroicons/react/solid";
 import { useParams, useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
 import { Buffer } from "buffer";
+import ShareModal from "./ShareModal";
+import DeleteFormModal from "../Form/Input Styles/DeleteFormModal";
 
 const axios = require("axios");
 export default function AllCards(props) {
   console.log(props);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [idx, setIDX] = useState(null);
-  // const { username } = useParams();
-  // console.log(username);
+  const [open, setOpen] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [currentCard, setCurrentCard] = useState("");
+
   const username = props.username;
-  console.log(props.username);
+
   const [data, setData] = useState(false);
   console.log(useParams);
   const displayCard = [];
@@ -30,6 +29,11 @@ export default function AllCards(props) {
       clearTimeout(timeId);
     };
   }, [show]);
+
+  const handleModal = (card) => {
+    setOpen(true);
+    setCurrentCard(card);
+  };
   useEffect(() => {
     console.log("here");
     if (username) {
@@ -42,7 +46,10 @@ export default function AllCards(props) {
     }
   }, [username]);
 
-  console.log(username);
+  useEffect(() => {
+    console.log({ currentCard });
+  }, [currentCard]);
+
   for (let card in data) {
     const {
       _id,
@@ -65,82 +72,83 @@ export default function AllCards(props) {
     };
     displayCard.push(display);
   }
+  const deleteCard = (card) => {
+    setCurrentCard(card);
+    setDeleteModal(true);
+  };
 
-  console.log(displayCard);
   if (displayCard.length > 0) {
     return (
       <div className="sm:grid grid-cols-2 gap-6 max-w-4xl m-auto p-4 ">
+        {open && (
+          <ShareModal card={currentCard} open={open} setOpen={setOpen} />
+        )}
+        {deleteModal && (
+          <DeleteFormModal
+            open={deleteModal}
+            setOpen={setDeleteModal}
+            card={currentCard}
+            username={username}
+          />
+        )}
         {displayCard.map((card, id) => {
           return (
             <div
               key={id}
-              className="drop-shadow-md  border-gray-100 border h-52 sm:h-60 w-full sm:w-full text-small text-gray-500 font-medium mb-4 sm:mb-0 bg-white rounded-2xl  flex flex-col justify-between p-6 sm:p-10 "
+              className="drop-shadow-md  border-gray-100 border h-52 sm:h-60 w-full sm:w-full text-small text-gray-500 font-medium mb-4 sm:mb-0 bg-white rounded-2xl  flex flex-col justify-between p-4 sm:p-6 "
             >
               <div className="flex justify-between items-center pb-4">
-                <div className="h-14 w-14 rounded-full overflow-hidden">
+                <div className="h-20 w-20 rounded-full overflow-hidden  border-4 border-gray-200 ">
                   {card.image === "data:;base64," ? (
-                    <div className=" bg-gray-200 w-full h-full flex items-center justify-center">
+                    <div className=" w-full h-full flex items-center justify-center">
                       <UserCircleIcon className="h-2/3 w-2/3 fill-gray-300" />
                     </div>
                   ) : (
                     <img
-                      className="object-cover h-14 w-14"
+                      className="object-cover h-20 w-20 "
                       src={card.image}
                       alt="profile"
                     />
                   )}
                 </div>
 
-                <div className="flex gap-2">
-                  <div>
-                    <button
-                      onClick={() =>
-                        navigate(`/mycard/update/${username}/${card.id}`)
-                      }
-                      className="bg-white hover:bg-gray-500 hover:text-white text-gray-500 border-gray-500 border px-3 py-1 text-xs font-medium rounded-xl "
-                    >
-                      Edit
-                    </button>
-                  </div>
-                  <div>
-                    <button
-                      onClick={() => navigate(`/mycard/${username}/${card.id}`)}
-                      className="bg-white hover:bg-gray-500 hover:text-white text-gray-500 border-gray-500 border px-3 py-1 text-xs font-medium rounded-xl"
-                    >
-                      View
-                    </button>
-                  </div>
-                </div>
+                <p className="font-bold text-xl">{card.name}</p>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                <button
+                  onClick={() => navigate(`/mycard/preview/${card.id}`)}
+                  className="w-[49%]  border p-1  font-medium border-gray-500  rounded-md bg-white  hover:bg-gray-500 hover:text-white text-gray-500"
+                >
+                  Preview
+                </button>
+                <button
+                  onClick={() => handleModal(card)}
+                  className="w-[49%] border p-1  font-medium border-gray-500  rounded-md bg-white  hover:bg-gray-500 hover:text-white text-gray-500"
+                >
+                  Share
+                </button>
+
+                <button
+                  onClick={() => navigate(`/mycard/update/${card.id}`)}
+                  className="w-[49%] border p-1  font-medium border-gray-500  rounded-md bg-white  hover:bg-gray-500 hover:text-white text-gray-500"
+                >
+                  Edit
+                </button>
+
+                <button
+                  onClick={()=>deleteCard(card)}
+                  className="w-[49%] border p-1  font-medium border-gray-500  rounded-md bg-white  hover:bg-gray-500 hover:text-white text-gray-500"
+                >
+                  Delete
+                </button>
               </div>
 
-              <div>
-                <p className="text-2xl text-gray-700">{card.name}</p>
-                <p className="text-gray-600">{card.jobTitle}</p>
-                <div className="flex items-center pt-3">
-                  <p className="text-sm truncate w-3/4">
-                    https://britekard.netlify.app/mycard/{props.username}/
-                    {card.id}
-                  </p>
-                  <DuplicateIcon
-                    className="h-7 w-7 fill-gray-400 hover:fill-gray-500"
-                    onClick={() => {
-                      navigator.clipboard.writeText(
-                        `https://britekard.netlify.app/mycard/${props.username}/${card.id}`
-                      );
-                      setShow(true);
-                      setIDX(id);
-                    }}
-                  />
-                  {show && idx === id && (
-                    <p
-                      className=" text-xs text-gray-700 font-medium pl-2"
-                      id={id}
-                    >
-                      Copied!
-                    </p>
-                  )}
-                </div>
-              </div>
+              {/* <div
+                onClick={() => handleModal(card)}
+                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-400 hover:bg-purple-300 md:py-4 md:text-lg md:px-10 cursor-pointer"
+              >
+                Share
+              </div> */}
             </div>
           );
         })}

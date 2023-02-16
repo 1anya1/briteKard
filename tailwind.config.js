@@ -1,6 +1,7 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+  
     fontFamily: {
       sans: ["Graphik", "sans-serif"],
       serif: ["Merriweather", "serif"],
@@ -19,7 +20,9 @@ module.exports = {
     colors: {
       transparent: "transparent",
       current: "currentColor",
-      white: "#f9faf9",
+      // snow: "#f9faf9",
+      snow:'#fefefe',
+      white:'#ffffff',
       truewhite: "#ffffff",
       red: "#F22800",
       blue: {
@@ -35,6 +38,7 @@ module.exports = {
         900: "#161846",
       },
       gray: {
+        10:'#f3f3f3',
         50: "#f9faf9",
         100: "#eef2f5",
         200: "#d9dfe9",
@@ -45,6 +49,19 @@ module.exports = {
         700: "#3e404d",
         800: "#2a2b35",
         900: "#191921",
+      },
+      purple: {
+        50: "#faf5ff",
+        100: "#f3e8ff",
+        200: "#bfaef3",
+        300: "#866dd1",
+        // 400: " #c084fc",
+        400:"#9578ef",
+        500: " #a855f7",
+        600: " #9333ea",
+        700: " #7e22ce",
+        800: "#6b21a8",
+        900: "#581c87",
       },
     },
     // fill: ({ theme }) => ({
@@ -58,6 +75,7 @@ module.exports = {
       },
       height: {
         "fourty-two": "42%",
+        600: '600px',
       },
       width: {
         "fourty-tw0": "42%",
@@ -75,6 +93,9 @@ module.exports = {
       screens: {
         sm: "600px",
       },
+      animation:{
+        bounce:"bounce 1s 1.5",
+      }
     },
   },
   plugins: [require("@tailwindcss/forms"), require("tailwind-scrollbar-hide")],

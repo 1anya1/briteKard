@@ -8,7 +8,7 @@ export default function URLInputs(props) {
         {props.label}
       </label>
       <div className="mt-1 flex rounded-md shadow-sm">
-        <span className="inline-flex items-center px-3 rounded-l-2xl border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
           https://
         </span>
         <input
@@ -17,7 +17,7 @@ export default function URLInputs(props) {
           id={props.id}
           value={props.value}
           onChange={(e) => props.change(e)}
-          className="focus:ring-gray-500 focus:border-gray-500 flex-1 block w-full rounded-none rounded-r-2xl sm:text-sm border-gray-300"
+          className="focus:ring-gray-500 focus:border-gray-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
           placeholder={props.placeholder}
         />
       </div>

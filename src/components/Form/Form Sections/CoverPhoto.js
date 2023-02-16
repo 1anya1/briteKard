@@ -36,7 +36,7 @@ export default function CoverPhoto(props) {
   }
 
   return (
-    <div className="drop-shadow-md  border-gray-100 border rounded-2xl bg-white mb-5 max-w-4xl m-auto">
+    <div className="drop-shadow-md  border-gray-100 border rounded-2xl bg-snow mb-5 max-w-4xl m-auto">
       <div className=" p-4  sm:p-8">
         <label className="block text-sm font-medium text-gray-700">
           <FormDescription formName={formName} />
@@ -68,7 +68,7 @@ export default function CoverPhoto(props) {
                 htmlFor="logo"
                 className="relative cursor-pointer bg-white  rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:ring-gray-500 focus:border-gray-500"
               >
-                <span className="text-center text-xs border py-2 px-3 mb-2  rounded-2xl text-gray-600  border-gray-500 hover:opacity-70 focus:ring-gray-500 focus:border-gray-500">
+                <span className="text-center text-xs border py-2 px-3 mb-2  rounded-md text-gray-600  border-gray-500 hover:opacity-70 focus:ring-gray-500 focus:border-gray-500">
                   Upload a file
                 </span>
                 <input

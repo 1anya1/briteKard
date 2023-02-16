@@ -34,7 +34,7 @@ export default function SocialLinks(props) {
     setInput(e.target.value);
   }
   return (
-    <div className="drop-shadow-md  border-gray-100 border rounded-2xl bg-white mb-5 max-w-4xl m-auto">
+    <div className="drop-shadow-md  border-gray-100 border rounded-2xl bg-snow mb-5 max-w-4xl m-auto">
       <div className=" p-4 md:grid md:grid-cols-3 md:gap-3  sm:p-8">
         <FormDescription formName={formName} />
         {site.map((el, idx) => (
@@ -54,8 +54,9 @@ export default function SocialLinks(props) {
             name="social-media"
             onChange={handleChange}
             autoComplete="social-media"
-            className="mt-1 block w-full py-2 px-3 border text-gray-500 border-gray-300 bg-white leading-none rounded-2xl shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
+            className="mt-1 block w-full py-2 px-3 border text-gray-500 border-gray-300 bg-white leading-none rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
           >
+            
             <option value="" disabled defaultValue>
               Please choose an option
             </option>
@@ -70,7 +71,7 @@ export default function SocialLinks(props) {
           </select>
           <button
             onClick={addMore}
-            className="  justify-center mt-1 py-2 px-4 border  text-xs font-medium rounded-2xl text-white bg-gray-500 hover:opacity-70 active:opacity-70 ml-3"
+            className="  justify-center mt-1 py-2 px-4 border  text-xs font-medium rounded-md text-white bg-gray-500 hover:opacity-70 active:opacity-70 ml-3"
           >
             Add
           </button>
