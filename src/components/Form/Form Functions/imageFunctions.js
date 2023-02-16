@@ -1,6 +1,6 @@
 function getBase64(file) {
   return new Promise((resolve) => {
-    console.log(file);
+
     let baseURL = "";
     let reader = new FileReader();
     reader.readAsDataURL(file);

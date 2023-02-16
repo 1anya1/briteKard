@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { useState, Fragment, useRef } from "react";
-import { DuplicateIcon } from "@heroicons/react/solid";
+import { Fragment, useRef } from "react";
+
 
 export default function ShareModal(props) {
   const { card, open, setOpen } = props;

@@ -1,11 +1,5 @@
 import "./App.css";
-import {
-  Routes,
-  Route,
-  useNavigate,
-  useLocation,
-  useParams,
-} from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Nav from "./components/Nav/Nav";
 import DisplayCard from "./components/Display Card/DisplayCard";
 import Form from "./components/Form/Form";
@@ -22,11 +16,9 @@ export default function App() {
   const [username, setUsername] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
-  const { id: routerID } = useParams();
-  console.log({ routerID });
   const [id, setId] = useState("");
   const location = useLocation();
-  console.log({ location }, location.pathname, id);
+
   useEffect(() => {
     if (localStorage.token) {
       axios
@@ -36,7 +28,6 @@ export default function App() {
         .then((response) => {
           setLoggedIn(true);
           setUsername(response.data.username);
-          console.log(username);
         })
         .catch((error) => {
           console.log(error);
@@ -45,9 +36,8 @@ export default function App() {
       setLoggedIn(false);
     }
   }, [username]);
-  console.log(username);
+
   const handleLogOut = (e) => {
-    console.log(e);
     e.preventDefault();
     localStorage.clear();
     setLoggedIn(false);
@@ -57,7 +47,9 @@ export default function App() {
 
   return (
     <div className="bg-white min-h-screen">
-      {!location.pathname.includes("share") && <Nav username={username} handleLogOut={handleLogOut} />}
+      {!location.pathname.includes("share") && (
+        <Nav username={username} handleLogOut={handleLogOut} />
+      )}
       <Routes>
         <Route
           path="/"

@@ -13,7 +13,6 @@ import { Buffer } from "buffer";
 const axios = require("axios");
 export default function DisplayCard() {
   let { username, id } = useParams();
-  console.log("Im in display cards", { username }, { id });
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
   const [image, setImage] = useState(null);
@@ -46,7 +45,6 @@ export default function DisplayCard() {
     axios
       .get(`https://britekard.herokuapp.com/vCards/${username}/${id}`)
       .then(function (response) {
-        console.log(response);
         download(`${username}.VCF`, response.data[0]);
       })
       .catch(function (error) {
@@ -54,27 +52,21 @@ export default function DisplayCard() {
       });
   }
   function download(filename, text) {
-    console.log("here");
     var element = document.createElement("a");
     element.setAttribute(
       "href",
       "data:text/vcard;charset=utf-8," + encodeURIComponent(text)
     );
-    console.log(element);
     element.setAttribute("download", filename);
-
     element.style.display = "none";
     document.body.appendChild(element);
-
     element.click();
-
     document.body.removeChild(element);
   }
 
   function shareCard() {
     setQrToggle(!qrToggle);
   }
-  console.log(data);
 
   if (data) {
     let {
@@ -133,7 +125,7 @@ export default function DisplayCard() {
       ["LinkedIn", linkedIn],
     ];
 
-    console.log(image);
+
     return (
       <div className=" w-full h-full sm:py-16">
         <div className="grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500  sm:bg-white max-w-screen-sm mx-auto sm:pb-12 sm:px-9 sm:rounded-3xl">

@@ -30,7 +30,7 @@ export default function UpdateForm() {
         `https://britekard.herokuapp.com/vCards/mycard/update/${username}/${id}`
       )
       .then((response) => {
-        console.log(response);
+    
         setUserInputs(response.data);
       })
       .catch(function (error) {
