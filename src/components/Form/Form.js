@@ -8,6 +8,7 @@ import CoverPhoto from "./Form Sections/CoverPhoto";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
 import { Buffer } from "buffer";
+import ColorPicker from "./ColorSelect";
 const axios = require("axios");
 export default function Forms(props) {
   //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
@@ -19,6 +20,7 @@ export default function Forms(props) {
     [{ name: "Work Info", toggle: false }],
     [{ name: "Social Links", toggle: false }],
     [{ name: "Cover Photo", toggle: false }],
+    // [{ name: "Choose Theme", toggle: false }],
   ]);
   const [id, setId] = useState("");
   const [qr, setQR] = useState(0);
@@ -89,6 +91,10 @@ export default function Forms(props) {
     qrCode: "",
   });
 
+  // const [colorScheme, setColorScheme] = useState({
+  //   background: "white",
+  //   cta: "gray-500",
+  // });
   function handleSubmit(event) {
     event.preventDefault();
     userInputs.username = props.username;
@@ -130,7 +136,7 @@ export default function Forms(props) {
         }
       )
       .then((res) => {
-        navigate(`/myCards/${props.username}`);
+        navigate(`/myCards`);
       })
       .catch((err) => console.error(err));
   }
@@ -198,15 +204,15 @@ export default function Forms(props) {
   } else {
     return (
       <div className="container mx-auto gap-2 max-w-4xl m-auto">
-        <div className="container mx-auto sm:px-4">
-          <p className="text-center font-medium text-gray-600 text-xl pt-8 ">
+        <div className="container mx-auto sm:px-4 pl-4 sm:pl-0 ">
+          <p className="text-2xl font-extrabold  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
             Create New Business Card
           </p>
-          <div className="flex flex-row flex-nowrap overflow-scroll scrollbar-hide my-8 pl-4 sm:pl-0 container mx-auto gap-2">
+          <div className="flex flex-row flex-nowrap overflow-scroll scrollbar-hide my-8  container mx-auto gap-2">
             <Chips options={options} toggle={toggle} />
           </div>
         </div>
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-0">
           <form onSubmit={handleSubmit}>
             <PersonalInfo
               handleChange={handleChange}
@@ -249,16 +255,23 @@ export default function Forms(props) {
                     logo={userInputs.logo.url}
                   />
                 );
+              }
+              if (el[0].toggle && el[0].name === "Choose Theme") {
+                return <ColorPicker />;
               } else {
                 return null;
               }
             })}
-            <button
-              type="submit"
-              className=" w-full sm:w-44 inline-flex justify-center py-2 px-4 border border-gray-500 shadow-sm text-sm font-medium rounded-2xl text-white bg-gray-500 hover:opacity-70 active:opacity-70 my-8"
-            >
-              <p className="leading-relaxed text-sm">Create Card</p>
-            </button>
+            <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start mb-8">
+              <div className="rounded-md shadow">
+                <button
+                  type="submit"
+                  className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 md:py-4 md:text-lg md:px-10 cursor-pointer"
+                >
+                  <p className="leading-relaxed text-sm">Create Card</p>
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       </div>

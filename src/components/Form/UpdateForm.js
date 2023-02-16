@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
-import DeleteFormModal from "./Input Styles/DeleteFormModal";
 import LoadingScreen from "../LoadingScreen";
 import { Buffer } from "buffer";
 
@@ -14,9 +13,6 @@ const axios = require("axios");
 export default function UpdateForm() {
   const navigate = useNavigate();
   const { username, id } = useParams();
-  const [deleteMe, setDeleteMe] = useState(false);
-
-  //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
 
   const [options, setOptions] = useState([
     [{ name: "Home Address", toggle: false }],
@@ -60,23 +56,8 @@ export default function UpdateForm() {
         console.log(error);
       });
   }
-  function deleteCard() {
-    setDeleteMe(!deleteMe);
-  }
-
-  function cardDeletion() {
-    axios
-      .delete(
-        `https://britekard.herokuapp.com/vCards/mycard/delete/${username}/${id}`
-      )
-      .then((response) => {
-        setDeleteMe(!deleteMe);
-        // setSuccessfuleDeletion(true);
-        navigate(-1);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  function cancelUpdate() {
+    navigate(-1);
   }
   function imageConvert(base64, type, id) {
     const copyObj = { ...userInputs };
@@ -138,13 +119,6 @@ export default function UpdateForm() {
   } else if (userInputs) {
     return (
       <>
-        <DeleteFormModal
-          deleteMe={deleteMe}
-          setDeleteMe={setDeleteMe}
-          deleteCard={deleteCard}
-          cardDeletion={cardDeletion}
-          username={username}
-        />
         <div className="container mx-auto gap-2 max-w-4xl m-auto">
           <div className="container mx-auto sm:px-4">
             <p className="text-center font-medium text-gray-600 text-xl pt-8 ">
@@ -210,10 +184,10 @@ export default function UpdateForm() {
               </button>
             </form>
             <button
-              onClick={deleteCard}
+              onClick={cancelUpdate}
               className=" w-full sm:w-44 inline-flex justify-center py-2 px-4 border border-red shadow-sm text-sm font-medium rounded-2xl text-red  hover:opacity-70 active:opacity-70 mb-8"
             >
-              Delete Card
+              Cancel
             </button>
           </div>
         </div>

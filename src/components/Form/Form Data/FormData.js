@@ -1,4 +1,5 @@
 const personalDataInputs = [
+ 
   {
     label: "First Name",
     type: "text",

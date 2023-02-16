@@ -1,5 +1,11 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import Nav from "./components/Nav/Nav";
 import DisplayCard from "./components/Display Card/DisplayCard";
 import Form from "./components/Form/Form";
@@ -7,20 +13,21 @@ import AllCards from "./components/Display All Card/AllCards";
 import React, { useState, useEffect } from "react";
 import UpdateForm from "./components/Form/UpdateForm";
 import Home from "./components/Home";
-
 import axios from "axios";
+import Footer from "./components/Footer/Footer";
+import LogIn from "./components/LogIn";
+import SignUp from "./components/SingUp";
 
 export default function App() {
-  // const [on, setOn] = useState(false);
   const [username, setUsername] = useState("");
-
-  // const [username] = useState("Anna");
   const [loggedIn, setLoggedIn] = useState(false);
-  console.log({ loggedIn });
+  const navigate = useNavigate();
+  const { id: routerID } = useParams();
+  console.log({ routerID });
   const [id, setId] = useState("");
-
+  const location = useLocation();
+  console.log({ location }, location.pathname, id);
   useEffect(() => {
-    console.log(localStorage.token);
     if (localStorage.token) {
       axios
         .get(
@@ -45,34 +52,47 @@ export default function App() {
     localStorage.clear();
     setLoggedIn(false);
     setUsername("");
+    navigate("/");
   };
 
   return (
     <div className="bg-white min-h-screen">
-      <Nav username={username} handleLogOut={handleLogOut} />
+      {!location.pathname.includes("share") && <Nav username={username} handleLogOut={handleLogOut} />}
       <Routes>
         <Route
           path="/"
           element={<Home setUsername={setUsername} loggedIn={loggedIn} />}
         />
-
         <Route
-          path="form"
-          element={<Form username={username} setId={setId} id={id} />}
+          path="/login"
+          element={<LogIn setUsername={setUsername} loggedIn={loggedIn} />}
         />
         <Route
-          path={`mycard/:username/:id`}
+          path="/signup"
+          element={<SignUp setUsername={setUsername} loggedIn={loggedIn} />}
+        />
+
+        <Route
+          path="/form"
+          element={<Form username={username} setId={setId} id={id} />}
+        />
+
+        <Route
+          path={`mycard/preview/:id`}
           element={<DisplayCard username={username} id={id} />}
         />
         <Route
-          path={`myCards/:username`}
-          element={<AllCards username={username} />}
+          path={`/share/:id`}
+          element={<DisplayCard username={username} id={id} />}
         />
+
+        <Route path={`myCards`} element={<AllCards username={username} />} />
         <Route
-          path={`mycard/update/:username/:id`}
+          path={`mycard/update/:id`}
           element={<UpdateForm username={username} id={id} />}
         ></Route>
       </Routes>
+      {!location.pathname.includes("share") && <Footer />}
     </div>
   );
 }

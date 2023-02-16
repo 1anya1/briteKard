@@ -8,7 +8,7 @@ export default function HomeAddress(props) {
   // const [country, setCountry] = useState("");
 
   return (
-    <div className=" drop-shadow-md  border-gray-100 border rounded-2xl bg-white mb-5 max-w-4xl m-auto">
+    <div className=" drop-shadow-md  border-gray-100 border rounded-2xl bg-snow mb-5 max-w-4xl m-auto">
       <div className="p-4 md:grid md:grid-cols-3 md:gap-3  sm:p-8">
         <FormDescription formName={formName} />
         {homeAddressInputs.map((el, idx) => (
@@ -37,7 +37,7 @@ export default function HomeAddress(props) {
             autoComplete="country-name"
             onChange={props.handleChange}
             value={props.userInputs["homeAddress"]["countryRegion"]}
-            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white focus:ring-gray-500 focus:border-gray-500 sm:text-sm rounded-2xl shadom-sm"
+            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white focus:ring-gray-500 focus:border-gray-500 sm:text-sm rounded-md shadom-sm"
           >
             <option>United States</option>
             <option>Canada</option>
