@@ -10,13 +10,12 @@ export default function SocialLinks(props) {
   const [input, setInput] = useState("");
   const [site, setSite] = useState(socialLinksInputs);
 
-  //Add another social channel
+  //Add another social channels
   function addMore(e) {
     e.preventDefault();
-    console.log("were here");
-    console.log(e);
+
     const duplicateState = [...site];
-    console.log(duplicateState);
+
     const data = {
       label: input,
       type: "text",
@@ -25,9 +24,8 @@ export default function SocialLinks(props) {
       value: ["socialUrls", `${input.toLowerCase()}`],
     };
     duplicateState.push(data);
-    console.log(duplicateState);
+
     setSite(duplicateState);
-    console.log(site);
   }
   //handle change event in addition of new input field
   function handleChange(e) {
@@ -56,7 +54,6 @@ export default function SocialLinks(props) {
             autoComplete="social-media"
             className="mt-1 block w-full py-2 px-3 border text-gray-500 border-gray-300 bg-white leading-none rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
           >
-            
             <option value="" disabled defaultValue>
               Please choose an option
             </option>

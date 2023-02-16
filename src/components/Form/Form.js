@@ -25,7 +25,6 @@ export default function Forms(props) {
   const [id, setId] = useState("");
   const [qr, setQR] = useState(0);
 
-  console.log(props.username, "inside the form");
   const [userInputs, setUserInputs] = useState({
     username: "",
     cardName: "",
@@ -99,20 +98,16 @@ export default function Forms(props) {
     event.preventDefault();
     userInputs.username = props.username;
     let body = userInputs;
-    console.log("inside handle submit", { body });
 
     sendData(body);
   }
   function sendData(body) {
     setSubmittedUpdate(true);
-    console.log(body);
+
     axios
       .post("https://britekard.herokuapp.com/vCards", body)
       .then((response) => {
-        console.log(response);
-        console.log(body);
-        const [qr, username, id] = response.data;
-        console.log(qr, username, id);
+        const [qr, id] = response.data;
         props.setId(id);
         const tobuff = qr.split(",");
         setQR(new Buffer.from(tobuff[1], "base64"));

@@ -67,8 +67,7 @@ export default function SignUp(props) {
             password: userInput.password,
           })
           .then((response) => {
-            console.log(response);
-            console.log(response.data.token);
+      
             localStorage.token = response.data.token;
             if (response.data.token) {
               props.setUsername(userInput.username);

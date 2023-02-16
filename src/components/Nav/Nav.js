@@ -11,8 +11,6 @@ function classNames(...classes) {
 export default function Nav(props) {
   const username = props.username;
 
-
-
   const [navigation, setNavigation] = useState(null);
   useEffect(() => {
     if (username) {
@@ -33,7 +31,7 @@ export default function Nav(props) {
       ]);
     }
   }, [props.username, username]);
-  console.log(navigation);
+
   const myEvent = (event) => {
     const target = event.target.innerHTML;
     const data = [...navigation];
@@ -44,7 +42,6 @@ export default function Nav(props) {
         data[el]["current"] = false;
       }
     }
-    console.log(data);
     setNavigation(data);
   };
 
@@ -66,13 +63,13 @@ export default function Nav(props) {
                 </Disclosure.Button>
               </div>
               <div className="flex-1 flex items-center justify-center sm:justify-between sm:items-stretch ">
-                <Link to='/'>
-                <div className="flex-shrink-0 flex items-center gap-2">
-                  <Logo height={"34px"} width={"auto"} />
-                  <p className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl ">
-                    BriteKard
-                  </p>
-                </div>
+                <Link to="/">
+                  <div className="flex-shrink-0 flex items-center gap-2">
+                    <Logo height={"34px"} width={"auto"} />
+                    <p className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl ">
+                      BriteKard
+                    </p>
+                  </div>
                 </Link>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">

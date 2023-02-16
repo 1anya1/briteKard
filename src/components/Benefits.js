@@ -6,7 +6,6 @@ import {
   QRLogo,
   DesignLogo,
 } from "../images/icons/All-Logos";
-import { twMerge } from "tailwind-merge";
 
 export default function Benefits() {
   return (

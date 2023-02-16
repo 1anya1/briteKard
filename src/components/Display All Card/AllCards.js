@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DocumentTextIcon, UserCircleIcon } from "@heroicons/react/solid";
-import { useParams, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
 import { Buffer } from "buffer";
 import ShareModal from "./ShareModal";
@@ -8,17 +8,13 @@ import DeleteFormModal from "../Form/Input Styles/DeleteFormModal";
 
 const axios = require("axios");
 export default function AllCards(props) {
-  console.log(props);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [currentCard, setCurrentCard] = useState("");
-
   const username = props.username;
-
   const [data, setData] = useState(false);
-  console.log(useParams);
   const displayCard = [];
 
   useEffect(() => {
@@ -35,20 +31,16 @@ export default function AllCards(props) {
     setCurrentCard(card);
   };
   useEffect(() => {
-    console.log("here");
     if (username) {
       axios
         .get(`https://britekard.herokuapp.com/vCards/${username}`)
         .then((response) => {
-          console.log(response);
           setData(response.data);
         });
     }
   }, [username]);
 
-  useEffect(() => {
-    console.log({ currentCard });
-  }, [currentCard]);
+
 
   for (let card in data) {
     const {
@@ -136,7 +128,7 @@ export default function AllCards(props) {
                 </button>
 
                 <button
-                  onClick={()=>deleteCard(card)}
+                  onClick={() => deleteCard(card)}
                   className="w-[49%] border p-1  font-medium border-gray-500  rounded-md bg-white  hover:bg-gray-500 hover:text-white text-gray-500"
                 >
                   Delete

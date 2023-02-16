@@ -2,11 +2,8 @@ import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 export default function QRmodal(props) {
-  console.log(props);
   const open = props.qrToggle;
-
   const cancelButtonRef = useRef(null);
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
