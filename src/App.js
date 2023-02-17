@@ -46,44 +46,46 @@ export default function App() {
   };
 
   return (
-    <div className="bg-white min-h-screen">
-      {!location.pathname.includes("share") && (
-        <Nav username={username} handleLogOut={handleLogOut} />
-      )}
-      <Routes>
-        <Route
-          path="/"
-          element={<Home setUsername={setUsername} loggedIn={loggedIn} />}
-        />
-        <Route
-          path="/login"
-          element={<LogIn setUsername={setUsername} loggedIn={loggedIn} />}
-        />
-        <Route
-          path="/signup"
-          element={<SignUp setUsername={setUsername} loggedIn={loggedIn} />}
-        />
+    <div className="bg-white min-h-screen flex flex-col justify-between">
+      <div>
+        {!location.pathname.includes("share") && (
+          <Nav username={username} handleLogOut={handleLogOut} />
+        )}
+        <Routes>
+          <Route
+            path="/"
+            element={<Home setUsername={setUsername} loggedIn={loggedIn} />}
+          />
+          <Route
+            path="/login"
+            element={<LogIn setUsername={setUsername} loggedIn={loggedIn} />}
+          />
+          <Route
+            path="/signup"
+            element={<SignUp setUsername={setUsername} loggedIn={loggedIn} />}
+          />
 
-        <Route
-          path="/form"
-          element={<Form username={username} setId={setId} id={id} />}
-        />
+          <Route
+            path="/form"
+            element={<Form username={username} setId={setId} id={id} />}
+          />
 
-        <Route
-          path={`mycard/preview/:id`}
-          element={<DisplayCard username={username} id={id} />}
-        />
-        <Route
-          path={`/share/:id`}
-          element={<DisplayCard username={username} id={id} />}
-        />
+          <Route
+            path={`mycard/preview/:id`}
+            element={<DisplayCard username={username} id={id} />}
+          />
+          <Route
+            path={`/share/:id`}
+            element={<DisplayCard username={username} id={id} />}
+          />
 
-        <Route path={`myCards`} element={<AllCards username={username} />} />
-        <Route
-          path={`mycard/update/:id`}
-          element={<UpdateForm username={username} id={id} />}
-        ></Route>
-      </Routes>
+          <Route path={`myCards`} element={<AllCards username={username} />} />
+          <Route
+            path={`mycard/update/:id`}
+            element={<UpdateForm username={username} id={id} />}
+          ></Route>
+        </Routes>
+      </div>
       {!location.pathname.includes("share") && <Footer />}
     </div>
   );

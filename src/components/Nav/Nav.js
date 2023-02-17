@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import Logo from "../../Logo";
+import { useLocation } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -10,12 +11,13 @@ function classNames(...classes) {
 
 export default function Nav(props) {
   const username = props.username;
+  const { pathname } = useLocation();
+  const [navigation, setNavigation] = useState([]);
 
-  const [navigation, setNavigation] = useState(null);
   useEffect(() => {
     if (username) {
       setNavigation([
-        { name: "Home", loc: "/", current: true },
+        { name: "Home", loc: "/", current: false },
         { name: "New Card", loc: "/form", current: false },
         {
           name: "My Cards",
@@ -30,20 +32,7 @@ export default function Nav(props) {
         { name: "Sign Up", loc: "/signup", current: false },
       ]);
     }
-  }, [props.username, username]);
-
-  const myEvent = (event) => {
-    const target = event.target.innerHTML;
-    const data = [...navigation];
-    for (let el in data) {
-      if (data[el]["name"] === target) {
-        data[el]["current"] = true;
-      } else {
-        data[el]["current"] = false;
-      }
-    }
-    setNavigation(data);
-  };
+  }, [username]);
 
   return (
     <Disclosure as="nav" className="bg-gray-100">
@@ -78,9 +67,9 @@ export default function Nav(props) {
                         <Link
                           key={item.name}
                           to={item.loc}
-                          onClick={myEvent}
+                          // onClick={myEvent}
                           className={classNames(
-                            item.current
+                            item.loc === pathname
                               ? "bg-purple-400 text-white"
                               : "text-gray-900 hover:bg-gray-700 hover:text-white",
                             "px-3 py-2 rounded-md text-sm font-medium"
@@ -109,11 +98,11 @@ export default function Nav(props) {
                   <Link
                     key={item.name}
                     to={item.loc}
-                    onClick={myEvent}
+                    // onClick={myEvent}
                     className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                      item.loc === pathname
+                        ? "bg-purple-400 text-white"
+                        : "text-gray-900 hover:bg-gray-700 hover:text-white",
                       "block px-3 py-2 rounded-md text-base font-medium"
                     )}
                     aria-current={item.current ? "page" : undefined}

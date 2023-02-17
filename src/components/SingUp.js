@@ -67,7 +67,6 @@ export default function SignUp(props) {
             password: userInput.password,
           })
           .then((response) => {
-      
             localStorage.token = response.data.token;
             if (response.data.token) {
               props.setUsername(userInput.username);
@@ -100,14 +99,14 @@ export default function SignUp(props) {
             );
           })}
 
-            <div className="rounded-md shadow">
-              <button
-                type="submit"
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-400 hover:bg-purple-300 md:py-4 md:text-lg md:px-10 cursor-pointer"
-              >
-                Sign Up
-              </button>
-            </div>
+          <div className="rounded-md shadow">
+            <button
+              type="submit"
+              className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-400 hover:bg-purple-300 md:py-4 md:text-lg md:px-10 cursor-pointer"
+            >
+              Sign Up
+            </button>
+          </div>
           <p className="pt-4">
             Have an existing account?
             <Link to="/login">

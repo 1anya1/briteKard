@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
 import { Buffer } from "buffer";
 import ColorPicker from "./ColorSelect";
+
 const axios = require("axios");
 export default function Forms(props) {
   //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
@@ -28,7 +29,7 @@ export default function Forms(props) {
   const [userInputs, setUserInputs] = useState({
     username: "",
     cardName: "",
-    colorScheme: "",
+    colorScheme: "gray-500",
     uid: "",
     birthday: "",
     cellPhone: "",
@@ -90,24 +91,67 @@ export default function Forms(props) {
     qrCode: "",
   });
 
-  // const [colorScheme, setColorScheme] = useState({
-  //   background: "white",
-  //   cta: "gray-500",
-  // });
+  const [nameError, setNameError] = useState(false);
+  const [cellError, setCellError] = useState(false);
+  const [cardNameError, setCardNameError] = useState(false);
+  const [existingTitles, setTitles] = useState("");
+
   function handleSubmit(event) {
     event.preventDefault();
     userInputs.username = props.username;
     let body = userInputs;
-
-    sendData(body);
+    const duplicate = existingTitles.indexOf(userInputs.cardName) !== -1;
+    if (duplicate) {
+      setCardNameError(true);
+    }
+    if (body.firstName === "") {
+      setNameError(true);
+    }
+    if (body.cellPhone === "") {
+      setCellError(true);
+    } else {
+      if (!cardNameError) {
+        sendData(body);
+      }
+    }
   }
+  useEffect(() => {
+    const duplicate = existingTitles.indexOf(userInputs.cardName) !== -1;
+    if (!duplicate) {
+      setCardNameError(false);
+    }
+    if (userInputs.firstName.length > 0) {
+      setCardNameError(false);
+    }
+    if (userInputs.cellPhone.length > 0) {
+      setCardNameError(false);
+    }
+  }, [existingTitles, userInputs]);
+
+  useEffect(() => {
+    if (props.username) {
+      axios
+        .get(`https://britekard.herokuapp.com/vCards/${props.username}`)
+        .then((response) => {
+          const titles = [];
+          const data = response.data;
+          data.forEach((el) => {
+            if (el.cardName) {
+              titles.push(el.cardName);
+            }
+          });
+          setTitles([...titles]);
+        });
+    }
+  }, [props.username]);
+
   function sendData(body) {
     setSubmittedUpdate(true);
 
     axios
       .post("https://britekard.herokuapp.com/vCards", body)
       .then((response) => {
-        const [qr, id] = response.data;
+        const [qr, , id] = response.data;
         props.setId(id);
         const tobuff = qr.split(",");
         setQR(new Buffer.from(tobuff[1], "base64"));
@@ -209,10 +253,20 @@ export default function Forms(props) {
         </div>
         <div className="container mx-auto px-4 sm:px-0">
           <form onSubmit={handleSubmit}>
+            {/* <CardName
+              handleChange={handleChange}
+              userInputs={userInputs}
+              cardNameError={cardNameError}
+        
+            /> */}
             <PersonalInfo
               handleChange={handleChange}
               userInputs={userInputs}
               imageConvert={imageConvert}
+              cellError={cellError}
+              nameError={nameError}
+              setNameError={setNameError}
+              setCellError={setCellError}
             />
             {options.map((el, idx) => {
               if (el[0].toggle && el[0].name === "Home Address") {
@@ -260,6 +314,7 @@ export default function Forms(props) {
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start mb-8">
               <div className="rounded-md shadow">
                 <button
+                  noValidate
                   type="submit"
                   className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 md:py-4 md:text-lg md:px-10 cursor-pointer"
                 >

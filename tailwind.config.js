@@ -20,11 +20,20 @@ module.exports = {
     colors: {
       transparent: "transparent",
       current: "currentColor",
-      // snow: "#f9faf9",
       snow:'#fefefe',
       white:'#ffffff',
       truewhite: "#ffffff",
       red: "#F22800",
+      pallete:{
+        purple:'8E60F0',
+        pink:'F060EA',
+        yellow:'EDF060',
+        blue:'6088F0',
+        aqua:'60CEF0',
+        gray: 'D9D9D9',
+        black:'000000',
+
+      },
       blue: {
         50: "#f7fafb",
         100: "#e6f2fc",

@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import { DocumentTextIcon, UserCircleIcon } from "@heroicons/react/solid";
-import {  useNavigate } from "react-router-dom";
+import { UserCircleIcon } from "@heroicons/react/solid";
+import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
 import { Buffer } from "buffer";
 import ShareModal from "./ShareModal";
 import DeleteFormModal from "../Form/Input Styles/DeleteFormModal";
+import Lottie from "lottie-react";
+import emptyBox from "../../images/lottie/empty-box.json";
+import { Link } from "react-router-dom";
 
 const axios = require("axios");
 export default function AllCards(props) {
@@ -38,9 +41,7 @@ export default function AllCards(props) {
           setData(response.data);
         });
     }
-  }, [username]);
-
-
+  }, [username, deleteModal]);
 
   for (let card in data) {
     const {
@@ -73,7 +74,7 @@ export default function AllCards(props) {
     return (
       <div className="sm:grid grid-cols-2 gap-6 max-w-4xl m-auto p-4 ">
         {open && (
-          <ShareModal card={currentCard} open={open} setOpen={setOpen} />
+          <ShareModal card={currentCard} open={open} setOpen={setOpen} username={username} />
         )}
         {deleteModal && (
           <DeleteFormModal
@@ -150,14 +151,29 @@ export default function AllCards(props) {
     return <LoadingScreen />;
   } else {
     return (
-      <>
-        <DocumentTextIcon className="fill-gray-400 w-2/6 sm:w-2/6 m-auto" />
-        <div className="font-medium text-xl sm:text-2xl text-gray-700 w-5/6 sm:w-4/6 m-auto center">
-          You dont have any cards yet. Click button below to create your digital
-          business card
+      <div className="relative bg-white overflow-hidden pb-4" >
+        <div className="max-w-7xl mx-auto">
+          <div className="w-4/5 sm:w-1/2 flex flex-center m-auto">
+            <Lottie
+              animationData={emptyBox}
+              loop={true}
+              style={{ width: "100%" }}
+            />
+          </div>
+          <p className="font-medium text-xl sm:text-2xl text-gray-700 w-5/6 sm:w-4/6 m-auto text-center">
+            You don't have any cards yet. Click below to get started.
+          </p>
+          <div className="mt-5 sm:mt-8 sm:flex sm:justify-center px-4">
+            <div className="rounded-md shadow">
+              <Link to="/form">
+                <div className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-700 md:py-4 md:text-lg md:px-10 cursor-pointer">
+                  Get started
+                </div>
+              </Link>
+            </div>
+          </div>
         </div>
-        <button>Create Card</button>
-      </>
+      </div>
     );
   }
 }

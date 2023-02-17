@@ -13,9 +13,7 @@ export default function SocialLinks(props) {
   //Add another social channels
   function addMore(e) {
     e.preventDefault();
-
     const duplicateState = [...site];
-
     const data = {
       label: input,
       type: "text",
@@ -24,7 +22,6 @@ export default function SocialLinks(props) {
       value: ["socialUrls", `${input.toLowerCase()}`],
     };
     duplicateState.push(data);
-
     setSite(duplicateState);
   }
   //handle change event in addition of new input field

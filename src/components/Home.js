@@ -7,8 +7,6 @@ import qrCode from "../images/lottie/qrcode.json";
 import { Link } from "react-router-dom";
 
 export default function Home(props) {
-
-
   return (
     <>
       <div className="relative bg-white overflow-hidden">

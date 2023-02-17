@@ -30,7 +30,6 @@ export default function UpdateForm() {
         `https://britekard.herokuapp.com/vCards/mycard/update/${username}/${id}`
       )
       .then((response) => {
-    
         setUserInputs(response.data);
       })
       .catch(function (error) {
@@ -119,9 +118,9 @@ export default function UpdateForm() {
   } else if (userInputs) {
     return (
       <>
-        <div className="container mx-auto gap-2 max-w-4xl m-auto">
+        <div className="container mx-auto gap-2 max-w-4xl m-auto pb-4">
           <div className="container mx-auto sm:px-4">
-            <p className="text-center font-medium text-gray-600 text-xl pt-8 ">
+            <p className="text-2xl font-extrabold  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
               Update Business Card
             </p>
             <div className="flex flex-row flex-nowrap overflow-scroll scrollbar-hide my-8 pl-4 sm:pl-0 container mx-auto gap-2">
@@ -176,19 +175,27 @@ export default function UpdateForm() {
                   return null;
                 }
               })}
-              <button
-                type="submit"
-                className=" w-full sm:w-44 inline-flex justify-center py-2 px-4 border border-gray-500 shadow-sm text-sm font-medium rounded-2xl text-white bg-gray-500 hover:opacity-70 active:opacity-70 mt-8 mb-4"
-              >
-                <p className="leading-relaxed text-sm">Update Card</p>
-              </button>
+              <div className="mt-5 sm:mt-8 sm:flex justify-center  sm:justify-start">
+                <div className="rounded-md shadow">
+                  <button
+                    type="submit"
+                    className="w-full sm:w-60 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 md:py-4 md:text-lg md:px-10 cursor-pointer"
+                  >
+                    <p className="leading-relaxed text-sm"> Update Card</p>
+                  </button>
+                </div>
+              </div>
             </form>
-            <button
-              onClick={cancelUpdate}
-              className=" w-full sm:w-44 inline-flex justify-center py-2 px-4 border border-red shadow-sm text-sm font-medium rounded-2xl text-red  hover:opacity-70 active:opacity-70 mb-8"
-            >
-              Cancel
-            </button>
+            <div className="my-4 sm:flex justify-center  sm:justify-start">
+              <div className="rounded-md shadow">
+                <button
+                  onClick={cancelUpdate}
+                  className="w-full sm:w-60 flex items-center justify-center px-8 py-3 border border-gray-900 text-base font-medium rounded-md text-gray-900 bg-gray-white hover:bg-gray-100 md:py-4 md:text-lg md:px-10 cursor-pointer"
+                >
+                  <p className="leading-relaxed text-sm"> Cancel</p>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </>
