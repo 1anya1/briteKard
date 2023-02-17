@@ -75,7 +75,7 @@ export default function App() {
             element={<DisplayCard username={username} id={id} />}
           />
           <Route
-            path={`/share/:id`}
+            path={`/share/:username/:id`}
             element={<DisplayCard username={username} id={id} />}
           />
 
