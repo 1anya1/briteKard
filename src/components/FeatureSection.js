@@ -4,49 +4,60 @@ import {
   GlobeAltIcon,
   LightningBoltIcon,
   ScaleIcon,
+  CheckIcon,
+  
 } from "@heroicons/react/outline";
 
 const features = [
   {
-    name: "Competitive exchange rates",
+    name: "Convenient",
     description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
+      "Digital business cards can be easily shared via email, social media, or messaging apps, making them more convenient and accessible to others.",
     icon: GlobeAltIcon,
   },
   {
-    name: "No hidden fees",
+    name: "Eco-Friendly",
     description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
+      "By using a digital business card, you eliminate the need for paper cards, reducing waste and helping the environment.",
     icon: ScaleIcon,
   },
   {
-    name: "Transfers are instant",
+    name: "Cost-effective",
     description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
+      "Digital business cards can be created and distributed at a low cost, saving you money in printing and design expenses.",
     icon: LightningBoltIcon,
   },
   {
-    name: "Mobile notifications",
+    name: "Easy to update",
     description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
+      "Digital business cards can be easily updated with new information, such as your phone number or email address, making it easier to keep your contacts up-to-date.",
+    icon: AnnotationIcon,
+  },
+  {
+    name: "Interactive",
+    description:
+      "Digital business cards can include clickable links to your website or social media profiles, providing an interactive experience for the recipient.",
+    icon: AnnotationIcon,
+  },
+  {
+    name: "Increased reach",
+    description:
+      "With digital business cards, you can easily share your contact information with people all over the world, not just those in your immediate vicinity.",
     icon: AnnotationIcon,
   },
 ];
 
 export default function Feature() {
   return (
-    <div className="py-12 bg-white" id="feature-benefits">
+    <div className="py-12 bg-gray-100" id="feature-benefits">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:text-center">
-          <h2 className="text-base text-gray-600 font-semibold tracking-wide uppercase">
-            Ready when you are 
-          </h2>
+        
           <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-            A better way to send money
+           Why go digital?
           </p>
-          <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-            Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam
-            voluptatum cupiditate veritatis in accusamus quisquam.
+          <p className="mt-4 max-w-2xl text-xl text-gray-900 lg:mx-auto">
+          Digital business cards offer several benefits over traditional paper business cards:
           </p>
         </div>
 
@@ -55,8 +66,8 @@ export default function Feature() {
             {features.map((feature) => (
               <div key={feature.name} className="relative">
                 <dt>
-                  <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-gray-500 text-white">
-                    <feature.icon className="h-6 w-6" aria-hidden="true" />
+                  <div className="absolute flex items-center justify-center h-12 w-12 rounded-mde">
+                    <CheckIcon className="h-8 w-8 stroke-gray-900" aria-hidden="true" />
                   </div>
                   <p className="ml-16 text-lg leading-6 font-medium text-gray-900">
                     {feature.name}
