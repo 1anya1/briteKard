@@ -1,6 +1,6 @@
 import FormInput from "./Form/Input Styles/FormInput";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import axios from "axios";
 const data = [
   {
@@ -40,6 +40,7 @@ const data = [
   },
 ];
 export default function SignUp(props) {
+  const navigate = useNavigate();
   const [userInput, setUserInput] = useState([
     {
       username: null,
@@ -70,6 +71,7 @@ export default function SignUp(props) {
             localStorage.token = response.data.token;
             if (response.data.token) {
               props.setUsername(userInput.username);
+              navigate(`/myCards`);
             }
           })
           .catch((error) => {
