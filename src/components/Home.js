@@ -1,10 +1,10 @@
 import CTA from "./CTA";
 import "../images/home.svg";
-
 import Benefits from "./Benefits";
 import Lottie from "lottie-react";
 import qrCode from "../images/lottie/qrcode.json";
 import { Link } from "react-router-dom";
+import Feature from "./FeatureSection";
 
 export default function Home(props) {
   return (
@@ -16,7 +16,7 @@ export default function Home(props) {
               <div className="sm:text-center lg:text-left">
                 <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                   <span className="block xl:inline">
-                    Virtual Business Cards
+                    Digital Business Cards
                   </span>
                   <span className="block text-purple-400 xl:inline">
                     {" Made Easy "}
@@ -50,6 +50,7 @@ export default function Home(props) {
 
       <Benefits />
       <CTA />
+      <Feature />
     </>
   );
 }
