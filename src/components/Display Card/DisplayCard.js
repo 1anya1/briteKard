@@ -125,7 +125,6 @@ export default function DisplayCard() {
       ["LinkedIn", linkedIn],
     ];
 
-
     return (
       <div className=" w-full h-full sm:py-16">
         <div className="grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500  sm:bg-white max-w-screen-sm mx-auto sm:pb-12 sm:px-9 sm:rounded-3xl">

@@ -1,5 +1,12 @@
+const cardNameInputs = [
+  {
+    label: "Title",
+    type: "text",
+    id: "cardName",
+    placeholder: "Work",
+  },
+];
 const personalDataInputs = [
- 
   {
     label: "First Name",
     type: "text",
@@ -159,6 +166,7 @@ const workInfoInputs = [
 ];
 
 export {
+  cardNameInputs,
   personalDataInputs,
   homeAddressInputs,
   socialLinksInputs,

@@ -9,7 +9,6 @@ export default function GetVCard(props) {
         download(`${props.username}.VCF`, response.data[0]);
       })
       .catch(function (error) {
-
         console.log(error);
       });
   }

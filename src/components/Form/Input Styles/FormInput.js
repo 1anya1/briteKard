@@ -14,9 +14,16 @@ export default function FormInput(props) {
         value={props.value}
         placeholder={props.placeholder}
         onChange={(e) => props.change(e)}
-        className="mt-1 focus:ring-gray-500 focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+        className={`mt-1 block w-full shadow-sm sm:text-sm rounded-md  ${
+          props.error
+            ? "border-red focus:ring-red focus:border-red "
+            : "border-gray-300 focus:ring-gray-500 focus:border-gray-500 "
+        }`}
         required={props.required}
       />
+      {props.error && (
+        <p className="text-red text-xs italic pt-1">{props.error}</p>
+      )}
     </div>
   );
 }

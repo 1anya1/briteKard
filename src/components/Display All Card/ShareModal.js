@@ -1,10 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useRef } from "react";
 
-
 export default function ShareModal(props) {
   const { card, open, setOpen } = props;
   const cancelButtonRef = useRef(null);
+  console.log({props})
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -39,11 +39,10 @@ export default function ShareModal(props) {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 md:w-full md:max-w-lg">
                 <div className="p-4">
-                 
                   <p className="text-gray-600">{card.jobTitle}</p>
                   <div className="flex items-center pt-3">
                     <p className="text-sm truncate w-3/4">
-                      {window.location.origin}/share/{card.id}
+                      {window.location.origin}/share/{props.username}/{card.id}
                     </p>
                   </div>
                   <div className="pt-8">
@@ -52,7 +51,7 @@ export default function ShareModal(props) {
                       className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                       onClick={() => {
                         navigator.clipboard.writeText(
-                          `${window.location.origin}/share/${card.id}`
+                          `${window.location.origin}/share/${props.username}/${card.id}`
                         );
                       }}
                     >

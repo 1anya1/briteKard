@@ -39,7 +39,29 @@ export default function PersonalInfo(props) {
                 placeholder={el.placeholder}
                 value={props.userInputs[el.id]}
                 change={props.handleChange}
-                required={"required"}
+                error={
+                  props.cellError && props.userInputs[el.id].length < 1
+                    ? "Please enter phone number"
+                    : null
+                }
+              />
+            );
+          }
+          if (el.id === "firstName") {
+            return (
+              <FormInput
+                key={idx}
+                label={el.label}
+                type={el.type}
+                id={el.id}
+                placeholder={el.placeholder}
+                value={props.userInputs[el.id]}
+                change={props.handleChange}
+                error={
+                  props.nameError && props.userInputs[el.id].length < 1
+                    ? "Please enter name"
+                    : null
+                }
               />
             );
           } else {
@@ -52,7 +74,6 @@ export default function PersonalInfo(props) {
                 placeholder={el.placeholder}
                 value={props.userInputs[el.id]}
                 change={props.handleChange}
-                required={ el.id === "firstName" ? "required" :''}
               />
             );
           }
