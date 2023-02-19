@@ -4,7 +4,8 @@ import { useState } from "react";
 export default function ProfileImageInputs(props) {
 
 
-  const [image, setImage] = useState("");
+
+  const [image, setImage] = useState(props.image? props.image : '');
   const [error, setError] = useState(false);
 
   //Handiling image input

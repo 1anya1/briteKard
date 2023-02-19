@@ -4,7 +4,6 @@ import { Fragment, useRef } from "react";
 export default function ShareModal(props) {
   const { card, open, setOpen } = props;
   const cancelButtonRef = useRef(null);
-  console.log({props})
 
   return (
     <Transition.Root show={open} as={Fragment}>

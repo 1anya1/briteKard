@@ -2,12 +2,9 @@ import FormDescription from "../Input Styles/FormDescription";
 import { useState } from "react";
 import { getBase64, checkFileSize } from "../Form Functions/imageFunctions";
 export default function CoverPhoto(props) {
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(props.logo ? props.logo : "");
   const [error, setError] = useState(false);
   const formName = "Background Image";
-
-
-
 
   function handleFileInputChange(e) {
     const file = e.target.files[0];
@@ -20,7 +17,7 @@ export default function CoverPhoto(props) {
           const base64URL = file["base64"];
           setImage(base64URL);
           setError(false);
-          props.handleImageChange(base64URL, 'logo')
+          props.handleImageChange(base64URL, "logo");
         })
         .catch((err) => {
           console.log(err);
@@ -28,7 +25,7 @@ export default function CoverPhoto(props) {
     } else {
       setImage(null);
       setError(true);
-      props.handleImageChange('', 'logo')
+      props.handleImageChange("", "logo");
     }
   }
 
@@ -73,7 +70,7 @@ export default function CoverPhoto(props) {
                   name="logo"
                   type="file"
                   accept="image/png, image/jpeg"
-                  onChange={(e) =>handleFileInputChange(e)}
+                  onChange={(e) => handleFileInputChange(e)}
                   className="sr-only"
                 />
               </label>

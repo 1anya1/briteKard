@@ -7,13 +7,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
 import LoadingScreen from "../LoadingScreen";
-import { Buffer } from "buffer";
 
 const axios = require("axios");
 export default function UpdateForm() {
   const navigate = useNavigate();
   const { username, id } = useParams();
-  const backend = process.env.REACT_APP_ENV==='staging'? 'http://localhost:49152' : "https://britekard.herokuapp.com"
+  const backend =
+    process.env.REACT_APP_ENV === "staging"
+      ? "http://localhost:49152"
+      : "https://britekard.herokuapp.com";
 
   const [options, setOptions] = useState([
     [{ name: "Home Address", toggle: false }],
@@ -27,9 +29,7 @@ export default function UpdateForm() {
 
   useEffect(() => {
     axios
-      .get(
-        `${backend}/vCards/mycard/update/${username}/${id}`
-      )
+      .get(`${backend}/vCards/mycard/update/${username}/${id}`)
       .then((response) => {
         setUserInputs(response.data);
       })
@@ -45,10 +45,7 @@ export default function UpdateForm() {
   function sendData(body) {
     setSubmittedUpdate(true);
     axios
-      .post(
-        `${backend}/vCards/mycard/update/${username}/${id}`,
-        body
-      )
+      .post(`${backend}/vCards/mycard/update/${username}/${id}`, body)
       .then((response) => {
         navigate(-1);
       })
@@ -59,7 +56,7 @@ export default function UpdateForm() {
   function cancelUpdate() {
     navigate(-1);
   }
-  
+
   function formatUSNumber(entry) {
     if (entry.length < 1) {
       return entry;
@@ -73,14 +70,17 @@ export default function UpdateForm() {
   function handleImageChange(base64, type) {
     const userObj = { ...userInputs };
     if (type === "profile") {
+      const prevImage = userObj.photo
+      userObj.previousPhoto = prevImage
       userObj.photo = base64;
     } else {
+      const prevImage = userObj.logo
+      userObj.previousLogo = prevImage
       userObj.logo = base64;
     }
 
     setUserInputs(userObj);
   }
-
 
   const handleChange = (event) => {
     const userObj = { ...userInputs };
@@ -127,7 +127,7 @@ export default function UpdateForm() {
               <PersonalInfo
                 handleImageChange={handleImageChange}
                 userInputs={userInputs}
-                
+                handleChange={handleChange}
               />
               {options.map((el, idx) => {
                 if (el[0].toggle && el[0].name === "Home Address") {
@@ -161,8 +161,8 @@ export default function UpdateForm() {
                   return (
                     <CoverPhoto
                       key={idx}
+                      handleImageChange={handleImageChange}
                       logo={userInputs.logo}
-                      nediaType={userInputs.logo.mediaType}
                     />
                   );
                 } else {

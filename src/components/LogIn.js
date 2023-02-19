@@ -26,6 +26,7 @@ export default function LogIn(props) {
   ]);
   const navigate = useNavigate();
   const backend = process.env.REACT_APP_ENV==='staging'? 'http://localhost:49152' : "https://britekard.herokuapp.com"
+  console.log({backend})
   function handleChange(event) {
     const userObj = { ...userInputs };
     let value = event.target.value;
