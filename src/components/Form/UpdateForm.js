@@ -13,6 +13,7 @@ const axios = require("axios");
 export default function UpdateForm() {
   const navigate = useNavigate();
   const { username, id } = useParams();
+  const backend = process.env.REACT_APP_ENV==='staging'? 'http://localhost:49152' : "https://britekard.herokuapp.com"
 
   const [options, setOptions] = useState([
     [{ name: "Home Address", toggle: false }],
@@ -27,7 +28,7 @@ export default function UpdateForm() {
   useEffect(() => {
     axios
       .get(
-        `https://britekard.herokuapp.com/vCards/mycard/update/${username}/${id}`
+        `${backend}/vCards/mycard/update/${username}/${id}`
       )
       .then((response) => {
         setUserInputs(response.data);
@@ -35,7 +36,7 @@ export default function UpdateForm() {
       .catch(function (error) {
         console.log(error);
       });
-  }, [id, username]);
+  }, [backend, id, username]);
   function handleSubmit(event) {
     event.preventDefault();
     let body = userInputs;
@@ -45,7 +46,7 @@ export default function UpdateForm() {
     setSubmittedUpdate(true);
     axios
       .post(
-        `https://britekard.herokuapp.com/vCards/mycard/update/${username}/${id}`,
+        `${backend}/vCards/mycard/update/${username}/${id}`,
         body
       )
       .then((response) => {
@@ -58,24 +59,7 @@ export default function UpdateForm() {
   function cancelUpdate() {
     navigate(-1);
   }
-  function imageConvert(base64, type, id) {
-    const copyObj = { ...userInputs };
-    if (id === "photo") {
-      const img = base64.split(",");
-      const fileContents = new Buffer.from(img[1], "base64");
-      copyObj.photo.url = fileContents;
-      copyObj.photo.mediaType = type;
-      copyObj.photo.base64 = true;
-      setUserInputs(copyObj);
-    } else {
-      const img = base64.split(",");
-      const fileContents = new Buffer.from(img[1], "base64");
-      copyObj.logo.url = fileContents;
-      copyObj.logo.mediaType = type;
-      copyObj.logo.base64 = true;
-      setUserInputs(copyObj);
-    }
-  }
+  
   function formatUSNumber(entry) {
     if (entry.length < 1) {
       return entry;
@@ -86,6 +70,17 @@ export default function UpdateForm() {
     const part3 = match.length > 6 ? `-${match.substring(6, 10)}` : "";
     return `${part1}${part2}${part3}`;
   }
+  function handleImageChange(base64, type) {
+    const userObj = { ...userInputs };
+    if (type === "profile") {
+      userObj.photo = base64;
+    } else {
+      userObj.logo = base64;
+    }
+
+    setUserInputs(userObj);
+  }
+
 
   const handleChange = (event) => {
     const userObj = { ...userInputs };
@@ -130,9 +125,9 @@ export default function UpdateForm() {
           <div className="container mx-auto px-4">
             <form onSubmit={handleSubmit}>
               <PersonalInfo
-                handleChange={handleChange}
+                handleImageChange={handleImageChange}
                 userInputs={userInputs}
-                imageConvert={imageConvert}
+                
               />
               {options.map((el, idx) => {
                 if (el[0].toggle && el[0].name === "Home Address") {
@@ -166,8 +161,7 @@ export default function UpdateForm() {
                   return (
                     <CoverPhoto
                       key={idx}
-                      imageConvert={imageConvert}
-                      logo={userInputs.logo.url}
+                      logo={userInputs.logo}
                       nediaType={userInputs.logo.mediaType}
                     />
                   );

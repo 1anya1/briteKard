@@ -1,30 +1,26 @@
 import FormDescription from "../Input Styles/FormDescription";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { getBase64, checkFileSize } from "../Form Functions/imageFunctions";
-import { Buffer } from "buffer";
 export default function CoverPhoto(props) {
-  const [image, setImage] = useState(props.logo);
+  const [image, setImage] = useState('');
   const [error, setError] = useState(false);
   const formName = "Background Image";
 
-  useEffect(() => {
-    const b64 = new Buffer.from(props.logo).toString("base64");
-    setImage(`data:${props.mediaType};base64,${b64}`);
-  }, [props.mediaType, props.logo]);
+
+
 
   function handleFileInputChange(e) {
     const file = e.target.files[0];
     const size = checkFileSize(e.target.files[0].size);
 
-    if (size) {
+    if (size < 2097152) {
       getBase64(file)
         .then((result) => {
           file["base64"] = result;
           const base64URL = file["base64"];
-          let type = file["type"];
-          props.imageConvert(base64URL, type, "logo");
           setImage(base64URL);
           setError(false);
+          props.handleImageChange(base64URL, 'logo')
         })
         .catch((err) => {
           console.log(err);
@@ -32,6 +28,7 @@ export default function CoverPhoto(props) {
     } else {
       setImage(null);
       setError(true);
+      props.handleImageChange('', 'logo')
     }
   }
 
@@ -43,7 +40,7 @@ export default function CoverPhoto(props) {
         </label>
         <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md max-w-md m-auto">
           <div className="space-y-1 text-center">
-            {image === "data:undefined;base64," || image === null ? (
+            {!image ? (
               <svg
                 className="mx-auto h-12 w-12 text-gray-400"
                 stroke="currentColor"
@@ -75,7 +72,8 @@ export default function CoverPhoto(props) {
                   id="logo"
                   name="logo"
                   type="file"
-                  onChange={handleFileInputChange}
+                  accept="image/png, image/jpeg"
+                  onChange={(e) =>handleFileInputChange(e)}
                   className="sr-only"
                 />
               </label>

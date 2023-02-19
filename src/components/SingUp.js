@@ -1,6 +1,6 @@
 import FormInput from "./Form/Input Styles/FormInput";
 import { useState } from "react";
-import { Link , useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 const data = [
   {
@@ -50,6 +50,7 @@ export default function SignUp(props) {
       email: null,
     },
   ]);
+  const backend = process.env.REACT_APP_ENV==='staging'? 'http://localhost:49152' : " https://britekard.herokuapp.com"
   function handleChange(event) {
     const inputs = { ...userInput };
     const val = event.target.value;
@@ -60,10 +61,10 @@ export default function SignUp(props) {
   function formSubmit(e) {
     e.preventDefault();
     axios
-      .post("https://britekard.herokuapp.com/user/signup", userInput)
+      .post(`${backend}/user/signup`, userInput)
       .then((response) => {
         axios
-          .post("https://britekard.herokuapp.com/user/login", {
+          .post(`${backend}/user/login`, {
             username: userInput.username,
             password: userInput.password,
           })

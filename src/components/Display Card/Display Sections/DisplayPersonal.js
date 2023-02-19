@@ -46,7 +46,8 @@ export default function DisplayPersonal(props) {
                   {el === "Phone Number" && (
                     <a href={`tel:+1${props.personalInfo[idx]}`}>
                       <p className="text-gray-700 text-base pb-4 font-medium">
-                        {formatUSNumber(props.personalInfo[idx])}
+                        {/* {formatUSNumber(props.personalInfo[idx])} */}
+                        {(props.personalInfo[idx])}
                       </p>
                     </a>
                   )}
