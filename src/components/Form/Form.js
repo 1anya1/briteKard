@@ -7,7 +7,6 @@ import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
-import { Buffer } from "buffer";
 import ColorPicker from "./ColorSelect";
 
 const axios = require("axios");

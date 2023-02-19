@@ -38,7 +38,7 @@ export default function App() {
     } else {
       setLoggedIn(false);
     }
-  }, [username]);
+  }, [backend, username]);
 
   const handleLogOut = (e) => {
     e.preventDefault();
