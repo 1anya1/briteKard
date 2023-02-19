@@ -20,8 +20,6 @@ export default function App() {
   const location = useLocation();
   const backend = process.env.REACT_APP_ENV==='staging'? 'http://localhost:49152' : "https://britekard.herokuapp.com"
 
-
-
   useEffect(() => {
     if (localStorage.token) {
       axios
@@ -75,11 +73,11 @@ export default function App() {
 
           <Route
             path={`mycard/preview/:username/:id`}
-            element={<DisplayCard username={username} id={id} />}
+            element={<DisplayCard />}
           />
           <Route
             path={`/share/:username/:id`}
-            element={<DisplayCard username={username} id={id} />}
+            element={<DisplayCard />}
           />
 
           <Route path={`myCards`} element={<AllCards username={username} />} />
