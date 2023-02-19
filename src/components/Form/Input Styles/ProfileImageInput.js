@@ -1,29 +1,27 @@
 import { getBase64, checkFileSize } from "../Form Functions/imageFunctions";
-import { useState, useEffect } from "react";
-import { Buffer } from "buffer";
+import { useState } from "react";
 
 export default function ProfileImageInputs(props) {
-  const [image, setImage] = useState(null);
+
+
+
+  const [image, setImage] = useState(props.image? props.image : '');
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    if (props.imageData.url) {
-      const b64 = new Buffer.from(props.imageData.url).toString("base64");
-      setImage(`data:${props.imageData.mediaType};base64,${b64}`);
-    }
-  }, [props.imageData.mediaType, props.imageData.url]);
+  //Handiling image input
+  //Setting to max 2gb of data transfer
+  // converting to base 64URL and setting to image
   function handleFileInputChange(e) {
     const file = e.target.files[0];
     const size = checkFileSize(e.target.files[0].size);
-    if (size) {
+    if (size < 2097152) {
       getBase64(file)
         .then((result) => {
           file["base64"] = result;
           const base64URL = file["base64"];
-          let type = file["type"];
-          props.imageConvert(base64URL, type, "photo");
           setImage(base64URL);
           setError(false);
+          props.handleImageChange(base64URL, "profile");
         })
         .catch((err) => {
           console.log(err);
@@ -31,6 +29,7 @@ export default function ProfileImageInputs(props) {
     } else {
       setError(true);
       setImage(null);
+      props.handleImageChange("", "profile");
     }
   }
 
@@ -58,7 +57,7 @@ export default function ProfileImageInputs(props) {
           </span>
           <label
             htmlFor="file-upload"
-            className="ml-5 relative cursor-pointer bg-gray-500 rounded-md py-2 px-3 border border-gray-500  text-white hover:opacity-70 focus:ring-gray-500 focus:border-gray-500"
+            className="ml-5 relative cursor-pointer bg-gray-500 rounded-2xl py-2 px-3 border border-gray-500  text-white hover:opacity-70 focus:ring-gray-500 focus:border-gray-500"
           >
             <p className="leading-relaxed text-xs font-medium"> File Input</p>
 
@@ -67,7 +66,7 @@ export default function ProfileImageInputs(props) {
               name="file-upload"
               type="file"
               accept="image/png, image/jpeg"
-              onChange={handleFileInputChange}
+              onChange={(e) => handleFileInputChange(e)}
               className="sr-only"
             />
           </label>

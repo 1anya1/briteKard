@@ -8,11 +8,12 @@ export default function DeleteFormModal(props) {
  const{open, setOpen, card, username}=props
 
   const cancelButtonRef = useRef(null);
+  const backend = process.env.REACT_APP_ENV==='staging'? 'http://localhost:49152' : "https://britekard.herokuapp.com"
 
   function cardDeletion() {
     axios
       .delete(
-        `https://britekard.herokuapp.com/vCards/mycard/delete/${username}/${card.id}`
+        `${backend}/vCards/mycard/delete/${username}/${card.id}`
       )
       .then((response) => {
         setOpen(false)

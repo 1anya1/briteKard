@@ -7,14 +7,12 @@ import URLInputs from "../Input Styles/URLInputs";
 export default function PersonalInfo(props) {
   const formName = "Personal Info";
 
+
   return (
     <div className="drop-shadow-md  border-gray-100 border rounded-2xl bg-snow mb-5 max-w-4xl m-auto">
       <div className=" p-4 md:grid md:grid-cols-3 md:gap-3 sm:p-8">
         <FormDescription formName={formName} />
-        <ProfileImageInputs
-          imageConvert={props.imageConvert}
-          imageData={props.userInputs.photo}
-        />
+        <ProfileImageInputs handleImageChange={props.handleImageChange} image={props.userInputs.photo} />
         {personalDataInputs.map((el, idx) => {
           if (el.type === "url")
             return (

@@ -18,12 +18,15 @@ export default function App() {
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const location = useLocation();
+  const backend = process.env.REACT_APP_ENV==='staging'? 'http://localhost:49152' : "https://britekard.herokuapp.com"
+
+
 
   useEffect(() => {
     if (localStorage.token) {
       axios
         .get(
-          "https://britekard.herokuapp.com/user/verify/" + localStorage.token
+          `${backend}/user/verify/${localStorage.token}`
         )
         .then((response) => {
           setLoggedIn(true);
@@ -35,7 +38,7 @@ export default function App() {
     } else {
       setLoggedIn(false);
     }
-  }, [username]);
+  }, [backend, username]);
 
   const handleLogOut = (e) => {
     e.preventDefault();

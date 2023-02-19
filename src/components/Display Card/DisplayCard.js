@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import DisplayPersonal from "./Display Sections/DisplayPersonal";
 import DisplaySocial from "./Display Sections/DisplaySocial";
 import DisplayWorkInfo from "./Display Sections/DisplayWorkInfo";
@@ -7,43 +6,28 @@ import { PhoneIcon, MailIcon, ChatAltIcon } from "@heroicons/react/solid";
 import { useParams } from "react-router-dom";
 import QRmodal from "./Display Sections/Display Functions/QRmodal";
 import LoadingScreen from "../LoadingScreen";
-import { Buffer } from "buffer";
-// import ProfileImageInputs from "../Form/Input Styles/ProfileImageInput";
 
 const axios = require("axios");
+
 export default function DisplayCard() {
   let { username, id } = useParams();
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
-  const [image, setImage] = useState(null);
-  const [background, setBackground] = useState(null);
-  const [qr, setQR] = useState(null);
-  //component did mount call only once []
-  useEffect(() => {
-    axios
-      .get(`https://britekard.herokuapp.com/vCards/mycard/${username}/${id}`)
-      .then((response) => {
-        const data = response.data[0];
-        setData(data);
-        if (data.photo.url.data.length > 0) {
-          const b64 = new Buffer.from(data.photo.url).toString("base64");
-          setImage(`data:${data.photo.mediaType};base64,${b64}`);
-        }
-        if (data.logo.url.data.length > 0) {
-          const backgroundb64 = new Buffer.from(data.logo.url).toString(
-            "base64"
-          );
-          setBackground(`data:${data.logo.mediaType};base64,${backgroundb64}`);
-        }
+  const backend =
+    process.env.REACT_APP_ENV === "staging"
+      ? "http://localhost:49152"
+      : "https://britekard.herokuapp.com";
 
-        const qrB64 = new Buffer.from(data.qrCode).toString("base64");
-        setQR(`data:image/png;base64,${qrB64}`);
-      });
-  }, [id, qr, username]);
+  useEffect(() => {
+    axios.get(`${backend}/vCards/mycard/${username}/${id}`).then((response) => {
+      const data = response.data[0];
+      setData(data);
+    });
+  }, [backend, id, username]);
 
   function getCard() {
     axios
-      .get(`https://britekard.herokuapp.com/vCards/${username}/${id}`)
+      .get(`${backend}/vCards/${username}/${id}`)
       .then(function (response) {
         download(`${username}.VCF`, response.data[0]);
       })
@@ -129,27 +113,27 @@ export default function DisplayCard() {
       <div className=" w-full h-full sm:py-16">
         <div className="grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500  sm:bg-white max-w-screen-sm mx-auto sm:pb-12 sm:px-9 sm:rounded-3xl">
           <div className=" w-full col-span-5 h-60  sm:h-64 relative sm:pt-12 sm:pb-104">
-            {background && (
+            {data.logo && (
               <img
                 className="object-cover overflow-hiddenr w-full h-64 object-center sm:rounded-3xl"
-                src={background}
+                src={data.logo}
                 alt="logo"
               />
             )}
-            {!background && (
+            {!data.photo && (
               <div className="object-cover overflow-hiddenr w-full h-64 object-center sm:rounded-3xl bg-gray-500"></div>
             )}
 
-            {image && (
+            {data.photo && (
               <div className=" rounded-full overflow-hidden justify-self-center absolute bottom-[-88px] sm:bottom-[-124px] left-2/4 translate-x-negative-half z-20">
                 <img
-                  src={image}
+                  src={data.photo}
                   alt="profile"
                   className="h-36 w-36 sm:h-40 sm:w-40 object-cover border-solid  rounded-full border-gray-50  border-8 relative "
                 />
               </div>
             )}
-            {!image && (
+            {!data.photo && (
               <div className=" rounded-full overflow-hidden justify-self-center absolute bottom-[-88px] sm:bottom-[-124px] left-2/4 translate-x-negative-half z-20">
                 <div
                   alt="profile"
@@ -205,19 +189,19 @@ export default function DisplayCard() {
               <div className="flex px-4 flex-col">
                 <button
                   onClick={getCard}
-                  className="text-small text-white font-medium pt-4 pb-4 mb-4 w-full bg-gray-500 rounded-2xl hover:bg-opacity-70 "
+                  className={`text-small text-white font-medium pt-4 pb-4 mb-4 w-full rounded-2xl hover:bg-opacity-70 bg-${data.colorScheme}`}
                 >
                   {"Add To Contacts".toUpperCase()}
                 </button>
                 <button
                   onClick={shareCard}
-                  className="text-small text-white font-medium pt-4 pb-4 mb-8 w-full bg-gray-500 rounded-2xl  hover:bg-opacity-70 "
+                  className={`text-small text-white font-medium pt-4 pb-4 mb-8 w-full rounded-2xl  hover:bg-opacity-70 bg-${data.colorScheme}`}
                 >
                   {"Share Card".toUpperCase()}
                 </button>
                 <QRmodal
                   qrToggle={qrToggle}
-                  qrCode={qr}
+                  qrCode={data.qrCode}
                   shareCard={shareCard}
                 />
               </div>

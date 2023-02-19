@@ -7,13 +7,16 @@ import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
-import { Buffer } from "buffer";
 import ColorPicker from "./ColorSelect";
 
 const axios = require("axios");
 export default function Forms(props) {
   //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
   const [submittedUpdate, setSubmittedUpdate] = useState(false);
+  const backend =
+    process.env.REACT_APP_ENV === "staging"
+      ? "http://localhost:49152"
+      : "https://britekard.herokuapp.com";
 
   const navigate = useNavigate();
   const [options, setOptions] = useState([
@@ -50,22 +53,14 @@ export default function Forms(props) {
     homePhone: "",
     homeFax: "",
     lastName: "",
-    logo: {
-      url: "",
-      mediaType: "",
-      base64: false,
-    },
+    logo: "",
     middleName: "",
     namePrefix: "",
     nameSuffix: "",
     nickname: "",
     note: "",
     organization: "",
-    photo: {
-      url: "",
-      mediaType: "",
-      base64: false,
-    },
+    photo: "",
     role: "",
     socialUrls: {
       facebook: "",
@@ -90,6 +85,7 @@ export default function Forms(props) {
     workFax: "",
     qrCode: "",
   });
+
 
   const [nameError, setNameError] = useState(false);
   const [cellError, setCellError] = useState(false);
@@ -130,36 +126,30 @@ export default function Forms(props) {
 
   useEffect(() => {
     if (props.username) {
-      axios
-        .get(`https://britekard.herokuapp.com/vCards/${props.username}`)
-        .then((response) => {
-          const titles = [];
-          const data = response.data;
-          data.forEach((el) => {
-            if (el.cardName) {
-              titles.push(el.cardName);
-            }
-          });
-          setTitles([...titles]);
+      axios.get(`${backend}/vCards/${props.username}`).then((response) => {
+        const titles = [];
+        const data = response.data;
+        data.forEach((el) => {
+          if (el.cardName) {
+            titles.push(el.cardName);
+          }
         });
+        setTitles([...titles]);
+      });
     }
-  }, [props.username]);
+  }, [backend, props.username]);
 
   function sendData(body) {
     setSubmittedUpdate(true);
 
     axios
-      .post("https://britekard.herokuapp.com/vCards", body)
+      .post(`${backend}/vCards`, body)
       .then((response) => {
         const [qr, , id] = response.data;
         props.setId(id);
-        const tobuff = qr.split(",");
-        setQR(new Buffer.from(tobuff[1], "base64"));
+        setQR(qr);
         setId(id);
       })
-      .catch(function (error) {
-        console.log(error);
-      });
   }
   useEffect(() => {
     if (id && id) {
@@ -168,38 +158,15 @@ export default function Forms(props) {
   });
   function sendQR(id, qr) {
     axios
-      .post(
-        `https://britekard.herokuapp.com/vCards/mycard/${props.username}/${id}`,
-        {
-          qrCode: qr,
-        }
-      )
+      .post(` ${backend}/vCards/mycard/${props.username}/${id}`, {
+        qrCode: qr,
+      })
       .then((res) => {
         navigate(`/myCards`);
       })
       .catch((err) => console.error(err));
   }
 
-  function imageConvert(base64, type, id) {
-    const copyObj = { ...userInputs };
-    if (id === "photo") {
-      const img = base64.split(",");
-      const fileContents = new Buffer.from(img[1], "base64");
-
-      copyObj.photo.url = fileContents;
-      copyObj.photo.mediaType = type;
-      copyObj.photo.base64 = true;
-      setUserInputs(copyObj);
-    } else {
-      const img = base64.split(",");
-      const fileContents = new Buffer.from(img[1], "base64");
-
-      copyObj.logo.url = fileContents;
-      copyObj.logo.mediaType = type;
-      copyObj.logo.base64 = true;
-      setUserInputs(copyObj);
-    }
-  }
   function formatUSNumber(entry) {
     if (entry.length < 1) {
       return entry;
@@ -211,8 +178,20 @@ export default function Forms(props) {
     return `${part1}${part2}${part3}`;
   }
 
+  function handleImageChange(base64, type) {
+    const userObj = { ...userInputs };
+    if (type === "profile") {
+      userObj.photo = base64;
+    } else {
+      userObj.logo = base64;
+    }
+
+    setUserInputs(userObj);
+  }
+
   function handleChange(event) {
     const userObj = { ...userInputs };
+
     let value = event.target.value;
     let objKey = event.target.getAttribute("id");
     if (
@@ -262,11 +241,11 @@ export default function Forms(props) {
             <PersonalInfo
               handleChange={handleChange}
               userInputs={userInputs}
-              imageConvert={imageConvert}
               cellError={cellError}
               nameError={nameError}
               setNameError={setNameError}
               setCellError={setCellError}
+              handleImageChange={handleImageChange}
             />
             {options.map((el, idx) => {
               if (el[0].toggle && el[0].name === "Home Address") {
@@ -300,8 +279,7 @@ export default function Forms(props) {
                 return (
                   <CoverPhoto
                     key={idx}
-                    imageConvert={imageConvert}
-                    logo={userInputs.logo.url}
+                    handleImageChange={handleImageChange}
                   />
                 );
               }

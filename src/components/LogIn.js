@@ -25,6 +25,8 @@ export default function LogIn(props) {
     { error: false },
   ]);
   const navigate = useNavigate();
+  const backend = process.env.REACT_APP_ENV==='staging'? 'http://localhost:49152' : "https://britekard.herokuapp.com"
+  console.log({backend})
   function handleChange(event) {
     const userObj = { ...userInputs };
     let value = event.target.value;
@@ -35,7 +37,7 @@ export default function LogIn(props) {
   function handleSubmit(e) {
     e.preventDefault();
     axios
-      .post("https://britekard.herokuapp.com/user/login", {
+      .post(`${backend}/user/login`, {
         username: userInputs.username,
         password: userInputs.password,
       })

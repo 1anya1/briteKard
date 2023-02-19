@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { UserCircleIcon } from "@heroicons/react/solid";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
-import { Buffer } from "buffer";
 import ShareModal from "./ShareModal";
 import DeleteFormModal from "../Form/Input Styles/DeleteFormModal";
 import Lottie from "lottie-react";
@@ -19,6 +18,7 @@ export default function AllCards(props) {
   const username = props.username;
   const [data, setData] = useState(false);
   const displayCard = [];
+  const backend = process.env.REACT_APP_ENV==='staging'? 'http://localhost:49152' : "https://britekard.herokuapp.com"
 
   useEffect(() => {
     const timeId = setTimeout(() => {
@@ -36,12 +36,12 @@ export default function AllCards(props) {
   useEffect(() => {
     if (username) {
       axios
-        .get(`https://britekard.herokuapp.com/vCards/${username}`)
+        .get(`${backend}/vCards/${username}`)
         .then((response) => {
           setData(response.data);
         });
     }
-  }, [username, deleteModal]);
+  }, [username, deleteModal, backend]);
 
   for (let card in data) {
     const {
@@ -49,11 +49,9 @@ export default function AllCards(props) {
       firstName,
       lastName,
       title,
-      photo: { url, mediaType },
+      photo,
     } = data[card];
-    const b64 = new Buffer.from(url).toString("base64");
-
-    const imageConvert = `data:${mediaType};base64,${b64}`;
+    
 
     const name = `${firstName} ${lastName}`;
 
@@ -61,7 +59,7 @@ export default function AllCards(props) {
       id: _id,
       name: name,
       jobTitle: title,
-      image: imageConvert,
+      image: photo,
     };
     displayCard.push(display);
   }
@@ -135,13 +133,6 @@ export default function AllCards(props) {
                   Delete
                 </button>
               </div>
-
-              {/* <div
-                onClick={() => handleModal(card)}
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-400 hover:bg-purple-300 md:py-4 md:text-lg md:px-10 cursor-pointer"
-              >
-                Share
-              </div> */}
             </div>
           );
         })}

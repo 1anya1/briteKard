@@ -3,16 +3,16 @@ export default function DisplayPersonal(props) {
   function removeHttp(url) {
     return url.replace(/^https?:\/\//, "");
   }
-  function formatUSNumber(entry) {
-    const match = entry
-      .replace(/\D+/g, "")
-      .replace(/^1/, "")
-      .match(/([^\d]*\d[^\d]*){1,10}$/)[0];
-    const part1 = match.length > 2 ? `(${match.substring(0, 3)})` : match;
-    const part2 = match.length > 3 ? ` ${match.substring(3, 6)}` : "";
-    const part3 = match.length > 6 ? `-${match.substring(6, 10)}` : "";
-    return `${part1}${part2}${part3}`;
-  }
+  // function formatUSNumber(entry) {
+  //   const match = entry
+  //     .replace(/\D+/g, "")
+  //     .replace(/^1/, "")
+  //     .match(/([^\d]*\d[^\d]*){1,10}$/)[0];
+  //   const part1 = match.length > 2 ? `(${match.substring(0, 3)})` : match;
+  //   const part2 = match.length > 3 ? ` ${match.substring(3, 6)}` : "";
+  //   const part3 = match.length > 6 ? `-${match.substring(6, 10)}` : "";
+  //   return `${part1}${part2}${part3}`;
+  // }
   return (
     <div className="drop-shadow-md mx-4 border-gray-100 border rounded-2xl  bg-white mb-5">
       <div className="mx-4 pt-4">
@@ -46,7 +46,8 @@ export default function DisplayPersonal(props) {
                   {el === "Phone Number" && (
                     <a href={`tel:+1${props.personalInfo[idx]}`}>
                       <p className="text-gray-700 text-base pb-4 font-medium">
-                        {formatUSNumber(props.personalInfo[idx])}
+                        {/* {formatUSNumber(props.personalInfo[idx])} */}
+                        {(props.personalInfo[idx])}
                       </p>
                     </a>
                   )}

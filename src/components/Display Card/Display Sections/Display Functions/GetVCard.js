@@ -1,10 +1,12 @@
 const axios = require("axios");
 export default function GetVCard(props) {
+  const backend =
+    process.env.REACT_APP_ENV === "staging"
+      ? "http://localhost:49152"
+      : "https://britekard.herokuapp.com";
   function getCard() {
     axios
-      .get(
-        `https://britekard.herokuapp.com/vCards/${props.username}/${props.id}`
-      )
+      .get(`${backend}/vCards/${props.username}/${props.id}`)
       .then(function (response) {
         download(`${props.username}.VCF`, response.data[0]);
       })
