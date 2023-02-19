@@ -74,7 +74,7 @@ export default function App() {
           />
 
           <Route
-            path={`mycard/preview/:id`}
+            path={`mycard/preview/:username/:id`}
             element={<DisplayCard username={username} id={id} />}
           />
           <Route
