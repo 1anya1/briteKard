@@ -19,10 +19,16 @@ export default function DisplayCard() {
       : "https://britekard.herokuapp.com";
 
   useEffect(() => {
-    axios.get(`${backend}/vCards/mycard/${username}/${id}`).then((response) => {
+    axios.get(`${backend}/vCards/mycard/${username}/${id}`)
+    .then((response) => {
       const data = response.data[0];
       setData(data);
-    });
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+    
+    ;
   }, [backend, id, username]);
 
   function getCard() {
