@@ -107,7 +107,7 @@ export default function AllCards(props) {
               </div>
               <div className="flex flex-wrap gap-1">
                 <button
-                  onClick={() => navigate(`/mycard/preview/${card.id}`)}
+                  onClick={() => navigate(`/mycard/preview/${username}/${card.id}`)}
                   className="w-[49%]  border p-1  font-medium border-gray-500  rounded-md bg-white  hover:bg-gray-500 hover:text-white text-gray-500"
                 >
                   Preview
