@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import FormInput from "./Form/Input Styles/FormInput";
+import FormInput from "../Form/Input Styles/FormInput";
 import { Link, useNavigate } from "react-router-dom";
 const data = [
   {
@@ -16,28 +16,32 @@ const data = [
     id: "password",
     placeholder: "password",
     value: "",
+    hidden: true,
   },
 ];
 export default function LogIn(props) {
-  const [userInputs, setUserInputs] = useState([
-    { username: null },
-    { password: null },
-    { error: false },
-  ]);
+  const [userInputs, setUserInputs] = useState({
+    username: null,
+    password: null,
+    error: false,
+    errorMessage:''
+  });
   const navigate = useNavigate();
-  const backend = process.env.REACT_APP_ENV==='staging'? 'http://localhost:49152' : "https://britekard.herokuapp.com"
-  console.log({backend})
   function handleChange(event) {
     const userObj = { ...userInputs };
+    console.log(userObj);
     let value = event.target.value;
     let objKey = event.target.getAttribute("id");
     userObj[objKey] = value;
+    userObj.error=false
     setUserInputs(userObj);
+
   }
+  console.log(process.env.REACT_APP_BACKEND_URL);
   function handleSubmit(e) {
     e.preventDefault();
     axios
-      .post(`${backend}/user/login`, {
+      .post(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
         username: userInputs.username,
         password: userInputs.password,
       })
@@ -50,6 +54,12 @@ export default function LogIn(props) {
       })
       .catch((error) => {
         console.log(error);
+        console.log(error.response.data);
+        setUserInputs((prevState) => ({
+          ...prevState,
+          error: true,
+          errorMessage: error.response.data
+        }));
       });
   }
 
@@ -59,6 +69,11 @@ export default function LogIn(props) {
         <p className="text-2xl font-extrabold  text-left  tracking-tight text-gray-900  mb-5 ">
           Log In
         </p>
+        {userInputs.error &&
+         <p className="text-md   text-left  tracking-tight text-red  mb-5 ">
+         {userInputs.errorMessage}
+       </p>
+        }
         <form onSubmit={handleSubmit}>
           {data.map((el, idx) => {
             return (
@@ -71,6 +86,7 @@ export default function LogIn(props) {
                 value={userInputs[el.id] || ""}
                 change={handleChange}
                 required={"required"}
+                hidden={el.hidden}
               />
             );
           })}
@@ -90,6 +106,11 @@ export default function LogIn(props) {
               <span className="cursor-pointer text-purple-400">
                 Sign up here
               </span>
+            </Link>
+          </p>
+          <p className="pt-4">
+            <Link to="/forgot-password">
+              <p className="cursor-pointer text-purple-400">Forgot Password</p>
             </Link>
           </p>
         </form>

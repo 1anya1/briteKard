@@ -8,7 +8,7 @@ export default function FormInput(props) {
         {props.label}
       </label>
       <input
-        type={props.type}
+        type={ props.hidden  ? 'password' : props.type}
         name={props.id}
         id={props.id}
         value={props.value}

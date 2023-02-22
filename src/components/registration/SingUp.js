@@ -1,4 +1,4 @@
-import FormInput from "./Form/Input Styles/FormInput";
+import FormInput from "../Form/Input Styles/FormInput";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,21 +16,8 @@ const data = [
     id: "password",
     placeholder: "password",
     value: "",
+    hidden:true
   },
-  // {
-  //   label: "First Name ",
-  //   type: "text",
-  //   id: "firstName",
-  //   placeholder: "userName",
-  //   value: "",
-  // },
-  // {
-  //   label: "Last Name",
-  //   type: "text",
-  //   id: "lastName",
-  //   placeholder: "lastName",
-  //   value: "",
-  // },
   {
     label: "Email",
     type: "text",
@@ -50,7 +37,7 @@ export default function SignUp(props) {
       email: null,
     },
   ]);
-  const backend = process.env.REACT_APP_ENV==='staging'? 'http://localhost:49152' : " https://britekard.herokuapp.com"
+
   function handleChange(event) {
     const inputs = { ...userInput };
     const val = event.target.value;
@@ -61,10 +48,10 @@ export default function SignUp(props) {
   function formSubmit(e) {
     e.preventDefault();
     axios
-      .post(`${backend}/user/signup`, userInput)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/user/signup`, userInput)
       .then((response) => {
         axios
-          .post(`${backend}/user/login`, {
+          .post(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
             username: userInput.username,
             password: userInput.password,
           })
@@ -98,6 +85,7 @@ export default function SignUp(props) {
                 value={userInput[el.id] || ""}
                 change={handleChange}
                 required={"required"}
+                hidden={el.hidden}
               />
             );
           })}
