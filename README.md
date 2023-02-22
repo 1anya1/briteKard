@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# BriteKard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+BirteKard is an application that helps users create a digital version of business cards. Users can customize their cards and share them using a unique link or QR code, making it easy for others to connect and access their contact information. Users can upload digital business cards directly into the phone via a .vcf file.
 
-## Available Scripts
+[![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://travis-ci.org/badges/badgerbadgerbadger) [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Frontend 
+The front end of this app takes advantage of the React framework and React Router Dom to build a single dynamic page. The parent component App.js controls page permissions based on JWT authentication; if a user is authenticated, the index and other pages become accessible and render views unique to the specific user. Tailwindcss was utilized to rapidly develop custom, responsive designs with minimal CSS code while maintaining design consistency and flexibility. Frontend deployed using Netlify.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Backend 
 
-### `npm test`
+On the application's server side, user authentication is handled through Passport. For the database, MongoDB was chosen due to its flexibility, and two separate schemas were established for users and cards. To store images, the app integrates the Cloudinary SDK, which offers fast image retrieval. Additionally, the app features a password reset function, which is made possible by implementing Nodemailer. Bakcend deployed to Heroku.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Technologies used
+  - ReactJS
+  - MongoDB
+  - Express
+  - Taiwindcss
+  - Cloudinary SDK
+  - Nodemailer
+  - Netlify
+  - Heroku
+  - Figma
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### To Get Started 
 
-### `npm run eject`
+- Clone this repo to your local machine using `https://github.com/pavloskaralis/foodie`
+- Install dependencies: npm install
+- Start the server: npm start
+- Navigate to the app in your browser: http://localhost:3000
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Roadmap
+- Set up Context for global state management 
+- Standarize components and implement storybook
+- Set up end to end testing 
+- Create Rect Native app
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## License
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
-## Learn More
+- **[MIT license](http://opensource.org/licenses/mit-license.php)**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
