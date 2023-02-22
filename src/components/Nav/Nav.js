@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import Logo from "../../Logo";
 import { useLocation } from "react-router-dom";
 
 function classNames(...classes) {
@@ -54,7 +53,7 @@ export default function Nav(props) {
               <div className="flex-1 flex items-center justify-center sm:justify-between sm:items-stretch ">
                 <Link to="/">
                   <div className="flex-shrink-0 flex items-center gap-2">
-                    <Logo height={"34px"} width={"auto"} />
+                    {/* <Logo height={"34px"} width={"auto"} /> */}
                     <p className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl ">
                       BriteKard
                     </p>
