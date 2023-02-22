@@ -18,7 +18,7 @@ export default function AllCards(props) {
   const username = props.username;
   const [data, setData] = useState(false);
   const displayCard = [];
-  const backend = process.env.REACT_APP_ENV==='staging'? 'http://localhost:49152' : "https://britekard.herokuapp.com"
+
 
   useEffect(() => {
     const timeId = setTimeout(() => {
@@ -36,12 +36,12 @@ export default function AllCards(props) {
   useEffect(() => {
     if (username) {
       axios
-        .get(`${backend}/vCards/${username}`)
+        .get(`${process.env.REACT_APP_BACKEND_URL}/vCards/${username}`)
         .then((response) => {
           setData(response.data);
         });
     }
-  }, [username, deleteModal, backend]);
+  }, [username, deleteModal]);
 
   for (let card in data) {
     const {

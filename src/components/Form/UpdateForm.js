@@ -12,10 +12,7 @@ const axios = require("axios");
 export default function UpdateForm() {
   const navigate = useNavigate();
   const { username, id } = useParams();
-  const backend =
-    process.env.REACT_APP_ENV === "staging"
-      ? "http://localhost:49152"
-      : "https://britekard.herokuapp.com";
+  
 
   const [options, setOptions] = useState([
     [{ name: "Home Address", toggle: false }],
@@ -29,14 +26,14 @@ export default function UpdateForm() {
 
   useEffect(() => {
     axios
-      .get(`${backend}/vCards/mycard/update/${username}/${id}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/vCards/mycard/update/${username}/${id}`)
       .then((response) => {
         setUserInputs(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }, [backend, id, username]);
+  }, [ id, username]);
   function handleSubmit(event) {
     event.preventDefault();
     let body = userInputs;
@@ -45,7 +42,7 @@ export default function UpdateForm() {
   function sendData(body) {
     setSubmittedUpdate(true);
     axios
-      .post(`${backend}/vCards/mycard/update/${username}/${id}`, body)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/vCards/mycard/update/${username}/${id}`, body)
       .then((response) => {
         navigate(-1);
       })

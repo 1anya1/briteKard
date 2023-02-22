@@ -13,13 +13,9 @@ export default function DisplayCard() {
   let { username, id } = useParams();
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
-  const backend =
-    process.env.REACT_APP_ENV === "staging"
-      ? "http://localhost:49152"
-      : "https://britekard.herokuapp.com";
-
+ 
   useEffect(() => {
-    axios.get(`${backend}/vCards/mycard/${username}/${id}`)
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/vCards/mycard/${username}/${id}`)
     .then((response) => {
       const data = response.data[0];
       setData(data);
@@ -29,11 +25,11 @@ export default function DisplayCard() {
     })
     
     ;
-  }, [backend, id, username]);
+  }, [ id, username]);
 
   function getCard() {
     axios
-      .get(`${backend}/vCards/${username}/${id}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/vCards/${username}/${id}`)
       .then(function (response) {
         download(`${username}.VCF`, response.data[0]);
       })

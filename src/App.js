@@ -9,8 +9,10 @@ import UpdateForm from "./components/Form/UpdateForm";
 import Home from "./components/Home";
 import axios from "axios";
 import Footer from "./components/Footer/Footer";
-import LogIn from "./components/LogIn";
-import SignUp from "./components/SingUp";
+import LogIn from "./components/registration/LogIn";
+import SignUp from "./components/registration/SingUp";
+import PasswordReset from "./components/registration/PasswordReset";
+import CreateNewPassword from "./components/registration/CreateNewPassword";
 
 export default function App() {
   const [username, setUsername] = useState("");
@@ -18,13 +20,13 @@ export default function App() {
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const location = useLocation();
-  const backend = process.env.REACT_APP_ENV==='staging'? 'http://localhost:49152' : "https://britekard.herokuapp.com"
+
 
   useEffect(() => {
     if (localStorage.token) {
       axios
         .get(
-          `${backend}/user/verify/${localStorage.token}`
+          `${process.env.REACT_APP_BACKEND_URL}/user/verify/${localStorage.token}`
         )
         .then((response) => {
           setLoggedIn(true);
@@ -36,7 +38,7 @@ export default function App() {
     } else {
       setLoggedIn(false);
     }
-  }, [backend, username]);
+  }, [ username]);
 
   const handleLogOut = (e) => {
     e.preventDefault();
@@ -70,10 +72,18 @@ export default function App() {
             path="/form"
             element={<Form username={username} setId={setId} id={id} />}
           />
+          <Route
+            path="/forgot-password"
+            element={<PasswordReset username={username} setId={setId} id={id} />}
+          />
 
           <Route
             path={`mycard/preview/:username/:id`}
             element={<DisplayCard />}
+          />
+           <Route
+            path={`/reset/:token`}
+            element={<CreateNewPassword />}
           />
           <Route
             path={`/share/:username/:id`}

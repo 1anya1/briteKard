@@ -13,10 +13,6 @@ const axios = require("axios");
 export default function Forms(props) {
   //Basic Info will always stay on as the minimum fields to fill out to generate or update vCard
   const [submittedUpdate, setSubmittedUpdate] = useState(false);
-  const backend =
-    process.env.REACT_APP_ENV === "staging"
-      ? "http://localhost:49152"
-      : "https://britekard.herokuapp.com";
 
   const navigate = useNavigate();
   const [options, setOptions] = useState([
@@ -126,7 +122,7 @@ export default function Forms(props) {
 
   useEffect(() => {
     if (props.username) {
-      axios.get(`${backend}/vCards/${props.username}`).then((response) => {
+      axios.get(`${process.env.REACT_APP_BACKEND_URL}/vCards/${props.username}`).then((response) => {
         const titles = [];
         const data = response.data;
         data.forEach((el) => {
@@ -137,13 +133,13 @@ export default function Forms(props) {
         setTitles([...titles]);
       });
     }
-  }, [backend, props.username]);
+  }, [ props.username]);
 
   function sendData(body) {
     setSubmittedUpdate(true);
 
     axios
-      .post(`${backend}/vCards`, body)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/vCards`, body)
       .then((response) => {
         const [qr, , id] = response.data;
         props.setId(id);
@@ -158,7 +154,7 @@ export default function Forms(props) {
   });
   function sendQR(id, qr) {
     axios
-      .post(` ${backend}/vCards/mycard/${props.username}/${id}`, {
+      .post(` ${process.env.REACT_APP_BACKEND_URL}/vCards/mycard/${props.username}/${id}`, {
         qrCode: qr,
       })
       .then((res) => {
