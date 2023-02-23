@@ -59,7 +59,7 @@ export default function SignUp(props) {
             localStorage.token = response.data.token;
             if (response.data.token) {
               props.setUsername(userInput.username);
-              navigate(`/myCards`);
+              navigate(`/dashboard`);
             }
           })
           .catch((error) => {
@@ -68,7 +68,7 @@ export default function SignUp(props) {
       });
   }
   return (
-    <div className="px-4 pt-14">
+    <div className="px-4 pt-14 flex-1">
       <div className="w-full max-w-2xl md:mx-auto md:px-10 py-10 px-4  bg-gray-50 rounded-xl mb-10 ">
         <p className="text-2xl font-extrabold  text-left  tracking-tight text-gray-900  mb-5 ">
           Sign Up

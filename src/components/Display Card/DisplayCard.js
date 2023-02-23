@@ -3,29 +3,49 @@ import DisplayPersonal from "./Display Sections/DisplayPersonal";
 import DisplaySocial from "./Display Sections/DisplaySocial";
 import DisplayWorkInfo from "./Display Sections/DisplayWorkInfo";
 import { PhoneIcon, MailIcon, ChatAltIcon } from "@heroicons/react/solid";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import QRmodal from "./Display Sections/Display Functions/QRmodal";
 import LoadingScreen from "../LoadingScreen";
+import { Link } from "react-router-dom";
 
 const axios = require("axios");
 
 export default function DisplayCard() {
   let { username, id } = useParams();
+  const { pathname } = useLocation();
+
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
- 
+
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BACKEND_URL}/vCards/mycard/${username}/${id}`)
-    .then((response) => {
-      const data = response.data[0];
-      setData(data);
-    })
-    .catch((error)=>{
-      console.log(error)
-    })
-    
-    ;
-  }, [ id, username]);
+    axios
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/vCards/mycard/${username}/${id}`
+      )
+      .then((response) => {
+        const data = response.data[0];
+        console.log(data);
+        setData(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [id, username]);
+  const handleAnalytics = (dataType) => {
+    console.log("in here");
+    if (pathname.includes("share")) {
+      const time = new Date().getTime();
+      const body = { cardId: data._id, [dataType]: time };
+      axios
+        .post(`${process.env.REACT_APP_BACKEND_URL}/engagement`, body)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
 
   function getCard() {
     axios
@@ -110,10 +130,13 @@ export default function DisplayCard() {
       ["Twitter", twitter],
       ["LinkedIn", linkedIn],
     ];
-
-    return (
-      <div className=" w-full h-full sm:py-16">
-        <div className="grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500  sm:bg-white max-w-screen-sm mx-auto sm:pb-12 sm:px-9 sm:rounded-3xl">
+    const cardView = () => {
+      return (
+        <div
+          className={`${
+            pathname.includes("share") ? "sm:pb-12 sm:px-9" : ""
+          } grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500  sm:bg-white max-w-screen-sm mx-auto  sm:rounded-3xl`}
+        >
           <div className=" w-full col-span-5 h-60  sm:h-64 relative sm:pt-12 sm:pb-104">
             {data.logo && (
               <img
@@ -122,8 +145,12 @@ export default function DisplayCard() {
                 alt="logo"
               />
             )}
-            {!data.photo && (
-              <div className="object-cover overflow-hiddenr w-full h-64 object-center sm:rounded-3xl bg-gray-500"></div>
+            {!data.logo && (
+              <img
+                className="object-cover overflow-hiddenr w-full h-64 object-center sm:rounded-3xl"
+                src="https://res.cloudinary.com/dwz87zxoy/image/upload/v1677106414/britekard/Screen_Shot_2023-02-22_at_2.53.13_PM_im2ned.png"
+                alt="logo"
+              />
             )}
 
             {data.photo && (
@@ -162,7 +189,10 @@ export default function DisplayCard() {
             <div className="flex gap-4 pt-4 justify-center pb-9 ">
               {cellPhone && (
                 <>
-                  <div className="h-12 w-12 rounded-full border-gray-500 border-2 bg-white  flex justify-center items-center hover:bg-gray-500">
+                  <div
+                    onClick={() => handleAnalytics("phone")}
+                    className="h-12 w-12 rounded-full border-gray-500 border-2 bg-white  flex justify-center items-center hover:bg-gray-500"
+                  >
                     <a href={`tel:+1${cellPhone}`}>
                       <PhoneIcon className="fill-gray-500  h-7 w-7 hover:fill-white" />
                     </a>
@@ -175,7 +205,10 @@ export default function DisplayCard() {
                 </>
               )}
               {email && (
-                <div className="h-12 w-12 rounded-full border-gray-500 border-2 bg-white flex justify-center items-center hover:bg-gray-500">
+                <div
+                  onClick={() => handleAnalytics("email")}
+                  className="h-12 w-12 rounded-full border-gray-500 border-2 bg-white flex justify-center items-center hover:bg-gray-500"
+                >
                   <a href={`mailto:${email}`}>
                     <MailIcon className="fill-gray-500   h-7 w-7 hover:fill-white" />
                   </a>
@@ -190,13 +223,19 @@ export default function DisplayCard() {
               )}
               <div className="flex px-4 flex-col">
                 <button
-                  onClick={getCard}
+                  onClick={() => {
+                    getCard();
+                    handleAnalytics("addCard");
+                  }}
                   className={`text-small text-white font-medium pt-4 pb-4 mb-4 w-full rounded-2xl hover:bg-opacity-70 bg-${data.colorScheme}`}
                 >
                   {"Add To Contacts".toUpperCase()}
                 </button>
                 <button
-                  onClick={shareCard}
+                  onClick={() => {
+                    shareCard();
+                    handleAnalytics("qrCode");
+                  }}
                   className={`text-small text-white font-medium pt-4 pb-4 mb-8 w-full rounded-2xl  hover:bg-opacity-70 bg-${data.colorScheme}`}
                 >
                   {"Share Card".toUpperCase()}
@@ -227,8 +266,39 @@ export default function DisplayCard() {
             <DisplaySocial socialData={socialData} />
           </div>
         </div>
-      </div>
-    );
+      );
+    };
+    if (pathname.includes("preview")) {
+      return (
+        <div className=" max-w-[1800px] px-[5%] ">
+          <div className=" mx-auto  ">
+            <div className="flex flex-row items-end justify-between pb-10">
+              <p className="  text-2xl font-bold  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
+                Business Card Preview
+              </p>
+            </div>
+            <div className="flex flex-row gap-1">
+              <Link to={"/dashboard"}>
+                <p className="font-bold cursor-pointer hover:text-purple-400">
+                  Back to Cards
+                </p>
+              </Link>
+              <p className="font-medium">{">"}</p>
+              <p className="font-medium">Preview</p>
+            </div>
+            {/* <div className="w-[39vh] h-[86vh] overflow-scroll m-auto border border-gray-300  rounded-2xl"> */}
+            <div className=" w-[calc(47vh_-_100px)]  sm:w-[calc(47vh_-_74px)]  h-[calc(100vh_-_200px)] sm:h-[calc(100vh_-_160px)] overflow-scroll border border-gray-300 rounded-2xl m-auto">
+              {cardView()}
+            </div>
+          </div>
+        </div>
+        // </div>
+      );
+    } else {
+      return (
+        <div className=" w-full h-full sm:py-16 bg-gray-100">{cardView()}</div>
+      );
+    }
   } else {
     return <LoadingScreen />;
   }

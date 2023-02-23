@@ -45,7 +45,7 @@ export default function CreateNewPassword() {
   }
 
   return (
-    <div className="px-4 pt-14">
+    <div className="px-4 pt-14 flex-1">
       <div className="w-full max-w-2xl md:mx-auto md:px-10 py-10 px-4  bg-gray-50 rounded-xl mb-10 ">
         <p className="text-2xl font-extrabold  text-left  tracking-tight text-gray-900  mb-5 ">
           Password Reset
