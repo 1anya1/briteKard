@@ -16,7 +16,7 @@ const data = [
     id: "password",
     placeholder: "password",
     value: "",
-    hidden:true
+    hidden: true,
   },
   {
     label: "Email",
@@ -42,7 +42,7 @@ export default function SignUp(props) {
     const inputs = { ...userInput };
     const val = event.target.value;
     const objKey = event.target.getAttribute("id");
-    inputs[objKey] = val;
+    inputs[objKey] = objKey === "email" ? val.toLowerCase() : val;
     setUserInput(inputs);
   }
   function formSubmit(e) {
@@ -52,14 +52,14 @@ export default function SignUp(props) {
       .then((response) => {
         axios
           .post(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
-            username: userInput.username,
+            email: userInput.email,
             password: userInput.password,
           })
           .then((response) => {
             localStorage.token = response.data.token;
             if (response.data.token) {
               props.setUsername(userInput.username);
-              navigate(`/myCards`);
+              navigate(`/dashboard`);
             }
           })
           .catch((error) => {
@@ -68,7 +68,7 @@ export default function SignUp(props) {
       });
   }
   return (
-    <div className="px-4 pt-14">
+    <div className="px-4 pt-14 flex-1">
       <div className="w-full max-w-2xl md:mx-auto md:px-10 py-10 px-4  bg-gray-50 rounded-xl mb-10 ">
         <p className="text-2xl font-extrabold  text-left  tracking-tight text-gray-900  mb-5 ">
           Sign Up
@@ -99,7 +99,7 @@ export default function SignUp(props) {
             </button>
           </div>
           <p className="pt-4">
-            Have an existing account?
+            Have an existing account?{' '}
             <Link to="/login">
               <span className="cursor-pointer text-purple-400">
                 Log in here

@@ -1,7 +1,7 @@
 import PersonalInfo from "./Form Sections/PersonalInfo";
 import SocialLinks from "./Form Sections/SocialLikns";
 import HomeAddress from "./Form Sections/HomeAddress";
-import Chips from "./Form Sections/Chips";
+// import Chips from "./Form Sections/Chips";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import WorkInfo from "./Form Sections/WorkInfo";
@@ -12,13 +12,13 @@ const axios = require("axios");
 export default function UpdateForm() {
   const navigate = useNavigate();
   const { username, id } = useParams();
-  
 
+  // eslint-disable-next-line no-unused-vars
   const [options, setOptions] = useState([
-    [{ name: "Home Address", toggle: false }],
-    [{ name: "Work Info", toggle: false }],
-    [{ name: "Social Links", toggle: false }],
-    [{ name: "Cover Photo", toggle: false }],
+    { name: "Home Address", toggle: true },
+    { name: "Work Info", toggle: true },
+    { name: "Social Links", toggle: true },
+    { name: "Cover Photo", toggle: true },
   ]);
 
   const [userInputs, setUserInputs] = useState(null);
@@ -26,14 +26,16 @@ export default function UpdateForm() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/vCards/mycard/update/${username}/${id}`)
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/vCards/mycard/update/${username}/${id}`
+      )
       .then((response) => {
         setUserInputs(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }, [ id, username]);
+  }, [id, username]);
   function handleSubmit(event) {
     event.preventDefault();
     let body = userInputs;
@@ -42,7 +44,10 @@ export default function UpdateForm() {
   function sendData(body) {
     setSubmittedUpdate(true);
     axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/vCards/mycard/update/${username}/${id}`, body)
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/vCards/mycard/update/${username}/${id}`,
+        body
+      )
       .then((response) => {
         navigate(-1);
       })
@@ -67,12 +72,12 @@ export default function UpdateForm() {
   function handleImageChange(base64, type) {
     const userObj = { ...userInputs };
     if (type === "profile") {
-      const prevImage = userObj.photo
-      userObj.previousPhoto = prevImage
+      const prevImage = userObj.photo;
+      userObj.previousPhoto = prevImage;
       userObj.photo = base64;
     } else {
-      const prevImage = userObj.logo
-      userObj.previousLogo = prevImage
+      const prevImage = userObj.logo;
+      userObj.previousLogo = prevImage;
       userObj.logo = base64;
     }
 
@@ -99,97 +104,99 @@ export default function UpdateForm() {
     }
     setUserInputs(userObj);
   };
-  function toggle(e) {
-    let newOptions = [...options];
-    newOptions[e][0].toggle = !newOptions[e][0].toggle;
-    setOptions(newOptions);
-  }
+  // function toggle(e) {
+  //   let newOptions = [...options];
+  //   newOptions[e].toggle = !newOptions[e].toggle;
+  //   setOptions(newOptions);
+  // }
 
   if (submittedUpdate || !userInputs) {
     return <LoadingScreen />;
   } else if (userInputs) {
     return (
-      <>
-        <div className="container mx-auto gap-2 max-w-4xl m-auto pb-4">
-          <div className="container mx-auto sm:px-4">
-            <p className="text-2xl font-extrabold  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
-              Update Business Card
+      <div className=" max-w-[1800px] px-[5%] m-auto ">
+        <div className=" mx-auto  ">
+          <div className="flex flex-row items-end justify-between pb-10">
+            <p className=" text-2xl font-bold  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
+              Update Card
             </p>
-            <div className="flex flex-row flex-nowrap overflow-scroll scrollbar-hide my-8 pl-4 sm:pl-0 container mx-auto gap-2">
-              <Chips options={options} toggle={toggle} />
-            </div>
           </div>
-          <div className="container mx-auto px-4">
-            <form onSubmit={handleSubmit}>
-              <PersonalInfo
-                handleImageChange={handleImageChange}
-                userInputs={userInputs}
-                handleChange={handleChange}
-              />
-              {options.map((el, idx) => {
-                if (el[0].toggle && el[0].name === "Home Address") {
-                  return (
-                    <HomeAddress
-                      key={idx}
-                      handleChange={handleChange}
-                      userInputs={userInputs}
-                    />
-                  );
-                }
-                if (el[0].toggle && el[0].name === "Social Links") {
-                  return (
-                    <SocialLinks
-                      key={idx}
-                      handleChange={handleChange}
-                      userInputs={userInputs}
-                    />
-                  );
-                }
-                if (el[0].toggle && el[0].name === "Work Info") {
-                  return (
-                    <WorkInfo
-                      key={idx}
-                      handleChange={handleChange}
-                      userInputs={userInputs}
-                    />
-                  );
-                }
-                if (el[0].toggle && el[0].name === "Cover Photo") {
-                  return (
-                    <CoverPhoto
-                      key={idx}
-                      handleImageChange={handleImageChange}
-                      logo={userInputs.logo}
-                    />
-                  );
-                } else {
-                  return null;
-                }
-              })}
-              <div className="mt-5 sm:mt-8 sm:flex justify-center  sm:justify-start">
-                <div className="rounded-md shadow">
+          {/* <div className="flex flex-row flex-nowrap overflow-scroll scrollbar-hide my-8 pl-4 sm:pl-0 container mx-auto gap-2">
+            <Chips options={options} toggle={toggle} />
+          </div> */}
+        </div>
+        <div className=" mx-auto ">
+          <form onSubmit={handleSubmit}>
+            <PersonalInfo
+              handleImageChange={handleImageChange}
+              userInputs={userInputs}
+              handleChange={handleChange}
+            />
+            {options.map((el, idx) => {
+              if (el.toggle && el.name === "Home Address") {
+                return (
+                  <HomeAddress
+                    key={idx}
+                    handleChange={handleChange}
+                    userInputs={userInputs}
+                  />
+                );
+              }
+              if (el.toggle && el.name === "Social Links") {
+                return (
+                  <SocialLinks
+                    key={idx}
+                    handleChange={handleChange}
+                    userInputs={userInputs}
+                  />
+                );
+              }
+              if (el.toggle && el.name === "Work Info") {
+                return (
+                  <WorkInfo
+                    key={idx}
+                    handleChange={handleChange}
+                    userInputs={userInputs}
+                  />
+                );
+              }
+              if (el.toggle && el.name === "Cover Photo") {
+                return (
+                  <CoverPhoto
+                    key={idx}
+                    handleImageChange={handleImageChange}
+                    logo={userInputs.logo}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })}
+            <div className='flex flex-col lg:flex-row gap-4 align-center my-10 '>
+              <div className=" sm:flex justify-center  sm:justify-start">
+                <div className="rounded-md shadow w-full lg:w-[300px]">
                   <button
                     type="submit"
-                    className="w-full sm:w-60 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 md:py-4 md:text-lg md:px-10 cursor-pointer"
+                    className="w-full  flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 md:py-4 md:text-lg md:px-10 cursor-pointer"
                   >
                     <p className="leading-relaxed text-sm"> Update Card</p>
                   </button>
                 </div>
               </div>
-            </form>
-            <div className="my-4 sm:flex justify-center  sm:justify-start">
-              <div className="rounded-md shadow">
-                <button
-                  onClick={cancelUpdate}
-                  className="w-full sm:w-60 flex items-center justify-center px-8 py-3 border border-gray-900 text-base font-medium rounded-md text-gray-900 bg-gray-white hover:bg-gray-100 md:py-4 md:text-lg md:px-10 cursor-pointer"
-                >
-                  <p className="leading-relaxed text-sm"> Cancel</p>
-                </button>
+              <div className=" sm:flex justify-center  sm:justify-start">
+                <div className="rounded-md shadow w-full lg:w-[300px]">
+                  <button
+                    onClick={cancelUpdate}
+                    className="w-full flex items-center justify-center px-8 py-3 border border-gray-900 text-base font-medium rounded-md text-gray-900 bg-gray-white hover:bg-gray-100 md:py-4 md:text-lg md:px-10 cursor-pointer"
+                  >
+                    <p className="leading-relaxed text-sm"> Cancel</p>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
-      </>
+      </div>
     );
   }
 }

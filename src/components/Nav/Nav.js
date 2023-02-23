@@ -19,8 +19,8 @@ export default function Nav(props) {
         { name: "Home", loc: "/", current: false },
         { name: "New Card", loc: "/form", current: false },
         {
-          name: "My Cards",
-          loc: `/myCards`,
+          name: "Dashboard",
+          loc: `/dashboard`,
           current: false,
         },
       ]);
@@ -34,7 +34,7 @@ export default function Nav(props) {
   }, [username]);
 
   return (
-    <Disclosure as="nav" className="bg-gray-100">
+    <Disclosure as="nav" className="bg-gray-50">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">

@@ -26,8 +26,6 @@ export default function PasswordReset(props) {
  
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(e);
-    console.log(email);
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/passwordReset/reset-password`, { email })
       .then((response) => {
@@ -36,14 +34,14 @@ export default function PasswordReset(props) {
         }
       })
       .catch((error) => {
-        console.log(error);
+
         setErrorMessage(error.response.data);
         setError(true);
       });
   }
 
   return (
-    <div className="px-4 pt-14">
+    <div className="px-4 pt-14 flex-1">
       <div className="w-full max-w-2xl md:mx-auto md:px-10 py-10 px-4  bg-gray-50 rounded-xl mb-10 ">
         <p className="text-2xl font-extrabold  text-left  tracking-tight text-gray-900  mb-5 ">
           Password reset

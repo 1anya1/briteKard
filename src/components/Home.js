@@ -5,8 +5,16 @@ import Lottie from "lottie-react";
 import qrCode from "../images/lottie/qrcode.json";
 import { Link } from "react-router-dom";
 import Feature from "./FeatureSection";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+export default function Home() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
 
-export default function Home(props) {
   return (
     <>
       <div className="relative bg-white overflow-hidden">
