@@ -24,11 +24,7 @@ import {
   AiOutlineUser,
   AiOutlineIdcard,
   AiOutlineSetting,
-  AiFillSignal,
-  AiOutlineLineChart,
   AiOutlineStock,
-  AiOutlineRise,
-  AiOutlineExport,
 } from "react-icons/ai";
 
 export default function App() {

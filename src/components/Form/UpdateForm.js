@@ -1,7 +1,7 @@
 import PersonalInfo from "./Form Sections/PersonalInfo";
 import SocialLinks from "./Form Sections/SocialLikns";
 import HomeAddress from "./Form Sections/HomeAddress";
-import Chips from "./Form Sections/Chips";
+// import Chips from "./Form Sections/Chips";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import WorkInfo from "./Form Sections/WorkInfo";
@@ -103,11 +103,11 @@ export default function UpdateForm() {
     }
     setUserInputs(userObj);
   };
-  function toggle(e) {
-    let newOptions = [...options];
-    newOptions[e].toggle = !newOptions[e].toggle;
-    setOptions(newOptions);
-  }
+  // function toggle(e) {
+  //   let newOptions = [...options];
+  //   newOptions[e].toggle = !newOptions[e].toggle;
+  //   setOptions(newOptions);
+  // }
 
   if (submittedUpdate || !userInputs) {
     return <LoadingScreen />;

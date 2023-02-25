@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import Chart, { Legend } from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";

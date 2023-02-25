@@ -84,6 +84,7 @@ export default function Analytics(props) {
 
     const value = dayFormatter(date);
     setDays(value);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeFrame]);
 
   useEffect(() => {

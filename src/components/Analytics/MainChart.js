@@ -1,8 +1,7 @@
+// eslint-disable-next-line no-unused-vars
 import Chart, { Legend } from "chart.js/auto";
 import { Line } from "react-chartjs-2";
-import { useState } from "react";
 const MainChart = ({ labels, data, timeFrame }) => {
-  const [trend, setTrend] = useState(null);
   console.log({ data });
   const dataArr = [];
   data.forEach((el) => {

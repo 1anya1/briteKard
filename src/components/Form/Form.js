@@ -218,11 +218,11 @@ export default function Forms(props) {
 
     setUserInputs(userObj);
   }
-  function toggle(e) {
-    let newOptions = [...options];
-    newOptions[e].toggle = !newOptions[e].toggle;
-    setOptions(newOptions);
-  }
+  // function toggle(e) {
+  //   let newOptions = [...options];
+  //   newOptions[e].toggle = !newOptions[e].toggle;
+  //   setOptions(newOptions);
+  // }
   if (submittedUpdate || !userInputs) {
     return <LoadingScreen />;
   } else {
