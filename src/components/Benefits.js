@@ -9,7 +9,7 @@ import {
 
 export default function Benefits() {
   return (
-    <div className="bg-gray-100 pt-14 pb-14">
+    <div className="bg-gray-50 pt-14 pb-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6  lg:px-8">
         <h2 className="text-3xl font-extrabold  text-center tracking-tight text-gray-900 sm:text-4xl mb-10">
           Business Card for the Digital Age

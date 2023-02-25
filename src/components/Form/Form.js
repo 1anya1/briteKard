@@ -1,13 +1,14 @@
 import PersonalInfo from "./Form Sections/PersonalInfo";
 import SocialLinks from "./Form Sections/SocialLikns";
 import HomeAddress from "./Form Sections/HomeAddress";
-import Chips from "./Form Sections/Chips";
+// import Chips from "./Form Sections/Chips";
 import React, { useEffect, useState } from "react";
 import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
 import ColorPicker from "./ColorSelect";
+import CardName from "./Form Sections/CardName";
 
 const axios = require("axios");
 export default function Forms(props) {
@@ -15,13 +16,19 @@ export default function Forms(props) {
   const [submittedUpdate, setSubmittedUpdate] = useState(false);
 
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const [options, setOptions] = useState([
-    [{ name: "Home Address", toggle: false }],
-    [{ name: "Work Info", toggle: false }],
-    [{ name: "Social Links", toggle: false }],
-    [{ name: "Cover Photo", toggle: false }],
+    // { name: "Home Address", toggle: false },
+    // { name: "Work Info", toggle: false },
+    // { name: "Social Links", toggle: false },
+    // { name: "Cover Photo", toggle: false },
     // [{ name: "Choose Theme", toggle: false }],
+    { name: "Home Address", toggle: true },
+    { name: "Work Info", toggle: true },
+    { name: "Social Links", toggle: true },
+    { name: "Cover Photo", toggle: true },
   ]);
+
   const [id, setId] = useState("");
   const [qr, setQR] = useState(0);
 
@@ -82,7 +89,6 @@ export default function Forms(props) {
     qrCode: "",
   });
 
-
   const [nameError, setNameError] = useState(false);
   const [cellError, setCellError] = useState(false);
   const [cardNameError, setCardNameError] = useState(false);
@@ -122,18 +128,20 @@ export default function Forms(props) {
 
   useEffect(() => {
     if (props.username) {
-      axios.get(`${process.env.REACT_APP_BACKEND_URL}/vCards/${props.username}`).then((response) => {
-        const titles = [];
-        const data = response.data;
-        data.forEach((el) => {
-          if (el.cardName) {
-            titles.push(el.cardName);
-          }
+      axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/vCards/${props.username}`)
+        .then((response) => {
+          const titles = [];
+          const data = response.data;
+          data.forEach((el) => {
+            if (el.cardName) {
+              titles.push(el.cardName);
+            }
+          });
+          setTitles([...titles]);
         });
-        setTitles([...titles]);
-      });
     }
-  }, [ props.username]);
+  }, [props.username]);
 
   function sendData(body) {
     setSubmittedUpdate(true);
@@ -145,7 +153,7 @@ export default function Forms(props) {
         props.setId(id);
         setQR(qr);
         setId(id);
-      })
+      });
   }
   useEffect(() => {
     if (id && id) {
@@ -154,11 +162,14 @@ export default function Forms(props) {
   });
   function sendQR(id, qr) {
     axios
-      .post(` ${process.env.REACT_APP_BACKEND_URL}/vCards/mycard/${props.username}/${id}`, {
-        qrCode: qr,
-      })
+      .post(
+        ` ${process.env.REACT_APP_BACKEND_URL}/vCards/mycard/${props.username}/${id}`,
+        {
+          qrCode: qr,
+        }
+      )
       .then((res) => {
-        navigate(`/myCards`);
+        navigate(`/dashboard`);
       })
       .catch((err) => console.error(err));
   }
@@ -208,32 +219,34 @@ export default function Forms(props) {
 
     setUserInputs(userObj);
   }
-  function toggle(e) {
-    let newOptions = [...options];
-    newOptions[e][0].toggle = !newOptions[e][0].toggle;
-    setOptions(newOptions);
-  }
+  // function toggle(e) {
+  //   let newOptions = [...options];
+  //   newOptions[e].toggle = !newOptions[e].toggle;
+  //   setOptions(newOptions);
+  // }
   if (submittedUpdate || !userInputs) {
     return <LoadingScreen />;
   } else {
     return (
-      <div className="container mx-auto gap-2 max-w-4xl m-auto">
-        <div className="container mx-auto sm:px-4 pl-4 sm:pl-0 ">
-          <p className="text-2xl font-extrabold  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
-            Create New Business Card
-          </p>
-          <div className="flex flex-row flex-nowrap overflow-scroll scrollbar-hide my-8  container mx-auto gap-2">
-            <Chips options={options} toggle={toggle} />
+      <div className=" max-w-[1800px] px-[5%] m-auto ">
+        <div className=" mx-auto  ">
+          <div className="flex flex-row items-end justify-between pb-10">
+            <p className=" text-2xl font-bold  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
+              Add New Card
+            </p>
           </div>
+          {/* <div className="flex flex-row flex-nowrap overflow-scroll scrollbar-hide my-8  container mx-auto gap-2">
+            <Chips options={options} toggle={toggle} />
+          </div> */}
+          
         </div>
-        <div className="container mx-auto px-4 sm:px-0">
+        <div>
           <form onSubmit={handleSubmit}>
-            {/* <CardName
+            <CardName
               handleChange={handleChange}
               userInputs={userInputs}
               cardNameError={cardNameError}
-        
-            /> */}
+            />
             <PersonalInfo
               handleChange={handleChange}
               userInputs={userInputs}
@@ -244,7 +257,7 @@ export default function Forms(props) {
               handleImageChange={handleImageChange}
             />
             {options.map((el, idx) => {
-              if (el[0].toggle && el[0].name === "Home Address") {
+              if (el.toggle && el.name === "Home Address") {
                 return (
                   <HomeAddress
                     key={idx}
@@ -253,7 +266,7 @@ export default function Forms(props) {
                   />
                 );
               }
-              if (el[0].toggle && el[0].name === "Social Links") {
+              if (el.toggle && el.name === "Social Links") {
                 return (
                   <SocialLinks
                     key={idx}
@@ -262,7 +275,7 @@ export default function Forms(props) {
                   />
                 );
               }
-              if (el[0].toggle && el[0].name === "Work Info") {
+              if (el.toggle && el.name === "Work Info") {
                 return (
                   <WorkInfo
                     key={idx}
@@ -271,22 +284,19 @@ export default function Forms(props) {
                   />
                 );
               }
-              if (el[0].toggle && el[0].name === "Cover Photo") {
+              if (el.toggle && el.name === "Cover Photo") {
                 return (
-                  <CoverPhoto
-                    key={idx}
-                    handleImageChange={handleImageChange}
-                  />
+                  <CoverPhoto key={idx} handleImageChange={handleImageChange} />
                 );
               }
-              if (el[0].toggle && el[0].name === "Choose Theme") {
+              if (el.toggle && el.name === "Choose Theme") {
                 return <ColorPicker />;
               } else {
                 return null;
               }
             })}
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start mb-8">
-              <div className="rounded-md shadow">
+              <div className="rounded-md shadow w-full xl:w-[300px]">
                 <button
                   noValidate
                   type="submit"

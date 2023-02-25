@@ -26,10 +26,11 @@ export default function SocialLinks(props) {
   }
   //handle change event in addition of new input field
   function handleChange(e) {
+    console.log(e.target.value)
     setInput(e.target.value);
   }
   return (
-    <div className="drop-shadow-md  border-gray-100 border rounded-2xl bg-snow mb-5 max-w-4xl m-auto">
+    <div className="drop-shadow-md  border-gray-100 border rounded-2xl bg-snow mb-5 max-w-[1800px] m-auto">
       <div className=" p-4 md:grid md:grid-cols-3 md:gap-3  sm:p-8">
         <FormDescription formName={formName} />
         {site.map((el, idx) => (
@@ -51,8 +52,8 @@ export default function SocialLinks(props) {
             autoComplete="social-media"
             className="mt-1 block w-full py-2 px-3 border text-gray-500 border-gray-300 bg-white leading-none rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
           >
-            <option value="" disabled defaultValue>
-              Please choose an option
+            <option value="" >
+              More Options
             </option>
             <option>YouTube</option>
             <option>Instagram</option>

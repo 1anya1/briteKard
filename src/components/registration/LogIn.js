@@ -4,10 +4,10 @@ import FormInput from "../Form/Input Styles/FormInput";
 import { Link, useNavigate } from "react-router-dom";
 const data = [
   {
-    label: "Username",
+    label: "Email",
     type: "text",
-    id: "username",
-    placeholder: "username",
+    id: "email",
+    placeholder: "example@gmail.com",
     value: "",
   },
   {
@@ -21,7 +21,7 @@ const data = [
 ];
 export default function LogIn(props) {
   const [userInputs, setUserInputs] = useState({
-    username: null,
+    email: null,
     password: null,
     error: false,
     errorMessage:''
@@ -42,14 +42,14 @@ export default function LogIn(props) {
     e.preventDefault();
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
-        username: userInputs.username,
+        email: userInputs.email,
         password: userInputs.password,
       })
       .then((response) => {
         localStorage.token = response.data.token;
         if (response.data.token) {
           props.setUsername(userInputs.username);
-          navigate(`/myCards`);
+          navigate(`/dashboard`);
         }
       })
       .catch((error) => {
@@ -64,7 +64,7 @@ export default function LogIn(props) {
   }
 
   return (
-    <div className="px-4 pt-14">
+    <div className="px-4 pt-14 flex-1">
       <div className="w-full max-w-2xl md:mx-auto md:px-10 py-10 px-4  bg-gray-50 rounded-xl mb-10 ">
         <p className="text-2xl font-extrabold  text-left  tracking-tight text-gray-900  mb-5 ">
           Log In
