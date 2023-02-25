@@ -34,7 +34,7 @@ export default function App() {
   const [id, setId] = useState("");
   const location = useLocation();
   console.log(location.pathname);
-  const [height, setHeight]= useState(window.innerHeight)
+  const [height, setHeight] = useState(window.innerHeight);
 
   useEffect(() => {
     if (localStorage.token) {
@@ -55,11 +55,11 @@ export default function App() {
   }, [username]);
   const updateDimensions = () => {
     setHeight(window.innerHeight);
-}
+  };
   useEffect(() => {
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
-}, []);
+  }, []);
 
   const routerSystem = () => {
     return (
@@ -138,20 +138,20 @@ export default function App() {
     },
   ];
   return (
-    <div className={`bg-white  min-h-[${height}px] `} styles={{ minHeight: "-webkit-fill-available" }}>
+    <div className={`bg-white  `} style={{ minHeight: `${height}px` }}>
       {location.pathname.includes("dashboard") ||
       location.pathname.includes("mycard") ||
       location.pathname.includes("form") ? (
         <div
-          className={`flex sm:flex-row-reverse flex-col h-[${height}px]  bg-gray-50`}
-          styles={{
-            minHeight: "-webkit-fill-available",
+          className={`flex sm:flex-row-reverse flex-col  bg-gray-50`}
+          style={{
+            minHeight: `${height}px`,
             paddingBottom: "env(safe-area-inset-bottom)",
           }}
         >
-           <div
+          <div
             className="flex-1  overflow-scroll sm:h-screen"
-            styles={{ minHeight: "-webkit-fill-available" }}
+           
           >
             {routerSystem()}
           </div>
@@ -174,8 +174,6 @@ export default function App() {
               </Link>
             ))}
           </div>
-
-         
         </div>
       ) : (
         <div className="bg-white min-h-screen flex flex-col justify-between">
