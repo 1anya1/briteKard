@@ -6,7 +6,7 @@ import { PhoneIcon, MailIcon, ChatAltIcon } from "@heroicons/react/solid";
 import { useParams, useLocation } from "react-router-dom";
 import QRmodal from "./Display Sections/Display Functions/QRmodal";
 import LoadingScreen from "../LoadingScreen";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const axios = require("axios");
 
