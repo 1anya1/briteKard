@@ -20,11 +20,13 @@ import PasswordReset from "./components/registration/PasswordReset";
 import CreateNewPassword from "./components/registration/CreateNewPassword";
 import Footer from "./components/Footer/Footer";
 import Analytics from "./components/Analytics/Analytics";
+import Profile from "./components/Profile/Profile";
+
 import {
   AiOutlineUser,
   AiOutlineIdcard,
-  AiOutlineSetting,
   AiOutlineStock,
+  AiOutlinePlusCircle,
 } from "react-icons/ai";
 
 export default function App() {
@@ -105,6 +107,10 @@ export default function App() {
           path={"/dashboard/analytics"}
           element={<Analytics username={username} />}
         />
+         <Route
+          path={"/dashboard/profile"}
+          element={<Profile username={username} handleLogOut={handleLogOut}/>}
+        />
         <Route
           path={`mycard/update/:id`}
           element={<UpdateForm username={username} id={id} />}
@@ -122,8 +128,8 @@ export default function App() {
     navigate("/");
   };
   const links = [
-    { name: "My Cards", link: "/dashboard", Icon: AiOutlineUser, active: true },
-    { name: "New Card", link: "/form", Icon: AiOutlineIdcard, active: false },
+    { name: "My Cards", link: "/dashboard", Icon: AiOutlineIdcard, active: true },
+    { name: "New Card", link: "/form", Icon: AiOutlinePlusCircle, active: false },
     {
       name: "Analytics",
       link: "/dashboard/analytics",
@@ -131,9 +137,9 @@ export default function App() {
       active: false,
     },
     {
-      name: "Settings",
+      name: "Profile",
       link: "/dashboard/profile",
-      Icon: AiOutlineSetting,
+      Icon: AiOutlineUser,
       active: false,
     },
   ];

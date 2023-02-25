@@ -36,7 +36,7 @@ export default function Analytics(props) {
   }, [username]);
 
   const handleAnalytics = (id, idx) => {
-    console.log("handleAnalytics");
+    console.log("handleAnalytics", id, idx);
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/engagement/${id}`)
       .then((response) => {
@@ -220,6 +220,7 @@ export default function Analytics(props) {
                 >
                   {data &&
                     data.map((card, idx) => (
+                    
                       <div
                         key={card._id}
                         onClick={() => handleAnalytics(card._id, idx)}
@@ -227,6 +228,7 @@ export default function Analytics(props) {
                           cardShow === idx ? "bg-gray-50" : ""
                         } p-2  flex flex-row  overflow-hidden gap-2 align-center hover:bg-purple-50 align-center content-center`}
                       >
+                        {  console.log(card._id)}
                         <div className="h-4 w-4 rounded-full overflow-hidden  border-1 border-gray-200  self-center ">
                           {!card.photo ? (
                             <div className=" w-full h-full flex items-center justify-center bg-gray-100">
