@@ -16,6 +16,7 @@ export default function Forms(props) {
   const [submittedUpdate, setSubmittedUpdate] = useState(false);
 
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const [options, setOptions] = useState([
     // { name: "Home Address", toggle: false },
     // { name: "Work Info", toggle: false },

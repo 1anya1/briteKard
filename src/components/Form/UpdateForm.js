@@ -13,6 +13,7 @@ export default function UpdateForm() {
   const navigate = useNavigate();
   const { username, id } = useParams();
 
+  // eslint-disable-next-line no-unused-vars
   const [options, setOptions] = useState([
     { name: "Home Address", toggle: true },
     { name: "Work Info", toggle: true },
