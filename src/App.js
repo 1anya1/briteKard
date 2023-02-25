@@ -34,6 +34,7 @@ export default function App() {
   const [id, setId] = useState("");
   const location = useLocation();
   console.log(location.pathname);
+  const [height, setHeight]= useState(window.innerHeight)
 
   useEffect(() => {
     if (localStorage.token) {
@@ -52,6 +53,13 @@ export default function App() {
       setLoggedIn(false);
     }
   }, [username]);
+  const updateDimensions = () => {
+    setHeight(window.innerHeight);
+}
+  useEffect(() => {
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+}, []);
 
   const routerSystem = () => {
     return (
@@ -130,12 +138,24 @@ export default function App() {
     },
   ];
   return (
-    <div className="bg-white min-h-screen">
+    <div className={`bg-white  min-h-[${height}px] `} styles={{ minHeight: "-webkit-fill-available" }}>
       {location.pathname.includes("dashboard") ||
       location.pathname.includes("mycard") ||
       location.pathname.includes("form") ? (
-        <div className="flex flex-col-reverse sm:flex-row min-h-screen min-w-screen- h-screen overflow-scroll bg-gray-50 ">
-          <div className="z-10 bg-white w-screen sm:w-[100px] sm:min-w-[100px] lg:w-[300px] lg:min-w-[300px] flex flex-row sm:flex-col gap-1 sticky top-0 shadow-[1px_1px_6px_-3px__rgba(23,23,23,1)] sm:shadow-[1px_1px_6px_-5px__rgba(23,23,23,1)]  sm:h-screen pt-4 sm:pt-10 justify-around sm:justify-start h-[80px]">
+        <div
+          className={`flex sm:flex-row-reverse flex-col h-[${height}px]  bg-gray-50`}
+          styles={{
+            minHeight: "-webkit-fill-available",
+            paddingBottom: "env(safe-area-inset-bottom)",
+          }}
+        >
+           <div
+            className="flex-1  overflow-scroll sm:h-screen"
+            styles={{ minHeight: "-webkit-fill-available" }}
+          >
+            {routerSystem()}
+          </div>
+          <div className="z-10 bg-white w-screen sm:w-[100px] sm:min-w-[100px] lg:w-[300px] lg:min-w-[300px] flex flex-row sm:flex-col gap-1 sticky bottom-0 shadow-[1px_1px_6px_-3px__rgba(23,23,23,1)] sm:shadow-[1px_1px_6px_-5px__rgba(23,23,23,1)]  sm:h-screen pt-4 sm:pt-10 justify-around sm:justify-start h-[80px]">
             {links.map((link) => (
               <Link to={link.link}>
                 <div
@@ -155,9 +175,7 @@ export default function App() {
             ))}
           </div>
 
-          <div className="flex-1 h-[96vh] overflow-scroll sm:h-screen">
-            {routerSystem()}
-          </div>
+         
         </div>
       ) : (
         <div className="bg-white min-h-screen flex flex-col justify-between">
