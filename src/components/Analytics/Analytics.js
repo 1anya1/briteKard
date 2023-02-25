@@ -130,7 +130,7 @@ export default function Analytics(props) {
   }, [analytics, days]);
 
   return (
-    <div className=" max-w-[1800px] px-[5%] ">
+    <div className=" max-w-[1800px] px-[5%] pb-6 ">
       <div className=" mx-auto  ">
         <div className="flex flex-row items-end justify-between pb-10">
           <p className="  text-2xl font-bold text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
@@ -151,7 +151,7 @@ export default function Analytics(props) {
               } bg-gray-100  cursor-pointer flex flex-row gap-2 border border-gray-200 relative  py-2 px-4  rounded-[20px] w-full md:w-max  justify-start md:justify-center  content-center items-center `}
             >
               <div>
-                <p className="font-semibold md:text-sm text-xs">
+                <p className="font-semibold text-sm">
                   Last {timeFrame} days :
                 </p>
                 <div
@@ -167,7 +167,7 @@ export default function Analytics(props) {
                       timeFrame === 7 ? "bg-gray-50" : ""
                     } hover:bg-purple-50`}
                   >
-                    <p className=" pl-4 py-1 text-xs md:text-sm">7 Days</p>
+                    <p className=" pl-4 py-1 md:text-sm">7 Days</p>
                   </div>
                   {console.log(timeFrame, timeFrame === 30)}
                   <div
@@ -176,7 +176,7 @@ export default function Analytics(props) {
                       timeFrame === 30 ? "bg-gray-50" : ""
                     } hover:bg-purple-50`}
                   >
-                    <p className=" pl-4 py-1 text-xs md:text-sm">30 Days</p>
+                    <p className=" pl-4 py-1 text-sm">30 Days</p>
                   </div>
                   <div
                     onClick={() => setTimeFrame(90)}
@@ -184,7 +184,7 @@ export default function Analytics(props) {
                       timeFrame === 90 ? "bg-gray-50" : ""
                     } hover:bg-purple-50`}
                   >
-                    <p className=" pl-4 py-1 text-xs md:text-sm">90 Days</p>
+                    <p className=" pl-4 py-1 text-sm">90 Days</p>
                   </div>
                   <div
                     onClick={() => setTimeFrame(180)}
@@ -192,11 +192,11 @@ export default function Analytics(props) {
                       timeFrame === 180 ? "bg-gray-50" : ""
                     } hover:bg-purple-50`}
                   >
-                    <p className=" pl-4 py-1 text-xs md:text-sm">180 Days</p>
+                    <p className=" pl-4 py-1 text-sm">180 Days</p>
                   </div>
                 </div>
               </div>
-              <p className="font-semibold md:text-sm text-xs ">
+              <p className="font-semibold text-sm ">
                 {startingPoint} - {endingPoint}
               </p>
             </div>
@@ -206,11 +206,11 @@ export default function Analytics(props) {
                 setShow(false);
               }}
               className={` ${
-                showCard ? "rounded-br-none rounded-bl-none" : "rounded-[20px] "
+                showCard ? "rounded-br-none rounded-bl-none z-10" : "rounded-[20px] "
               } bg-gray-100 cursor-pointer flex flex-row gap-2 border border-gray-200 relative  py-2 px-4 rounded-[20px] w-full md:w-max   content-center items-center justify-start md:justify-center`}
             >
               <div>
-                <p className="font-semibold md:text-sm text-xs">Card Data :</p>
+                <p className="font-semibold text-sm ">Card Data :</p>
                 <div
                   className={`${
                     showCard
@@ -241,7 +241,7 @@ export default function Analytics(props) {
                           )}
                         </div>
 
-                        <p className="text-xs md:text-sm">
+                        <p className="text-sm">
                           {card.cardName ? card.cardName : card._id}
                         </p>
                       </div>
@@ -266,7 +266,7 @@ export default function Analytics(props) {
                   )}
                 </div>
 
-                <p className="md:text-sm text-xs font-semibold capitalize">
+                <p className="text-sm  font-semibold capitalize">
                   {data[cardShow].cardName
                     ? data[cardShow].cardName
                     : data[cardShow]._id}

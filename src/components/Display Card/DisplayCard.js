@@ -134,7 +134,7 @@ export default function DisplayCard() {
       return (
         <div
           className={`${
-            pathname.includes("share") ? "sm:pb-12 sm:px-9" : ""
+            pathname.includes("share") ? "sm:pb-12 sm:px-9" : "sm:pb-12 sm:px-9"
           } grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500  sm:bg-white max-w-screen-sm mx-auto  sm:rounded-3xl`}
         >
           <div className=" w-full col-span-5 h-60  sm:h-64 relative sm:pt-12 sm:pb-104">
@@ -270,14 +270,14 @@ export default function DisplayCard() {
     };
     if (pathname.includes("preview")) {
       return (
-        <div className=" max-w-[1800px] px-[5%] ">
+        <div className=" max-w-[1800px] px-[5%] pb-6 ">
           <div className=" mx-auto  ">
             <div className="flex flex-row items-end justify-between pb-10">
               <p className="  text-2xl font-bold  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
                 Business Card Preview
               </p>
             </div>
-            <div className="flex flex-row gap-1">
+            {/* <div className="flex flex-row gap-1">
               <Link to={"/dashboard"}>
                 <p className="font-bold cursor-pointer hover:text-purple-400">
                   Back to Cards
@@ -285,11 +285,11 @@ export default function DisplayCard() {
               </Link>
               <p className="font-medium">{">"}</p>
               <p className="font-medium">Preview</p>
-            </div>
+            </div> */}
             {/* <div className="w-[39vh] h-[86vh] overflow-scroll m-auto border border-gray-300  rounded-2xl"> */}
-            <div className=" w-[calc(47vh_-_100px)]  sm:w-[calc(47vh_-_74px)]  h-[calc(100vh_-_200px)] sm:h-[calc(100vh_-_160px)] overflow-scroll border border-gray-300 rounded-2xl m-auto">
-              {cardView()}
-            </div>
+            {/* <div className=" w-[calc(47vh_-_100px)]  sm:w-[calc(47vh_-_74px)]  h-[calc(100vh_-_200px)] sm:h-[calc(100vh_-_160px)] overflow-scroll border border-gray-300 rounded-2xl m-auto"> */}
+            <div className=" w-full h-full sm:py-16 ">{cardView()}</div>
+            {/* </div> */}
           </div>
         </div>
         // </div>
