@@ -19,8 +19,7 @@ export default function DisplayCard() {
 
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
-  var sBrowser,
-    sUsrAg = navigator.userAgent;
+  let sUsrAg = navigator.userAgent;
 
   useEffect(() => {
     axios
