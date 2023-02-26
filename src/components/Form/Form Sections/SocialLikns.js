@@ -26,7 +26,6 @@ export default function SocialLinks(props) {
   }
   //handle change event in addition of new input field
   function handleChange(e) {
-    console.log(e.target.value)
     setInput(e.target.value);
   }
   return (

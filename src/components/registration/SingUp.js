@@ -99,7 +99,7 @@ export default function SignUp(props) {
             </button>
           </div>
           <p className="pt-4">
-            Have an existing account?
+            Have an existing account?{' '}
             <Link to="/login">
               <span className="cursor-pointer text-purple-400">
                 Log in here

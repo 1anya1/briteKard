@@ -2,7 +2,6 @@
 import Chart, { Legend } from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 const MainChart = ({ labels, data, timeFrame }) => {
-  console.log({ data });
   const dataArr = [];
   data.forEach((el) => {
     const d = {

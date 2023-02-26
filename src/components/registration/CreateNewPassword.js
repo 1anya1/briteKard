@@ -5,7 +5,6 @@ import axios from "axios";
 import FormInput from "../Form/Input Styles/FormInput";
 export default function CreateNewPassword() {
   const { token } = useParams();
-  console.log(token);
   const [password, setPassword] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -26,7 +25,6 @@ export default function CreateNewPassword() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("submitted");
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/passwordReset/reset`, {
         token,

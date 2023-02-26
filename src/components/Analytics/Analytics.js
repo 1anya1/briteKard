@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import MiniChart from "./MiniChart";
 import { UserCircleIcon } from "@heroicons/react/solid";
 import MainChart from "./MainChart";
+import { useNavigate } from "react-router-dom";
 
 export default function Analytics(props) {
   const { username } = props;
   const [data, setData] = useState(null);
   const [analytics, setAnalytics] = useState(null);
-
   const [days, setDays] = useState(null);
   const [qrData, setQrData] = useState(null);
   const [contactDownloads, setContactDownloads] = useState(null);
@@ -21,13 +21,18 @@ export default function Analytics(props) {
   const [show, setShow] = useState(false);
   const [cardShow, setCardShow] = useState(0);
   const [showCard, setShowCard] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
-    console.log("in user name", username);
+    if (localStorage.getItem("token") === null) {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     if (username) {
       axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/vCards/${username}`)
         .then((response) => {
-          console.log(response);
           setData(response.data);
 
           handleAnalytics(response.data[0]._id, 0);
@@ -36,12 +41,10 @@ export default function Analytics(props) {
   }, [username]);
 
   const handleAnalytics = (id, idx) => {
-    console.log("handleAnalytics", id, idx);
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/engagement/${id}`)
       .then((response) => {
         setAnalytics(response.data);
-        console.log(response.data);
         setCardShow(idx);
       })
       .catch((error) => {
@@ -84,7 +87,7 @@ export default function Analytics(props) {
 
     const value = dayFormatter(date);
     setDays(value);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeFrame]);
 
   useEffect(() => {
@@ -93,7 +96,6 @@ export default function Analytics(props) {
       const obj = {};
       data.forEach((v) => {
         const dayString = new Date(Number(v)).toDateString().split(" ");
-        console.log(dayString);
         const day = `${dayString[1]} ${dayString[2]}`;
         obj[day] = (obj[day] || 0) + 1;
       });
@@ -109,7 +111,6 @@ export default function Analytics(props) {
     if (analytics) {
       const qrCodeData = analytics.qrCode;
       const val = getDataPoints(qrCodeData);
-      console.log(val);
       setQrData(val);
       const websiteClicks = analytics.addCard;
       const contact = getDataPoints(websiteClicks);
@@ -151,9 +152,7 @@ export default function Analytics(props) {
               } bg-gray-100  cursor-pointer flex flex-row gap-2 border border-gray-200 relative  py-2 px-4  rounded-[20px] w-full md:w-max  justify-start md:justify-center  content-center items-center `}
             >
               <div>
-                <p className="font-semibold text-sm">
-                  Last {timeFrame} days :
-                </p>
+                <p className="font-semibold text-sm">Last {timeFrame} days :</p>
                 <div
                   className={`${
                     show
@@ -169,7 +168,6 @@ export default function Analytics(props) {
                   >
                     <p className=" pl-4 py-1 md:text-sm">7 Days</p>
                   </div>
-                  {console.log(timeFrame, timeFrame === 30)}
                   <div
                     onClick={() => setTimeFrame(30)}
                     className={`${
@@ -206,7 +204,9 @@ export default function Analytics(props) {
                 setShow(false);
               }}
               className={` ${
-                showCard ? "rounded-br-none rounded-bl-none z-10" : "rounded-[20px] "
+                showCard
+                  ? "rounded-br-none rounded-bl-none z-10"
+                  : "rounded-[20px] "
               } bg-gray-100 cursor-pointer flex flex-row gap-2 border border-gray-200 relative  py-2 px-4 rounded-[20px] w-full md:w-max   content-center items-center justify-start md:justify-center`}
             >
               <div>
@@ -220,7 +220,6 @@ export default function Analytics(props) {
                 >
                   {data &&
                     data.map((card, idx) => (
-                    
                       <div
                         key={card._id}
                         onClick={() => handleAnalytics(card._id, idx)}
@@ -228,7 +227,6 @@ export default function Analytics(props) {
                           cardShow === idx ? "bg-gray-50" : ""
                         } p-2  flex flex-row  overflow-hidden gap-2 align-center hover:bg-purple-50 align-center content-center`}
                       >
-                        {  console.log(card._id)}
                         <div className="h-4 w-4 rounded-full overflow-hidden  border-1 border-gray-200  self-center ">
                           {!card.photo ? (
                             <div className=" w-full h-full flex items-center justify-center bg-gray-100">

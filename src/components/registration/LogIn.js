@@ -24,20 +24,18 @@ export default function LogIn(props) {
     email: null,
     password: null,
     error: false,
-    errorMessage:''
+    errorMessage: "",
   });
   const navigate = useNavigate();
   function handleChange(event) {
     const userObj = { ...userInputs };
-    console.log(userObj);
     let value = event.target.value;
     let objKey = event.target.getAttribute("id");
-    userObj[objKey] = objKey==='email'? value.toLowerCase() : value;
-    userObj.error=false
+    userObj[objKey] = objKey === "email" ? value.toLowerCase() : value;
+    userObj.error = false;
     setUserInputs(userObj);
-
   }
-  console.log(process.env.REACT_APP_BACKEND_URL);
+
   function handleSubmit(e) {
     e.preventDefault();
     axios
@@ -53,12 +51,10 @@ export default function LogIn(props) {
         }
       })
       .catch((error) => {
-        console.log(error);
-        console.log(error.response.data);
         setUserInputs((prevState) => ({
           ...prevState,
           error: true,
-          errorMessage: error.response.data
+          errorMessage: error.response.data,
         }));
       });
   }
@@ -69,11 +65,11 @@ export default function LogIn(props) {
         <p className="text-2xl font-extrabold  text-left  tracking-tight text-gray-900  mb-5 ">
           Log In
         </p>
-        {userInputs.error &&
-         <p className="text-md   text-left  tracking-tight text-red  mb-5 ">
-         {userInputs.errorMessage}
-       </p>
-        }
+        {userInputs.error && (
+          <p className="text-md   text-left  tracking-tight text-red  mb-5 ">
+            {userInputs.errorMessage}
+          </p>
+        )}
         <form onSubmit={handleSubmit}>
           {data.map((el, idx) => {
             return (

@@ -20,6 +20,12 @@ export default function AllCards(props) {
   const displayCard = [];
 
   useEffect(() => {
+    if (localStorage.getItem("token") === null) {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     const timeId = setTimeout(() => {
       setShow(false);
     }, 1000);
@@ -37,14 +43,13 @@ export default function AllCards(props) {
       axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/vCards/${username}`)
         .then((response) => {
-          console.log(response.data);
           setData(response.data);
         });
     }
   }, [username, deleteModal]);
 
   for (let card in data) {
-    const { _id, firstName, lastName, title, photo } = data[card];
+    const { _id, firstName, lastName, title, photo, qrCode } = data[card];
 
     const name = `${firstName} ${lastName}`;
 
@@ -53,6 +58,7 @@ export default function AllCards(props) {
       name: name,
       jobTitle: title,
       image: photo,
+      qrCode,
     };
     displayCard.push(display);
   }
@@ -66,7 +72,7 @@ export default function AllCards(props) {
       <div className=" mx-auto  ">
         <div className="flex flex-row items-end justify-between pb-10">
           <p className="  text-2xl font-bold  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
-           My Business Cards
+            My Business Cards
           </p>
         </div>
         {displayCard.length > 0 && (
