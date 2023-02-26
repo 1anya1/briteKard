@@ -6,6 +6,7 @@ import { PhoneIcon, MailIcon, ChatAltIcon } from "@heroicons/react/solid";
 import { useParams, useLocation } from "react-router-dom";
 import QRmodal from "./Display Sections/Display Functions/QRmodal";
 import LoadingScreen from "../LoadingScreen";
+import { saveAs } from "file-saver";
 // import { Link } from "react-router-dom";
 
 const axios = require("axios");
@@ -29,7 +30,6 @@ export default function DisplayCard() {
       })
       .catch((error) => {
         setError(true);
-       
       });
   }, [id, username]);
   const handleAnalytics = (dataType) => {
@@ -55,20 +55,24 @@ export default function DisplayCard() {
       })
       .catch(function (error) {
         console.log(error);
-        
       });
   }
   function download(filename, text) {
-    var element = document.createElement("a");
-    element.setAttribute(
-      "href",
-      "data:text/vcard;charset=utf-8," + encodeURIComponent(text)
-    );
-    element.setAttribute("download", filename);
-    element.style.display = "none";
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
+    // var element = document.createElement("a");
+    // element.setAttribute(
+    //   "href",
+    //   "data:text/vcard;charset=utf-8," + encodeURIComponent(text)
+    // );
+    // element.setAttribute("download", filename);
+    // element.style.display = "none";
+    // document.body.appendChild(element);
+    // element.click();
+    // document.body.removeChild(element);
+    console.log(text)
+    const blob = new Blob([text], { type: "data:text/vcard;charset=utf-8" });
+  
+    // save the file using FileSaver.js
+    saveAs(blob, `${filename}.vcf`);
   }
 
   function shareCard() {
@@ -304,7 +308,7 @@ export default function DisplayCard() {
   if (error) {
     return (
       <p className="pt-[30vh] flex justify-center align-center text-xl font-medium  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
-       404 Page Not Found
+        404 Page Not Found
       </p>
     );
   } else {
