@@ -34,11 +34,9 @@ export default function Analytics(props) {
         .get(`${process.env.REACT_APP_BACKEND_URL}/vCards/${username}`)
         .then((response) => {
           setData(response.data);
-          if(response.data.length > 0){
+          if (response.data[0]) {
             handleAnalytics(response.data[0]._id, 0);
           }
-
-         
         });
     }
   }, [username]);
@@ -141,7 +139,7 @@ export default function Analytics(props) {
             Card Analytics
           </p>
         </div>
-        {data && (
+        {data?.length> 0 && (
           <div className="flex flex-col md:flex-row gap-2.5 pb-8">
             <div
               onClick={() => {
@@ -221,7 +219,7 @@ export default function Analytics(props) {
                       : "hidden"
                   }`}
                 >
-                  {data &&
+                  {data?.length > 0 &&
                     data.map((card, idx) => (
                       <div
                         key={card._id}
@@ -251,30 +249,32 @@ export default function Analytics(props) {
                     ))}
                 </div>
               </div>
-              <div
-                key={data[cardShow]._id}
-                className="flex flex-row  overflow-hidden gap-2 content-center align-center "
-              >
-                <div className="h-4 w-4 rounded-full overflow-hidden  1 border-gray-200 self-center  ">
-                  {!data[cardShow].photo ? (
-                    <div className=" w-full h-full flex items-center justify-center bg-gray-100">
-                      <UserCircleIcon className="h-2/3 w-2/3 fill-gray-300" />
-                    </div>
-                  ) : (
-                    <img
-                      className="object-cover h-full w-full "
-                      src={data[cardShow].photo}
-                      alt="profile"
-                    />
-                  )}
-                </div>
+              {data?.length > 0 && (
+                <div
+                  key={data[cardShow]._id}
+                  className="flex flex-row  overflow-hidden gap-2 content-center align-center "
+                >
+                  <div className="h-4 w-4 rounded-full overflow-hidden  1 border-gray-200 self-center  ">
+                    {!data[cardShow].photo ? (
+                      <div className=" w-full h-full flex items-center justify-center bg-gray-100">
+                        <UserCircleIcon className="h-2/3 w-2/3 fill-gray-300" />
+                      </div>
+                    ) : (
+                      <img
+                        className="object-cover h-full w-full "
+                        src={data[cardShow].photo}
+                        alt="profile"
+                      />
+                    )}
+                  </div>
 
-                <p className="text-sm  font-semibold capitalize">
-                  {data[cardShow].cardName
-                    ? data[cardShow].cardName
-                    : data[cardShow]._id}
-                </p>
-              </div>
+                  <p className="text-sm  font-semibold capitalize">
+                    {data[cardShow].cardName
+                      ? data[cardShow].cardName
+                      : data[cardShow]._id}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         )}
