@@ -7,6 +7,7 @@ import { useParams, useLocation } from "react-router-dom";
 import QRmodal from "./Display Sections/Display Functions/QRmodal";
 import LoadingScreen from "../LoadingScreen";
 import { saveAs } from "file-saver";
+
 // import { Link } from "react-router-dom";
 
 const axios = require("axios");
@@ -18,6 +19,8 @@ export default function DisplayCard() {
 
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
+  var sBrowser,
+    sUsrAg = navigator.userAgent;
 
   useEffect(() => {
     axios
@@ -51,28 +54,30 @@ export default function DisplayCard() {
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/vCards/${username}/${id}`)
       .then(function (response) {
-        download(`${username}.VCF`, response.data[0]);
+        download({ username }, response.data[0]);
       })
       .catch(function (error) {
         console.log(error);
       });
   }
   function download(filename, text) {
-    // var element = document.createElement("a");
-    // element.setAttribute(
-    //   "href",
-    //   "data:text/vcard;charset=utf-8," + encodeURIComponent(text)
-    // );
-    // element.setAttribute("download", filename);
-    // element.style.display = "none";
-    // document.body.appendChild(element);
-    // element.click();
-    // document.body.removeChild(element);
-    console.log(text)
-    const blob = new Blob([text], { type: "data:text/vcard;charset=utf-8" });
-  
-    // save the file using FileSaver.js
-    saveAs(blob, `${filename}.vcf`);
+    if (sUsrAg.indexOf("Safari") > -1) {
+      var element = document.createElement("a");
+      element.setAttribute(
+        "href",
+        "data:text/vcard;charset=utf-8," + encodeURIComponent(text)
+      );
+      element.setAttribute("download", filename.username);
+      element.style.display = "none";
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    } else {
+      const blob = new Blob([text], { type: "data:text/vcard;charset=utf-8" });
+
+      // save the file using FileSaver.js
+      saveAs(blob, `${filename.username}.vcf`);
+    }
   }
 
   function shareCard() {
