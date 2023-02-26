@@ -34,8 +34,11 @@ export default function Analytics(props) {
         .get(`${process.env.REACT_APP_BACKEND_URL}/vCards/${username}`)
         .then((response) => {
           setData(response.data);
+          if(response.data.length > 0){
+            handleAnalytics(response.data[0]._id, 0);
+          }
 
-          handleAnalytics(response.data[0]._id, 0);
+         
         });
     }
   }, [username]);
