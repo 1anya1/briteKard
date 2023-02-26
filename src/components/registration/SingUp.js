@@ -16,7 +16,7 @@ const data = [
     id: "password",
     placeholder: "password",
     value: "",
-    hidden:true
+    hidden: true,
   },
   {
     label: "Email",
@@ -42,7 +42,7 @@ export default function SignUp(props) {
     const inputs = { ...userInput };
     const val = event.target.value;
     const objKey = event.target.getAttribute("id");
-    inputs[objKey] = val;
+    inputs[objKey] = objKey === "email" ? val.toLowerCase() : val;
     setUserInput(inputs);
   }
   function formSubmit(e) {
@@ -52,7 +52,7 @@ export default function SignUp(props) {
       .then((response) => {
         axios
           .post(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
-            username: userInput.username,
+            email: userInput.email,
             password: userInput.password,
           })
           .then((response) => {

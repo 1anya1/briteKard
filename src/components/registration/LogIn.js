@@ -32,7 +32,7 @@ export default function LogIn(props) {
     console.log(userObj);
     let value = event.target.value;
     let objKey = event.target.getAttribute("id");
-    userObj[objKey] = value;
+    userObj[objKey] = objKey==='email'? value.toLowerCase() : value;
     userObj.error=false
     setUserInputs(userObj);
 
