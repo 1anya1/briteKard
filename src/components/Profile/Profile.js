@@ -1,4 +1,14 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 export default function Profile(props) {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token") === null) {
+      navigate("/");
+    }
+  },[navigate]);
+
   return (
     <div className=" max-w-[1800px] px-[5%] pb-6 ">
       <div className=" mx-auto  ">
@@ -7,7 +17,7 @@ export default function Profile(props) {
             {props.username} Profile
           </p>
         </div>
-        
+
         <div
           onClick={props.handleLogOut}
           className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start mb-8"

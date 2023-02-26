@@ -26,8 +26,6 @@ export default function PasswordReset(props) {
  
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(e);
-    console.log(email);
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/passwordReset/reset-password`, { email })
       .then((response) => {
@@ -36,7 +34,7 @@ export default function PasswordReset(props) {
         }
       })
       .catch((error) => {
-        console.log(error);
+
         setErrorMessage(error.response.data);
         setError(true);
       });

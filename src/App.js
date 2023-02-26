@@ -35,7 +35,6 @@ export default function App() {
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const location = useLocation();
-  console.log(location.pathname);
   const [height, setHeight] = useState(window.innerHeight);
 
   useEffect(() => {
@@ -53,8 +52,9 @@ export default function App() {
         });
     } else {
       setLoggedIn(false);
+      // navigate("/");
     }
-  }, [username]);
+  }, [ username]);
   const updateDimensions = () => {
     setHeight(window.innerHeight);
   };
@@ -107,9 +107,9 @@ export default function App() {
           path={"/dashboard/analytics"}
           element={<Analytics username={username} />}
         />
-         <Route
+        <Route
           path={"/dashboard/profile"}
-          element={<Profile username={username} handleLogOut={handleLogOut}/>}
+          element={<Profile username={username} handleLogOut={handleLogOut} />}
         />
         <Route
           path={`mycard/update/:id`}
@@ -120,7 +120,6 @@ export default function App() {
   };
 
   const handleLogOut = (e) => {
-    console.log("here", e);
     e.preventDefault();
     localStorage.clear();
     setLoggedIn(false);
@@ -128,8 +127,18 @@ export default function App() {
     navigate("/");
   };
   const links = [
-    { name: "My Cards", link: "/dashboard", Icon: AiOutlineIdcard, active: true },
-    { name: "New Card", link: "/form", Icon: AiOutlinePlusCircle, active: false },
+    {
+      name: "My Cards",
+      link: "/dashboard",
+      Icon: AiOutlineIdcard,
+      active: true,
+    },
+    {
+      name: "New Card",
+      link: "/form",
+      Icon: AiOutlinePlusCircle,
+      active: false,
+    },
     {
       name: "Analytics",
       link: "/dashboard/analytics",
@@ -155,10 +164,7 @@ export default function App() {
             paddingBottom: "env(safe-area-inset-bottom)",
           }}
         >
-          <div
-            className="flex-1  overflow-scroll sm:h-screen"
-           
-          >
+          <div className="flex-1  overflow-scroll sm:h-screen">
             {routerSystem()}
           </div>
           <div className="z-10 bg-white w-screen sm:w-[100px] sm:min-w-[100px] lg:w-[300px] lg:min-w-[300px] flex flex-row sm:flex-col gap-1 sticky bottom-0 shadow-[1px_1px_6px_-3px__rgba(23,23,23,1)] sm:shadow-[1px_1px_6px_-5px__rgba(23,23,23,1)]  sm:h-screen pt-4 sm:pt-10 justify-around sm:justify-start h-[80px]">
@@ -188,7 +194,7 @@ export default function App() {
           )}
 
           {routerSystem()}
-          <Footer />
+          {!location.pathname.includes("share") && <Footer />}
         </div>
       )}
     </div>

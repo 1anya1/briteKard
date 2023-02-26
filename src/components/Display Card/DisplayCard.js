@@ -13,6 +13,7 @@ const axios = require("axios");
 export default function DisplayCard() {
   let { username, id } = useParams();
   const { pathname } = useLocation();
+  const [error, setError] = useState(false);
 
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
@@ -24,15 +25,14 @@ export default function DisplayCard() {
       )
       .then((response) => {
         const data = response.data[0];
-        console.log(data);
         setData(data);
       })
       .catch((error) => {
-        console.log(error);
+        setError(true);
+       
       });
   }, [id, username]);
   const handleAnalytics = (dataType) => {
-    console.log("in here");
     if (pathname.includes("share")) {
       const time = new Date().getTime();
       const body = { cardId: data._id, [dataType]: time };
@@ -55,6 +55,7 @@ export default function DisplayCard() {
       })
       .catch(function (error) {
         console.log(error);
+        
       });
   }
   function download(filename, text) {
@@ -299,6 +300,13 @@ export default function DisplayCard() {
         <div className=" w-full h-full sm:py-16 bg-gray-100">{cardView()}</div>
       );
     }
+  }
+  if (error) {
+    return (
+      <p className="pt-[30vh] flex justify-center align-center text-xl font-medium  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
+       404 Page Not Found
+      </p>
+    );
   } else {
     return <LoadingScreen />;
   }
