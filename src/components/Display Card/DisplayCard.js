@@ -6,7 +6,8 @@ import { PhoneIcon, MailIcon, ChatAltIcon } from "@heroicons/react/solid";
 import { useParams, useLocation } from "react-router-dom";
 import QRmodal from "./Display Sections/Display Functions/QRmodal";
 import LoadingScreen from "../LoadingScreen";
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
+import { browserName } from "react-device-detect";
 
 // import { Link } from "react-router-dom";
 
@@ -19,7 +20,7 @@ export default function DisplayCard() {
 
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
-  let sUsrAg = navigator.userAgent;
+  console.log({ browserName });
 
   useEffect(() => {
     axios
@@ -60,23 +61,37 @@ export default function DisplayCard() {
       });
   }
   function download(filename, text) {
-    if (sUsrAg.indexOf("Safari") > -1) {
-      var element = document.createElement("a");
-      element.setAttribute(
-        "href",
-        "data:text/vcard;charset=utf-8," + encodeURIComponent(text)
-      );
-      element.setAttribute("download", filename.username);
-      element.style.display = "none";
-      document.body.appendChild(element);
-      element.click();
-      document.body.removeChild(element);
-    } else {
-      const blob = new Blob([text], { type: "data:text/vcard;charset=utf-8" });
-
-      // save the file using FileSaver.js
-      saveAs(blob, `${filename.username}.vcf`);
-    }
+    // if (browserName === "Safari" || browserName === "Chrome") {
+    //   var element = document.createElement("a");
+    //   element.setAttribute(
+    //     "href",
+    //     "data:text/vcard;charset=utf-8," + encodeURIComponent(text)
+    //   );
+    //   element.setAttribute("download", filename.username);
+    //   element.style.display = "none";
+    //   document.body.appendChild(element);
+    //   element.click();
+    //   document.body.removeChild(element);
+    // } else {
+      const file = new Blob([text], { type: "data:text/vcard;charset=utf-8" })
+      if (!file) {
+        console.error("No file selected!");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const vcardData = reader.result;
+        const blob = new Blob([vcardData], { type: "text/x-vcard" });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${filename.username}.vcf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+      reader.readAsText(file);
+    
   }
 
   function shareCard() {
