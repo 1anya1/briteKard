@@ -73,15 +73,48 @@ export default function DisplayCard() {
     //   element.click();
     //   document.body.removeChild(element);
     // } else {
-      const file = new Blob([text], { type: "data:text/vcard;charset=utf-8" })
-      if (!file) {
-        console.error("No file selected!");
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = () => {
-        const vcardData = reader.result;
-        const blob = new Blob([vcardData], { type: "text/x-vcard" });
+    // const file = new Blob([text], { type: "data:text/vcard;charset=UTF-32" });
+    //   if (!file) {
+    //     console.error("No file selected!");
+    //     return;
+    //   }
+    //   const reader = new FileReader();
+    //   reader.onload = () => {
+    //     const vcardData = reader.result;
+    //     const blob = new Blob([vcardData], {
+    //       type: "data:text/vcard;charset=utf-8",
+    //     });
+    //     const url = window.URL.createObjectURL(blob);
+    //     const link = document.createElement("a");
+    //     link.href = url;
+    //     link.download = `${filename.username}.vcf`;
+    //     document.body.appendChild(link);
+    //     link.click();
+    //     document.body.removeChild(link);
+    //     if(browserName === "Firefox" || ){
+    //       console.log('heres')
+    //       window.URL.revokeObjectURL(url);
+    //     }
+    //   };
+    //   reader.readAsText(file);
+    // }
+
+    //   blob = new Blob([data], { type: "text/x-vcard" });
+    // } else {
+    if (browserName === "Firefox") {
+      alert("in here");
+      const dataUri = `data:text/vcard;charset=utf-8,${encodeURIComponent(
+        text
+      )}`;
+      const win = window.open(dataUri, "_blank");
+      win.focus();
+    } else {
+      const blob = new Blob([text], { type: "text/vcard" });
+      if (window.navigator.msSaveOrOpenBlob) {
+        // Use Microsoft-specific function to open file on iOS
+        window.navigator.msSaveOrOpenBlob(blob, `${filename.username}.vcf`);
+      } else {
+        // Use standard method for other browsers
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
@@ -89,9 +122,10 @@ export default function DisplayCard() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-      };
-      reader.readAsText(file);
-    
+        window.URL.revokeObjectURL(url);
+      }
+    }
+
   }
 
   function shareCard() {
