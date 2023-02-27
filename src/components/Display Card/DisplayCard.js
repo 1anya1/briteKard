@@ -125,6 +125,7 @@ export default function DisplayCard() {
         window.URL.revokeObjectURL(url);
       }
     }
+
   }
 
   function shareCard() {
