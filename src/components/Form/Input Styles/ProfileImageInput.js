@@ -1,5 +1,6 @@
-import { getBase64, checkFileSize } from "../Form Functions/imageFunctions";
+// import { getBase64, checkFileSize } from "../Form Functions/imageFunctions";
 import { useState } from "react";
+import Compress from "react-image-file-resizer";
 
 export default function ProfileImageInputs(props) {
 
@@ -8,29 +9,30 @@ export default function ProfileImageInputs(props) {
   const [image, setImage] = useState(props.image? props.image : '');
   const [error, setError] = useState(false);
 
-  //Handiling image input
-  //Setting to max 2gb of data transfer
-  // converting to base 64URL and setting to image
+ 
   function handleFileInputChange(e) {
     const file = e.target.files[0];
-    const size = checkFileSize(e.target.files[0].size);
-    if (size < 2097152) {
-      getBase64(file)
-        .then((result) => {
-          file["base64"] = result;
-          const base64URL = file["base64"];
-          setImage(base64URL);
+    Compress.imageFileResizer(
+      file, // the file from input
+      500, // width
+      500, // height
+      "PNG", // compress format WEBP, JPEG, PNG
+      70, // quality
+      0, // rotation
+      (uri) => {
+        if (uri) {
+          setImage(uri);
           setError(false);
-          props.handleImageChange(base64URL, "profile");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      setError(true);
-      setImage(null);
-      props.handleImageChange("", "profile");
-    }
+          props.handleImageChange(uri, "profile");
+        } else {
+          setImage(null);
+          setError(true);
+          props.handleImageChange("", "profile");
+        }
+   
+      },
+      "base64" // blob or base64 default base64
+    );
   }
 
   return (
@@ -73,7 +75,7 @@ export default function ProfileImageInputs(props) {
         </div>
         {error && (
           <span className="text-xs text-red" id="logo">
-            Your file is too large. Please make sure the image is 2MG or less.
+            Something went wrong. Please try again.
           </span>
         )}
       </div>

@@ -1,6 +1,9 @@
 import FormDescription from "../Input Styles/FormDescription";
 import { useState } from "react";
-import { getBase64, checkFileSize } from "../Form Functions/imageFunctions";
+// import { getBase64, checkFileSize } from "../Form Functions/imageFunctions";
+// import Compressor from 'compressorjs';
+import Compress from "react-image-file-resizer";
+
 export default function CoverPhoto(props) {
   const [image, setImage] = useState(props.logo ? props.logo : "");
   const [error, setError] = useState(false);
@@ -8,25 +11,28 @@ export default function CoverPhoto(props) {
 
   function handleFileInputChange(e) {
     const file = e.target.files[0];
-    const size = checkFileSize(e.target.files[0].size);
-
-    if (size < 2097152) {
-      getBase64(file)
-        .then((result) => {
-          file["base64"] = result;
-          const base64URL = file["base64"];
-          setImage(base64URL);
+    Compress.imageFileResizer(
+      file, // the file from input
+      700, // width
+      700, // height
+      "PNG", // compress format WEBP, JPEG, PNG
+      70, // quality
+      0, // rotation
+      (uri) => {
+        if (uri) {
+          setImage(uri);
           setError(false);
-          props.handleImageChange(base64URL, "logo");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      setImage(null);
-      setError(true);
-      props.handleImageChange("", "logo");
-    }
+          props.handleImageChange(uri, "logo");
+      
+        } else {
+          setImage(null);
+          setError(true);
+          props.handleImageChange("", "logo");
+
+        }
+      },
+      "base64"
+    );
   }
 
   return (
@@ -75,11 +81,10 @@ export default function CoverPhoto(props) {
                 />
               </label>
             </div>
-            <p className="text-xs text-gray-500 pt-2">PNG or JPG up to 2MB</p>
+            <p className="text-xs text-gray-500 pt-2">PNG or JPG Images</p>
             {error && (
               <span className="text-xs text-red" id="logo">
-                Your file is too large. Please make sure the image is 2MG or
-                less.
+                Your file is too large. Please try again.
               </span>
             )}
           </div>
