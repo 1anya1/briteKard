@@ -35,6 +35,8 @@ export default function SignUp(props) {
       firstName: null,
       lastName: null,
       email: null,
+      error: false,
+      errorMessage: "",
     },
   ]);
 
@@ -50,6 +52,7 @@ export default function SignUp(props) {
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/user/signup`, userInput)
       .then((response) => {
+        console.log(response);
         axios
           .post(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
             email: userInput.email,
@@ -63,8 +66,19 @@ export default function SignUp(props) {
             }
           })
           .catch((error) => {
-            console.log(error);
+            setUserInput((prevState) => ({
+              ...prevState,
+              error: true,
+              errorMessage: error.response.data,
+            }));
           });
+      })
+      .catch((error) => {
+        setUserInput((prevState) => ({
+          ...prevState,
+          error: true,
+          errorMessage: error.response.data,
+        }));
       });
   }
   return (
@@ -73,6 +87,11 @@ export default function SignUp(props) {
         <p className="text-2xl font-extrabold  text-left  tracking-tight text-gray-900  mb-5 ">
           Sign Up
         </p>
+        {userInput.error && (
+          <p className="text-md   text-left  tracking-tight text-red  mb-5 ">
+            {userInput.errorMessage}
+          </p>
+        )}
         <form onSubmit={formSubmit}>
           {data.map((el, idx) => {
             return (
@@ -99,7 +118,7 @@ export default function SignUp(props) {
             </button>
           </div>
           <p className="pt-4">
-            Have an existing account?{' '}
+            Have an existing account?{" "}
             <Link to="/login">
               <span className="cursor-pointer text-purple-400">
                 Log in here
