@@ -20,7 +20,7 @@ export default function DisplayCard() {
 
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
-  console.log({ browserName });
+
 
   useEffect(() => {
     axios

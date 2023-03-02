@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
 import ShareModal from "./ShareModal";
 import DeleteFormModal from "../Form/Input Styles/DeleteFormModal";
-import Lottie from "lottie-react";
-import emptyBox from "../../images/lottie/empty-box.json";
 import { Link } from "react-router-dom";
+import { AiOutlinePlus } from "react-icons/ai";
 
 const axios = require("axios");
 export default function AllCards(props) {
@@ -76,7 +75,7 @@ export default function AllCards(props) {
           </p>
         </div>
         {displayCard.length > 0 && (
-          <div className="flex flex-row flex-wrap gap-3  ">
+          <div className="flex flex-row flex-wrap sm:gap-5  gap-2 ">
             {open && (
               <ShareModal
                 card={currentCard}
@@ -97,7 +96,7 @@ export default function AllCards(props) {
               return (
                 <div
                   key={id}
-                  className="drop-shadow-md  border-gray-100 border  lg:w-[calc(50%_-_6px)] w-full sm:w-full text-small text-gray-500 font-medium mb-4 sm:mb-0 bg-white rounded-2xl  flex flex-col justify-between p-4 sm:p-6  h-max"
+                  className="drop-shadow-md  border-gray-100 border  lg:w-[calc(50%_-_10px)] w-full sm:w-full text-small text-gray-800 font-medium mb-4 sm:mb-0 bg-white rounded-2xl  flex flex-col justify-between p-4 sm:p-6  h-max"
                 >
                   <div className="flex justify-between items-center pb-4">
                     <div className="h-20 w-20 rounded-full overflow-hidden  border-4 border-gray-200 ">
@@ -116,32 +115,32 @@ export default function AllCards(props) {
 
                     <p className="font-bold text-xl">{card.name}</p>
                   </div>
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
                     <button
                       onClick={() =>
                         navigate(`/mycard/preview/${username}/${card.id}`)
                       }
-                      className=" h-11 w-[calc(50%_-_2px)] border p-1  font-medium border-gray-500  rounded-md bg-white  hover:bg-gray-500 hover:text-white text-gray-500"
+                      className=" h-12  sm:w-[calc(50%_-_4px)] w-[calc(50%_-_2px)] border p-1  font-medium border-gray-800  rounded-md bg-white  hover:bg-gray-100  text-gray-800 text-lg"
                     >
                       Preview
                     </button>
                     <button
                       onClick={() => handleModal(card)}
-                      className=" h-11 w-[calc(50%_-_2px)] border p-1  font-medium border-gray-500  rounded-md bg-white  hover:bg-gray-500 hover:text-white text-gray-500"
+                      className=" h-12 sm:w-[calc(50%_-_4px)] w-[calc(50%_-_2px)] border p-1  font-medium border-gray-800  rounded-md bg-white  hover:bg-gray-100  text-gray-800 text-base"
                     >
                       Share
                     </button>
 
                     <button
                       onClick={() => navigate(`/mycard/update/${card.id}`)}
-                      className="h-11 w-[calc(50%_-_2px)] border p-1  font-medium border-gray-500  rounded-md bg-white  hover:bg-gray-500 hover:text-white text-gray-500"
+                      className="h-12  sm:w-[calc(50%_-_4px)] w-[calc(50%_-_2px)] border p-1  font-medium border-gray-800  rounded-md bg-white  hover:bg-gray-100  text-gray-800 text-base"
                     >
                       Edit
                     </button>
 
                     <button
                       onClick={() => deleteCard(card)}
-                      className=" h-11 w-[calc(50%_-_2px)] border p-1  font-medium border-gray-500  rounded-md bg-white  hover:bg-gray-500 hover:text-white text-gray-500"
+                      className=" h-12 sm:w-[calc(50%_-_4px)] w-[calc(50%_-_2px)] border p-1  font-medium border-gray-800  rounded-md bg-white  hover:bg-gray-100  text-gray-800 text-base"
                     >
                       Delete
                     </button>
@@ -149,32 +148,29 @@ export default function AllCards(props) {
                 </div>
               );
             })}
+            <div className="h-[200px] drop-shadow-md  border-gray-100 border  lg:w-[calc(50%_-_10px)] w-full sm:w-full text-small text-gray-800 font-medium mb-4 sm:mb-0 bg-white rounded-2xl  flex flex-col  p-4 sm:p-6 justify-center items-center">
+              <Link to="/form">
+                <div className="gap-4 flex flex-col cursor-pointer group">
+                  <div className="rounded-full bg-gray-50 w-max p-4 m-auto group-hover:bg-gray-200 ">
+                    <AiOutlinePlus size={30} className="color-gray-900" />
+                  </div>
+                  <p className="text-lg font-bold">Create New Card</p>
+                </div>
+              </Link>
+            </div>
           </div>
         )}
-        {!data && username && <LoadingScreen />}{" "}
+        {!data && username && <LoadingScreen />}
         {displayCard.length < 1 && data && (
-          <div className="relative bg-white overflow-hidden pb-4">
-            <div className="max-w-7xl mx-auto">
-              <div className="w-4/5 sm:w-1/2 flex flex-center m-auto">
-                <Lottie
-                  animationData={emptyBox}
-                  loop={true}
-                  style={{ width: "100%" }}
-                />
-              </div>
-              <p className="font-medium text-xl sm:text-2xl text-gray-700 w-5/6 sm:w-4/6 m-auto text-center">
-                You don't have any cards yet. Click below to get started.
-              </p>
-              <div className="mt-5 sm:mt-8 sm:flex sm:justify-center px-4">
-                <div className="rounded-md shadow">
-                  <Link to="/form">
-                    <div className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-700 md:py-4 md:text-lg md:px-10 cursor-pointer">
-                      Get started
-                    </div>
-                  </Link>
+          <div className="h-[200px] drop-shadow-md  border-gray-100 border  lg:w-[calc(50%_-_10px)] w-full sm:w-full text-small text-gray-800 font-medium mb-4 sm:mb-0 bg-white rounded-2xl  flex flex-col  p-4 sm:p-6 justify-center items-center">
+            <Link to="/form">
+              <div className="gap-4 flex flex-col cursor-pointer group">
+                <div className="rounded-full bg-gray-50 w-max p-4 m-auto group-hover:bg-gray-200 ">
+                  <AiOutlinePlus size={30} className="color-gray-900" />
                 </div>
+                <p className="text-lg font-bold">Create New Card</p>
               </div>
-            </div>
+            </Link>
           </div>
         )}
       </div>

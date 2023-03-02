@@ -44,17 +44,18 @@ export default function App() {
           `${process.env.REACT_APP_BACKEND_URL}/user/verify/${localStorage.token}`
         )
         .then((response) => {
+          console.log(response);
           setLoggedIn(true);
           setUsername(response.data.username);
         })
         .catch((error) => {
-          console.log(error);
+          setLoggedIn(false);
+          localStorage.removeItem("token");
         });
     } else {
       setLoggedIn(false);
-      // navigate("/");
     }
-  }, [ username]);
+  }, [username]);
   const updateDimensions = () => {
     setHeight(window.innerHeight);
   };
