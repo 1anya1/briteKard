@@ -57,6 +57,7 @@ export default function App() {
     }
   }, [username]);
   const updateDimensions = () => {
+    console.log("here");
     setHeight(window.innerHeight);
   };
   useEffect(() => {
@@ -110,7 +111,14 @@ export default function App() {
         />
         <Route
           path={"/dashboard/profile"}
-          element={<Profile username={username} handleLogOut={handleLogOut} />}
+          element={
+            <Profile
+              username={username}
+              handleLogOut={handleLogOut}
+              height={height}
+              setUsername={setUsername}
+            />
+          }
         />
         <Route
           path={`mycard/update/:id`}
