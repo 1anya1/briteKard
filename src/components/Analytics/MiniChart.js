@@ -3,7 +3,11 @@ import Chart, { Legend } from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import { useState, useEffect } from "react";
+import { ResizeObserver as ResizeObserverPolyfill } from "@juggle/resize-observer";
 const MiniChart = ({ labels, data, title }) => {
+  if (typeof window !== "undefined") {
+    window.ResizeObserver = window.ResizeObserver || ResizeObserverPolyfill;
+  }
   const [difference, setDifference] = useState(0);
   const [trend, setTrend] = useState(0);
   useEffect(() => {
@@ -18,11 +22,11 @@ const MiniChart = ({ labels, data, title }) => {
   }, [data]);
 
   return (
-    <div className="bg-white  rounded-3xl p-4 md:p-6  flex flex-col w-screen sm:w-[calc(50%_-_6px)] xl:w-[calc(25%_-_12px)] drop-shadow-md">
+    <div className="bg-white  rounded-3xl p-4 md:p-6  flex flex-col  drop-shadow-md">
       <p className="text-gray-900 font-medium">{title}</p>
-      <div className="flex flex-row gap-1">
+      <div className="flex flex-row space-x-1">
         <div className="flex flex-row w-[40%]">
-          <div className="flex flex-row gap-[10px] items-end">
+          <div className="flex flex-row space-x-[10px] items-end">
             <p className="text-2xl font-medium">
               {data.reduce((total, curr) => total + curr)}
             </p>
@@ -70,7 +74,7 @@ const MiniChart = ({ labels, data, title }) => {
                       ? "rgba(242,40,0,1)"
                       : "rgba(82, 82, 82,1)",
                   pointRadius: 0,
-                  borderWidth:1,
+                  borderWidth: 1,
                 },
               ],
             }}
