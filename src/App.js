@@ -176,7 +176,7 @@ export default function App() {
           <div className="flex-1  overflow-scroll sm:h-screen scroll-fix">
             {routerSystem()}
           </div>
-          <div className="z-10 bg-white w-screen sm:w-[100px] sm:min-w-[100px] lg:w-[300px] lg:min-w-[300px] flex flex-row sm:flex-col space-x-1 space-y-1 sticky bottom-0 shadow-[1px_1px_6px_-3px__rgba(23,23,23,1)] sm:shadow-[1px_1px_6px_-5px__rgba(23,23,23,1)]  sm:h-screen pt-4 sm:pt-10 justify-around sm:justify-start h-[80px]">
+          <div className=" fixed  left-0 z-10 bg-white w-screen sm:w-[100px] sm:min-w-[100px] lg:w-[300px] lg:min-w-[300px] flex flex-row sm:flex-col space-x-1 space-y-1  bottom-0 shadow-[1px_1px_6px_-3px__rgba(23,23,23,1)] sm:shadow-[1px_1px_6px_-5px__rgba(23,23,23,1)]  sm:h-screen pt-4 sm:pt-10 justify-around sm:justify-start h-[80px]">
             {links.map((link) => (
               <Link to={link.link}>
                 <div
