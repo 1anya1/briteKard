@@ -122,7 +122,9 @@ export default function Profile(props) {
   };
   return (
     <div
-      className=" max-w-[1800px] px-[5%] pb-6  flex flex-col"
+className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(100%_-_300px)] ml-auto  pb-[120px] flex flex-col "
+
+      
       style={{ minHeight: `${height}px` }}
     >
       <DeleteProfileModal
@@ -138,7 +140,7 @@ export default function Profile(props) {
         </p>
       </div>
       {userData && (
-        <div className="bg-white  p-6 rounded-lg gap-2 flex flex-col drop-shadow-md">
+        <div className="bg-white  p-6 rounded-lg space-y-2 flex flex-col drop-shadow-md">
           <p className="text-xl font-semibold pb-2">Account Settings</p>
           <div className="">
             <p className="text-sm  pb-2">Username</p>
@@ -151,7 +153,7 @@ export default function Profile(props) {
               <input
                 value={user.new !== null ? user.new : user.previous}
                 onChange={(e) => onChangeUsername(e)}
-                className="border border-gray-100  focus:ring-gray-200  focus:ring-1 focus:outline-none  px-2 py-1 rounded-md w-full  bg-gray-50"
+                className="h-12 border border-gray-100  focus:ring-gray-200  focus:ring-1 focus:outline-none  px-2 py-1 rounded-md w-full  bg-gray-50"
               />
               {user.available ? (
                 <AiOutlineCheck className="text-green absolute top-2 right-4" />
@@ -171,7 +173,7 @@ export default function Profile(props) {
               <input
                 value={email.new !== null ? email.new : email.previous}
                 onChange={(e) => onChangeEmail(e)}
-                className="border border-gray-100  focus:ring-gray-200  focus:ring-1 focus:outline-none  px-2 py-1 rounded-md w-full  bg-gray-50"
+                className="h-12 border border-gray-100  focus:ring-gray-200  focus:ring-1 focus:outline-none  px-2 py-1 rounded-md w-full  bg-gray-50"
               />
               {email.available ? (
                 <AiOutlineCheck className="text-green absolute top-2 right-4" />
@@ -180,7 +182,7 @@ export default function Profile(props) {
               ) : null}
             </div>
           </div>
-          <div className="pt-6 flex gap-2 sm:flex-row flex-col">
+          <div className="pt-6 flex md:space-x-2  md:space-y-0 space-y-2 sm:flex-row flex-col">
             <button
               disabled={user.available || email.available ? false : true}
               className="rounded-md bg-gray-900 px-4 py-2 text-white text-sm  border-gray-900 border  disabled:opacity-40 disabled:cursor-not-allowed w-full sm:w-max"
@@ -188,16 +190,18 @@ export default function Profile(props) {
             >
               Update
             </button>
+            {(user.new || email.new) && 
             <button
               className="rounded-md bg-white border-gray-900 border px-4 py-2 text-gray-900 text-sm w-full sm:w-max"
               onClick={onCancel}
             >
               Cancel
             </button>
+}
           </div>
         </div>
       )}
-      <div className="bg-white  p-6 rounded-lg gap-2 flex flex-col drop-shadow-md mt-4">
+      <div className="bg-white  p-6 rounded-lg space-y-2 flex flex-col drop-shadow-md mt-4">
         <p className="text-xl font-semibold ">Log Out</p>
         <p className="text-sm text-gray-500">Log our from your account.</p>
         <div className="rounded-md shadow w-full sm:w-max">
@@ -206,26 +210,26 @@ export default function Profile(props) {
             type="submit"
             className="rounded-md bg-white border-gray-900 border px-4 py-2 text-gray-900 text-sm w-full sm:w-max"
           >
-            <div className="flex flex-row gap-2 justify-center items-center">
+            <div className="flex flex-row space-x-2 justify-center items-center">
               <AiOutlineExport size={18} className="text-gray-600" />
               <p className="leading-relaxed text-sm">Log Out</p>
             </div>
           </button>
         </div>
       </div>
-      <div className="bg-white  p-6 rounded-lg gap-2 flex flex-col drop-shadow-md mt-4">
+      <div className="bg-white  p-6 rounded-lg space-y-2 flex flex-col drop-shadow-md mt-4">
         <p className="text-xl font-semibold ">Delete Account</p>
         <p className="text-sm text-gray-500">
           Once the account is deleted it can not be reinstated. All of the data
           will be permanently removed.
         </p>
-        <div className="rounded-md shadow w-full sm:w-[250px]">
+        <div className="rounded-md shadow w-full sm:w-max">
           <button
             onClick={() => setOpen(true)}
             type="submit"
             className="rounded-md bg-white border-red border px-4 py-2 text-red text-sm w-full sm:w-max"
           >
-            <div className="flex flex-row gap-2 justify-center items-center">
+            <div className="flex flex-row space-x-2 justify-center items-center">
               <AiOutlineDelete size={18} className="text-red" />
               <p className="leading-relaxed text-sm">Delete Account</p>
             </div>

@@ -35,14 +35,7 @@ const personalDataInputs = [
   },
 
   {
-    label: "Job Title",
-    type: "text",
-    id: "title",
-    placeholder: "Software Developer",
-  },
-
-  {
-    label: "Portfolio Site",
+    label: "Website",
     type: "url",
     id: "url",
     placeholder: "MyPortfolio.com",
@@ -105,6 +98,12 @@ const socialLinksInputs = [
 ];
 
 const workInfoInputs = [
+  {
+    label: "Job Title",
+    type: "text",
+    id: "title",
+    placeholder: "Software Developer",
+  },
   {
     label: "Organization Name",
     type: "text",

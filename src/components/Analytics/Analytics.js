@@ -133,7 +133,7 @@ export default function Analytics(props) {
   }, [analytics, days]);
 
   return (
-    <div className=" max-w-[1800px] px-[5%] pb-6 ">
+    <div className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(100%_-_300px)] ml-auto  pb-[120px] ">
       <div className=" mx-auto  ">
         <div className="flex flex-row items-end justify-between pb-10">
           <p className="  text-2xl font-bold text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
@@ -141,27 +141,25 @@ export default function Analytics(props) {
           </p>
         </div>
         {data?.length < 1 && (
-        <div className="h-[200px] drop-shadow-md  border-gray-100 border  lg:w-[calc(50%_-_10px)] w-full sm:w-full text-small text-gray-800 font-medium mb-4 sm:mb-0 bg-white rounded-2xl  flex flex-col  p-4 sm:p-6 justify-center items-center">
-          <Link to="/form">
-            <div className="gap-4 flex flex-col cursor-pointer group">
-              <div className="rounded-full bg-gray-50 w-max p-4 m-auto group-hover:bg-gray-200 ">
-                <AiOutlinePlus size={30} className="color-gray-900" />
+          <div className="h-[200px] drop-shadow-md  border-gray-100 border  lg:w-[calc(50%_-_10px)] w-full sm:w-full text-small text-gray-800 font-medium mb-4 sm:mb-0 bg-white rounded-2xl  flex flex-col  p-4 sm:p-6 justify-center items-center">
+            <Link to="/form">
+              <div className="space-x-4  space-y-4 flex flex-col cursor-pointer group">
+                <div className="rounded-full bg-gray-50 w-max p-4 m-auto group-hover:bg-gray-200 ">
+                  <AiOutlinePlus size={30} className="color-gray-900" />
+                </div>
+                <div>
+                  <p className="text-lg font-bold text-center">
+                    Create New Card
+                  </p>
+                  <p className="text-sm  text-center">No analytics available</p>
+                </div>
               </div>
-              <div className='gap-1'>
-                
-                <p className="text-lg font-bold text-center">
-                  Create New Card
-                </p>
-                <p className="text-sm  text-center">No analytics available</p>
-              </div>
-            </div>
-          </Link>
-        </div>
-        )} 
-         {data?.length > 0 && ( 
-
+            </Link>
+          </div>
+        )}
+        {data?.length > 0 && (
           <>
-            <div className="flex flex-col md:flex-row gap-2.5 pb-8">
+            <div className="flex flex-col lg:flex-row space-y-2.5 lg:space-x-2.5 lg:space-y-0 pb-8">
               <div
                 onClick={() => {
                   setShow(!show);
@@ -171,7 +169,7 @@ export default function Analytics(props) {
                   show
                     ? "rounded-br-none rounded-bl-none z-10"
                     : "rounded-[20px] "
-                } bg-gray-100  cursor-pointer flex flex-row gap-2 border border-gray-200 relative  py-2 px-4  rounded-[20px] w-full md:w-max  justify-start md:justify-center  content-center items-center `}
+                } bg-gray-100  cursor-pointer flex flex-row space-x-2 border border-gray-200 relative  py-2 px-4  rounded-[20px] w-full lg:w-max  justify-start lg:justify-center  content-center items-center `}
               >
                 <div>
                   <p className="font-semibold text-sm">
@@ -231,7 +229,7 @@ export default function Analytics(props) {
                   showCard
                     ? "rounded-br-none rounded-bl-none z-10"
                     : "rounded-[20px] "
-                } bg-gray-100 cursor-pointer flex flex-row gap-2 border border-gray-200 relative  py-2 px-4 rounded-[20px] w-full md:w-max   content-center items-center justify-start md:justify-center`}
+                } bg-gray-100 cursor-pointer flex flex-row space-x-2 border border-gray-200 relative  py-2 px-4 rounded-[20px] w-full lg:w-max   content-center items-center justify-start lg:justify-center`}
               >
                 <div>
                   <p className="font-semibold text-sm ">Card Data :</p>
@@ -249,7 +247,7 @@ export default function Analytics(props) {
                           onClick={() => handleAnalytics(card._id, idx)}
                           className={`${
                             cardShow === idx ? "bg-gray-50" : ""
-                          } p-2  flex flex-row  overflow-hidden gap-2 align-center hover:bg-purple-50 align-center content-center`}
+                          } p-2  flex flex-row  overflow-hidden space-x-2 align-center hover:bg-purple-50 align-center content-center`}
                         >
                           <div className="h-4 w-4 rounded-full overflow-hidden  border-1 border-gray-200  self-center ">
                             {!card.photo ? (
@@ -275,7 +273,7 @@ export default function Analytics(props) {
                 {data?.length > 0 && (
                   <div
                     key={data[cardShow]._id}
-                    className="flex flex-row  overflow-hidden gap-2 content-center align-center "
+                    className="flex flex-row  overflow-hidden space-x-2 content-center align-center "
                   >
                     <div className="h-4 w-4 rounded-full overflow-hidden  1 border-gray-200 self-center  ">
                       {!data[cardShow].photo ? (
@@ -301,8 +299,8 @@ export default function Analytics(props) {
               </div>
             </div>
 
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-row gap-3 flex-wrap justify-between">
+            <div className="flex flex-col  space-y-4">
+              <div className="grid xl:grid-cols-4  grid-cols-1 md:grid-cols-2  gap-3 justify-between w-full max-w-full">
                 {qrData && days && (
                   <MiniChart data={qrData} labels={days} title="QR Taps" />
                 )}

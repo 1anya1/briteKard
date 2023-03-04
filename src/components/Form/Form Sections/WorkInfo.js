@@ -18,7 +18,7 @@ export default function WorkInfo(props) {
                 label={el.label}
                 type={el.type}
                 id={el.id}
-                placeholder={el.placeholder}
+                // placeholder={el.placeholder}
                 value={props.userInputs[el.id]}
                 change={props.handleChange}
               />
@@ -31,7 +31,7 @@ export default function WorkInfo(props) {
                 label={el.label}
                 type={el.type}
                 id={el.id}
-                placeholder={el.placeholder}
+                // placeholder={el.placeholder}
                 value={props.userInputs[el.value[0]][el.value[1]]}
                 change={props.handleChange}
               />
@@ -43,7 +43,7 @@ export default function WorkInfo(props) {
                 label={el.label}
                 type={el.type}
                 id={el.id}
-                placeholder={el.placeholder}
+                // placeholder={el.placeholder}
                 value={props.userInputs[el.id]}
                 change={props.handleChange}
               />
@@ -63,7 +63,7 @@ export default function WorkInfo(props) {
             autoComplete="country-name"
             onChange={props.handleChange}
             value={props.userInputs["workAddress"]["countryRegion"]}
-            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white  shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm rounded-md"
+            className="h-12 mt-1 block w-full py-2 px-3 border border-gray-300 bg-white  shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm rounded-md"
           >
             <option>United States</option>
             <option>Canada</option>

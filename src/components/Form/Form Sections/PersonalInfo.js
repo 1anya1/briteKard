@@ -21,7 +21,7 @@ export default function PersonalInfo(props) {
                 label={el.label}
                 type={el.type}
                 id={el.id}
-                placeholder={el.placeholder}
+                // placeholder={el.placeholder}
                 value={props.userInputs[el.id]}
                 change={props.handleChange}
               />
@@ -34,7 +34,7 @@ export default function PersonalInfo(props) {
                 label={el.label}
                 type={el.type}
                 id={el.id}
-                placeholder={el.placeholder}
+                // placeholder={el.placeholder}
                 value={props.userInputs[el.id]}
                 change={props.handleChange}
                 error={
@@ -52,7 +52,7 @@ export default function PersonalInfo(props) {
                 label={el.label}
                 type={el.type}
                 id={el.id}
-                placeholder={el.placeholder}
+                // placeholder={el.placeholder}
                 value={props.userInputs[el.id]}
                 change={props.handleChange}
                 error={
@@ -69,7 +69,7 @@ export default function PersonalInfo(props) {
                 label={el.label}
                 type={el.type}
                 id={el.id}
-                placeholder={el.placeholder}
+                // placeholder={el.placeholder}
                 value={props.userInputs[el.id]}
                 change={props.handleChange}
               />

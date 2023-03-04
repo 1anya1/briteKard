@@ -52,7 +52,7 @@ export default function Nav(props) {
               </div>
               <div className="flex-1 flex items-center justify-center sm:justify-between sm:items-stretch ">
                 <Link to="/">
-                  <div className="flex-shrink-0 flex items-center gap-2">
+                  <div className="flex-shrink-0 flex items-center">
                     {/* <Logo height={"34px"} width={"auto"} /> */}
                     <p className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl ">
                       BriteKard

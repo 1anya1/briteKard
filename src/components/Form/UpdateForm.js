@@ -7,11 +7,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
 import LoadingScreen from "../LoadingScreen";
+import CardName from "./Form Sections/CardName";
 
 const axios = require("axios");
-export default function UpdateForm() {
+export default function UpdateForm(props) {
   const navigate = useNavigate();
-  const { username, id } = useParams();
+  const { id } = useParams();
+  const { username } = props;
+
 
   // eslint-disable-next-line no-unused-vars
   const [options, setOptions] = useState([
@@ -23,6 +26,26 @@ export default function UpdateForm() {
 
   const [userInputs, setUserInputs] = useState(null);
   const [submittedUpdate, setSubmittedUpdate] = useState(false);
+  const [cardNameError, setCardNameError] = useState(false);
+  const [existingTitles, setTitles] = useState("");
+  useEffect(() => {
+    console.log(username);
+    if (username) {
+      axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/vCards/${username}`)
+        .then((response) => {
+          console.log(response);
+          const titles = [];
+          const data = response.data;
+          data.forEach((el) => {
+            if (el.cardName) {
+              titles.push(el.cardName);
+            }
+          });
+          setTitles([...titles]);
+        });
+    }
+  }, [username]);
 
   useEffect(() => {
     axios
@@ -85,6 +108,16 @@ export default function UpdateForm() {
   }
 
   const handleChange = (event) => {
+    console.log(event.target.getAttribute("id"));
+    if (event.target.getAttribute("id") === "cardName") {
+      console.log(existingTitles);
+      if (existingTitles.indexOf(event.target.value) !== -1) {
+        setCardNameError(true);
+      }
+      else{
+        setCardNameError(false)
+      }
+    }
     const userObj = { ...userInputs };
     let value = event.target.value;
     let objKey = event.target.getAttribute("id");
@@ -114,7 +147,7 @@ export default function UpdateForm() {
     return <LoadingScreen />;
   } else if (userInputs) {
     return (
-      <div className=" max-w-[1800px] px-[5%] m-auto ">
+      <div className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(100%_-_300px)] ml-auto  pb-[120px] ">
         <div className=" mx-auto  ">
           <div className="flex flex-row items-end justify-between pb-10">
             <p className=" text-2xl font-bold  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
@@ -127,6 +160,11 @@ export default function UpdateForm() {
         </div>
         <div className=" mx-auto ">
           <form onSubmit={handleSubmit}>
+            <CardName
+              handleChange={handleChange}
+              userInputs={userInputs}
+              cardNameError={cardNameError}
+            />
             <PersonalInfo
               handleImageChange={handleImageChange}
               userInputs={userInputs}
@@ -172,7 +210,7 @@ export default function UpdateForm() {
                 return null;
               }
             })}
-            <div className='flex flex-col lg:flex-row gap-4 align-center my-10 '>
+            <div className="flex flex-col lg:flex-row gap-4 align-center my-10 ">
               <div className=" sm:flex justify-center  sm:justify-start">
                 <div className="rounded-md shadow w-full lg:w-[300px]">
                   <button

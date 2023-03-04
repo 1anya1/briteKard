@@ -1,7 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 import Chart, { Legend } from "chart.js/auto";
 import { Line } from "react-chartjs-2";
+import { ResizeObserver as ResizeObserverPolyfill } from "@juggle/resize-observer";
+
 const MainChart = ({ labels, data, timeFrame }) => {
+  if (typeof window !== "undefined") {
+    window.ResizeObserver = window.ResizeObserver || ResizeObserverPolyfill;
+  }
   const dataArr = [];
   data.forEach((el) => {
     const d = {
@@ -16,7 +21,7 @@ const MainChart = ({ labels, data, timeFrame }) => {
     dataArr.push(d);
   });
   return (
-    <div className="bg-white rounded-3xl p-6 h-[400px] drop-shadow-md">
+    <div className="bg-white rounded-3xl p-6 h-[400px] drop-shadow-md w-full">
       <p className="text-lg font-medium pb-10">
         Total Engagement : {timeFrame} Days
       </p>
