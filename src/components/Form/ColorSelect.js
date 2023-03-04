@@ -51,7 +51,7 @@ export default function ColorPicker() {
   const formName = "Choose Theme";
 
   return (
-    <div className=" drop-shadow-md  border-gray-100 border rounded-2xl bg-snow mb-5 max-w-[1800px] m-auto">
+    <div className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(100%_-_300px)] ml-auto  pb-[120px] ">
       <div className="p-4  sm:p-8">
         <FormDescription formName={formName} />
         <Listbox value={selected} onChange={setSelected}>

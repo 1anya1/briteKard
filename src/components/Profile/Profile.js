@@ -122,7 +122,9 @@ export default function Profile(props) {
   };
   return (
     <div
-      className=" max-w-[1800px] px-[5%] pb-6  flex flex-col"
+className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(100%_-_300px)] ml-auto  pb-[120px] flex flex-col "
+
+      
       style={{ minHeight: `${height}px` }}
     >
       <DeleteProfileModal

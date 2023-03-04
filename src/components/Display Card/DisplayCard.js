@@ -328,7 +328,7 @@ export default function DisplayCard() {
     };
     if (pathname.includes("preview")) {
       return (
-        <div className=" max-w-[1800px] px-[5%] pb-6 ">
+        <div className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(100%_-_300px)] ml-auto  pb-[120px] ">
           <div className=" mx-auto  ">
             <div className="flex flex-row items-end justify-between pb-10">
               <p className="  text-2xl font-bold  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
