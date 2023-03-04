@@ -176,11 +176,11 @@ export default function App() {
           <div className="flex-1  overflow-scroll sm:h-screen">
             {routerSystem()}
           </div>
-          <div className="z-10 bg-white w-screen sm:w-[100px] sm:min-w-[100px] lg:w-[300px] lg:min-w-[300px] flex flex-row sm:flex-col gap-1 sticky bottom-0 shadow-[1px_1px_6px_-3px__rgba(23,23,23,1)] sm:shadow-[1px_1px_6px_-5px__rgba(23,23,23,1)]  sm:h-screen pt-4 sm:pt-10 justify-around sm:justify-start h-[80px]">
+          <div className="z-10 bg-white w-screen sm:w-[100px] sm:min-w-[100px] lg:w-[300px] lg:min-w-[300px] flex flex-row sm:flex-col space-x-1 space-y-1 sticky bottom-0 shadow-[1px_1px_6px_-3px__rgba(23,23,23,1)] sm:shadow-[1px_1px_6px_-5px__rgba(23,23,23,1)]  sm:h-screen pt-4 sm:pt-10 justify-around sm:justify-start h-[80px]">
             {links.map((link) => (
               <Link to={link.link}>
                 <div
-                  className={`flex flex-row gap-2 sm:w-4/5 m-auto sm:py-4 sm:px-4 p-3  rounded-lg md:rounded-2xl  sm:h-max justify-center lg:justify-start hover:bg-purple-50 ${
+                  className={`flex flex-row space-x-2 sm:w-4/5 m-auto sm:py-4 sm:px-4 p-3  rounded-lg md:rounded-2xl  sm:h-max justify-center lg:justify-start hover:bg-purple-50 ${
                     location.pathname.includes(link.link) &&
                     location.pathname.length === link.link.length
                       ? "bg-gray-50 "

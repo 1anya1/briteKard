@@ -244,7 +244,7 @@ export default function DisplayCard() {
                 </p>
               )}
             </div>
-            <div className="flex gap-4 pt-4 justify-center pb-9 ">
+            <div className="flex space-x-4 pt-4 justify-center pb-9 ">
               {cellPhone && (
                 <>
                   <div

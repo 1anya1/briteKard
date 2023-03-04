@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function CTA() {
   return (
     <div className="bg-white">
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between  flex-col flex items-center gap-6">
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between  flex-col flex items-center space-y-6">
         <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl text-center">
           Ready when you are
         </h2>
