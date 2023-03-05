@@ -15,7 +15,6 @@ export default function UpdateForm(props) {
   const { id } = useParams();
   const { username } = props;
 
-
   // eslint-disable-next-line no-unused-vars
   const [options, setOptions] = useState([
     { name: "Home Address", toggle: true },
@@ -113,9 +112,8 @@ export default function UpdateForm(props) {
       console.log(existingTitles);
       if (existingTitles.indexOf(event.target.value) !== -1) {
         setCardNameError(true);
-      }
-      else{
-        setCardNameError(false)
+      } else {
+        setCardNameError(false);
       }
     }
     const userObj = { ...userInputs };
@@ -170,46 +168,14 @@ export default function UpdateForm(props) {
               userInputs={userInputs}
               handleChange={handleChange}
             />
-            {options.map((el, idx) => {
-              if (el.toggle && el.name === "Home Address") {
-                return (
-                  <HomeAddress
-                    key={idx}
-                    handleChange={handleChange}
-                    userInputs={userInputs}
-                  />
-                );
-              }
-              if (el.toggle && el.name === "Social Links") {
-                return (
-                  <SocialLinks
-                    key={idx}
-                    handleChange={handleChange}
-                    userInputs={userInputs}
-                  />
-                );
-              }
-              if (el.toggle && el.name === "Work Info") {
-                return (
-                  <WorkInfo
-                    key={idx}
-                    handleChange={handleChange}
-                    userInputs={userInputs}
-                  />
-                );
-              }
-              if (el.toggle && el.name === "Cover Photo") {
-                return (
-                  <CoverPhoto
-                    key={idx}
-                    handleImageChange={handleImageChange}
-                    logo={userInputs.logo}
-                  />
-                );
-              } else {
-                return null;
-              }
-            })}
+            <SocialLinks handleChange={handleChange} userInputs={userInputs} />
+            <WorkInfo handleChange={handleChange} userInputs={userInputs} />
+            <HomeAddress handleChange={handleChange} userInputs={userInputs} />
+            <CoverPhoto
+              handleImageChange={handleImageChange}
+              logo={userInputs.logo}
+            />
+
             <div className="flex flex-col lg:flex-row gap-4 align-center my-10 ">
               <div className=" sm:flex justify-center  sm:justify-start">
                 <div className="rounded-md shadow w-full lg:w-[300px]">

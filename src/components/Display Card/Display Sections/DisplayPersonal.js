@@ -25,15 +25,20 @@ export default function DisplayPersonal(props) {
           if (el === "Home Address") {
             return (
               props.houseStreet && (
-                <div key={idx}>
+                <div key={idx} className='pb-4'>
                   <p className="text-gray-400 text-sm  font-medium">
                     Home Address
                   </p>
-                  <p className="text-gray-700 text-base pb-4 font-medium capitalize ">
-                    {props.houseStreet} <br></br>
-                    {props.houseCity} {props.houseState}
-                    <br></br>
-                    {props.housezip}
+                  <p className="text-gray-700 text-base font-medium capitalize ">
+                    {props.houseStreet}
+                  </p>
+
+                  <p className="text-gray-700 text-base font-medium capitalize ">
+                    {props.houseCity} {props.houseState} {props.housezip}
+                  </p>
+
+                  <p className="text-gray-700 text-base font-medium capitalize ">
+                    {props.houseCountry}
                   </p>
                 </div>
               )
@@ -47,7 +52,7 @@ export default function DisplayPersonal(props) {
                     <a href={`tel:+1${props.personalInfo[idx]}`}>
                       <p className="text-gray-700 text-base pb-4 font-medium">
                         {/* {formatUSNumber(props.personalInfo[idx])} */}
-                        {(props.personalInfo[idx])}
+                        {props.personalInfo[idx]}
                       </p>
                     </a>
                   )}

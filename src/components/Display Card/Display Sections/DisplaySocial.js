@@ -13,17 +13,17 @@ import {
 } from "../../Form/Icons/SocialIcons";
 export default function DisplaySocial(props) {
   const socialData = {
-    Github: <GitHubSVG />,
-    Youtube: <YouTubeSVG />,
-    Snapchat: <SnapChatSVG />,
-    Tumblr: <TubmlrSVG />,
-    TikTok: <TikTokSVG />,
-    Meetup: <MeetUpSVG />,
-    Twitch: <TwitchSVG />,
-    Instagram: <InstagramSVG />,
-    Facebook: <FacebookSVG />,
-    Twitter: <TwitterSVG />,
-    LinkedIn: <LinkedInSvg />,
+    Github: <GitHubSVG color={"fill-gray-400"} />,
+    Youtube: <YouTubeSVG color={"fill-gray-400"} />,
+    Snapchat: <SnapChatSVG color={"fill-gray-400"} />,
+    Tumblr: <TubmlrSVG color={"fill-gray-400"} />,
+    TikTok: <TikTokSVG color={"fill-gray-400"} />,
+    Meetup: <MeetUpSVG color={"fill-gray-400"} />,
+    Twitch: <TwitchSVG color={"fill-gray-400"} />,
+    Instagram: <InstagramSVG color={"fill-gray-400"} />,
+    Facebook: <FacebookSVG color={"fill-gray-400"} />,
+    Twitter: <TwitterSVG color={"fill-gray-400"} />,
+    LinkedIn: <LinkedInSvg color={"fill-gray-400"} />,
   };
 
   return props.socialData.map((socialLink, idx) => {

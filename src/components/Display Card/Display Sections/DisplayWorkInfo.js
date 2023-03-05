@@ -19,11 +19,11 @@ export default function DisplayWorkInfo(props) {
   function removeHttp(url) {
     return url.replace(/^https?:\/\//, "");
   }
-  const{workStreet, workCity, workState,workZip, workAddressData} = props
-  const data = ()=>{
-    const length = workAddressData.some(el=>el.length>0)
-    return length ||  workStreet || workCity|| workState ||workZip
-  }
+  const { workStreet, workCity, workState, workZip, workAddressData } = props;
+  const data = () => {
+    const length = workAddressData.some((el) => el.length > 0);
+    return length || workStreet || workCity || workState || workZip;
+  };
 
   if (data()) {
     return (
@@ -78,15 +78,18 @@ export default function DisplayWorkInfo(props) {
             );
           })}
           {props.workStreet && (
-            <div>
+            <div className="pb-4 ">
               <p className="text-gray-400 text-sm  font-medium">
                 Company Address
               </p>
-              <p className="text-gray-700 text-base pb-4 font-medium capitalize ">
-                {props.workStreet} <br></br>
-                {props.workCity}, {props.workState}
-                <br></br>
-                {props.workzip}
+              <p className="text-gray-700 text-base font-medium capitalize ">
+                {props.workStreet}
+              </p>
+              <p className="text-gray-700 text-base font-medium capitalize ">
+                {props.workCity}, {props.workState} {props.workzip}
+              </p>
+              <p className="text-gray-700 text-base font-medium capitalize ">
+                {props.workCountry}
               </p>
             </div>
           )}

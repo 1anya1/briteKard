@@ -24,26 +24,7 @@ export default function HomeAddress(props) {
           />
         ))}
 
-        <div className="col-start-2 col-span-2">
-          <label
-            htmlFor="country"
-            className="block text-sm font-medium text-gray-700 "
-          >
-            Country
-          </label>
-          <select
-            id="homeAddress.countryRegion"
-            name="country"
-            autoComplete="country-name"
-            onChange={props.handleChange}
-            value={props.userInputs["homeAddress"]["countryRegion"]}
-            className= "h-12 mt-1 block w-full py-2 px-3 border border-gray-300 bg-white focus:ring-gray-500 focus:border-gray-500 sm:text-sm rounded-md shadom-sm"
-          >
-            <option>United States</option>
-            <option>Canada</option>
-            <option>Mexico</option>
-          </select>
-        </div>
+        
       </div>
     </div>
   );

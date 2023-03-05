@@ -21,7 +21,6 @@ export default function DisplayCard() {
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
 
-
   useEffect(() => {
     axios
       .get(
@@ -125,7 +124,6 @@ export default function DisplayCard() {
         window.URL.revokeObjectURL(url);
       }
     }
-
   }
 
   function shareCard() {
@@ -142,10 +140,12 @@ export default function DisplayCard() {
       homeAddress: { city: houseCity },
       homeAddress: { stateProvince: houseState },
       homeAddress: { postalCode: housezip },
+      homeAddress: { countryRegion: houseCountry },
       workAddress: { street: workStreet },
       workAddress: { city: workCity },
       workAddress: { stateProvince: workState },
       workAddress: { postalCode: workzip },
+      workAddress: { countryRegion: workCountry },
       workUrl,
       workEmail,
       workPhone,
@@ -312,6 +312,7 @@ export default function DisplayCard() {
               houseState={houseState}
               houseStreet={houseStreet}
               housezip={housezip}
+              houseCountry={houseCountry}
             />
 
             <DisplayWorkInfo
@@ -320,6 +321,7 @@ export default function DisplayCard() {
               workStreet={workStreet}
               workzip={workzip}
               workAddressData={workAddressData}
+              workCountry={workCountry}
             />
             <DisplaySocial socialData={socialData} />
           </div>

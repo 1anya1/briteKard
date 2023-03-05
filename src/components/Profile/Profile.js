@@ -113,7 +113,7 @@ export default function Profile(props) {
         email: data.email,
       })
       .then((response) => {
-        console.log('in here')
+        console.log("in here");
         props.setUsername(user.new);
       })
       .catch((error) => {
@@ -122,9 +122,7 @@ export default function Profile(props) {
   };
   return (
     <div
-className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(100%_-_300px)] ml-auto  pb-[120px] flex flex-col "
-
-      
+      className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(100%_-_300px)] ml-auto  pb-[120px] flex flex-col "
       style={{ minHeight: `${height}px` }}
     >
       <DeleteProfileModal
@@ -190,14 +188,14 @@ className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(
             >
               Update
             </button>
-            {(user.new || email.new) && 
-            <button
-              className="rounded-md bg-white border-gray-900 border px-4 py-2 text-gray-900 text-sm w-full sm:w-max"
-              onClick={onCancel}
-            >
-              Cancel
-            </button>
-}
+            {(user.new || email.new) && (
+              <button
+                className="rounded-md bg-white border-gray-900 border px-4 py-2 text-gray-900 text-sm w-full sm:w-max"
+                onClick={onCancel}
+              >
+                Cancel
+              </button>
+            )}
           </div>
         </div>
       )}
