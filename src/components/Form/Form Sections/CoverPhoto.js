@@ -69,7 +69,7 @@ export default function CoverPhoto(props) {
                 className="relative cursor-pointer bg-white  rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:ring-gray-500 focus:border-gray-500"
               >
                 <span className="text-center text-xs border py-2 px-3 mb-2  rounded-md text-gray-600  border-gray-500 hover:opacity-70 focus:ring-gray-500 focus:border-gray-500">
-                  Upload a file
+                  Upload Photo
                 </span>
                 <input
                   id="logo"

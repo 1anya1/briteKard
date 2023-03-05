@@ -153,7 +153,7 @@ className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(
               <input
                 value={user.new !== null ? user.new : user.previous}
                 onChange={(e) => onChangeUsername(e)}
-                className="border border-gray-100  focus:ring-gray-200  focus:ring-1 focus:outline-none  px-2 py-1 rounded-md w-full  bg-gray-50"
+                className="h-12 border border-gray-100  focus:ring-gray-200  focus:ring-1 focus:outline-none  px-2 py-1 rounded-md w-full  bg-gray-50"
               />
               {user.available ? (
                 <AiOutlineCheck className="text-green absolute top-2 right-4" />
@@ -173,7 +173,7 @@ className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(
               <input
                 value={email.new !== null ? email.new : email.previous}
                 onChange={(e) => onChangeEmail(e)}
-                className="border border-gray-100  focus:ring-gray-200  focus:ring-1 focus:outline-none  px-2 py-1 rounded-md w-full  bg-gray-50"
+                className="h-12 border border-gray-100  focus:ring-gray-200  focus:ring-1 focus:outline-none  px-2 py-1 rounded-md w-full  bg-gray-50"
               />
               {email.available ? (
                 <AiOutlineCheck className="text-green absolute top-2 right-4" />
@@ -190,12 +190,14 @@ className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(
             >
               Update
             </button>
+            {(user.new || email.new) && 
             <button
               className="rounded-md bg-white border-gray-900 border px-4 py-2 text-gray-900 text-sm w-full sm:w-max"
               onClick={onCancel}
             >
               Cancel
             </button>
+}
           </div>
         </div>
       )}

@@ -7,7 +7,7 @@ import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
-import ColorPicker from "./ColorSelect";
+// import ColorPicker from "./ColorSelect";
 import CardName from "./Form Sections/CardName";
 
 const axios = require("axios");
@@ -238,7 +238,6 @@ export default function Forms(props) {
           {/* <div className="flex flex-row flex-nowrap overflow-scroll scrollbar-hide my-8  container mx-auto gap-2">
             <Chips options={options} toggle={toggle} />
           </div> */}
-          
         </div>
         <div>
           <form onSubmit={handleSubmit}>
@@ -256,45 +255,11 @@ export default function Forms(props) {
               setCellError={setCellError}
               handleImageChange={handleImageChange}
             />
-            {options.map((el, idx) => {
-              if (el.toggle && el.name === "Home Address") {
-                return (
-                  <HomeAddress
-                    key={idx}
-                    handleChange={handleChange}
-                    userInputs={userInputs}
-                  />
-                );
-              }
-              if (el.toggle && el.name === "Social Links") {
-                return (
-                  <SocialLinks
-                    key={idx}
-                    handleChange={handleChange}
-                    userInputs={userInputs}
-                  />
-                );
-              }
-              if (el.toggle && el.name === "Work Info") {
-                return (
-                  <WorkInfo
-                    key={idx}
-                    handleChange={handleChange}
-                    userInputs={userInputs}
-                  />
-                );
-              }
-              if (el.toggle && el.name === "Cover Photo") {
-                return (
-                  <CoverPhoto key={idx} handleImageChange={handleImageChange} />
-                );
-              }
-              if (el.toggle && el.name === "Choose Theme") {
-                return <ColorPicker />;
-              } else {
-                return null;
-              }
-            })}
+            <HomeAddress handleChange={handleChange} userInputs={userInputs} />
+            <SocialLinks handleChange={handleChange} userInputs={userInputs} />
+            <WorkInfo handleChange={handleChange} userInputs={userInputs} />
+            <CoverPhoto handleImageChange={handleImageChange} />
+            {/* <ColorPicker />; */}
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start mb-8">
               <div className="rounded-md shadow w-full xl:w-[300px]">
                 <button

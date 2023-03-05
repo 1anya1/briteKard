@@ -17,7 +17,7 @@ export default function CardName(props) {
               label={el.label}
               type={el.type}
               id={el.id}
-              placeholder={el.placeholder}
+              // placeholder={el.placeholder}
               value={props.userInputs[el.id]}
               change={props.handleChange}
               error={props.cardNameError ? "This name is already taken" : null}

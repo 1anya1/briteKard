@@ -38,7 +38,7 @@ export default function SocialLinks(props) {
             label={el.label}
             type={el.type}
             id={el.id}
-            placeholder={el.placeholder}
+            // placeholder={el.placeholder}
             value={props.userInputs[el.value[0]][el.value[1]]}
             change={props.handleChange}
           />
@@ -49,7 +49,7 @@ export default function SocialLinks(props) {
             name="social-media"
             onChange={handleChange}
             autoComplete="social-media"
-            className="mt-1 block w-full py-2 px-3 border text-gray-500 border-gray-300 bg-white leading-none rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
+            className="h-12 mt-1 block w-full py-2 px-3 border text-gray-500 border-gray-300 bg-white leading-none rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
           >
             <option value="" >
               More Options
