@@ -75,7 +75,9 @@ export default function AllCards(props) {
           </p>
         </div>
         {displayCard.length > 0 && (
+
           <div className="grid xl:grid-cols-2 grid-cols-1 2xl:grid-cols-3 sm:gap-5  gap-2 ">
+
             {open && (
               <ShareModal
                 card={currentCard}
@@ -148,7 +150,9 @@ export default function AllCards(props) {
                 </div>
               );
             })}
+
             <div className="min-h-[200px] drop-shadow-md  border-gray-100 border  text-small text-gray-800 font-medium mb-4 sm:mb-0 bg-white rounded-2xl  flex flex-col  p-4 sm:p-6 justify-center items-center h-[100%]">
+
               <Link to="/form">
                 <div className=" flex flex-col cursor-pointer group">
                   <div className="rounded-full bg-gray-50 w-max p-4 m-auto group-hover:bg-gray-200 ">
