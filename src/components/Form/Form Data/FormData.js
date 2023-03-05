@@ -71,6 +71,13 @@ const homeAddressInputs = [
     placeholder: "California",
     value: ["homeAddress", "postalCode"],
   },
+  {
+    label: "Country",
+    type: "text",
+    id: `homeAddress.countryRegion`,
+    placeholder: "USA",
+    value: ["homeAddress", "countryRegion"],
+  },
 ];
 
 const socialLinksInputs = [
@@ -161,6 +168,13 @@ const workInfoInputs = [
     id: "workAddress.postalCode",
     value: ["workAddress", "postalCode"],
     placeholder: "92115",
+  },
+  {
+    label: "Country",
+    type: "text",
+    id: `workAddress.countryRegion`,
+    placeholder: "USA",
+    value: ["workAddress", "countryRegion"],
   },
 ];
 

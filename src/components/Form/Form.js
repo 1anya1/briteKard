@@ -255,9 +255,10 @@ export default function Forms(props) {
               setCellError={setCellError}
               handleImageChange={handleImageChange}
             />
-            <HomeAddress handleChange={handleChange} userInputs={userInputs} />
             <SocialLinks handleChange={handleChange} userInputs={userInputs} />
             <WorkInfo handleChange={handleChange} userInputs={userInputs} />
+            <HomeAddress handleChange={handleChange} userInputs={userInputs} />
+
             <CoverPhoto handleImageChange={handleImageChange} />
             {/* <ColorPicker />; */}
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start mb-8">
