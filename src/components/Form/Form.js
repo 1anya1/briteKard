@@ -7,7 +7,7 @@ import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
-// import ColorPicker from "./ColorSelect";
+import ColorPicker from "./ColorSelect";
 import CardName from "./Form Sections/CardName";
 
 const axios = require("axios");
@@ -35,7 +35,7 @@ export default function Forms(props) {
   const [userInputs, setUserInputs] = useState({
     username: "",
     cardName: "",
-    colorScheme: "gray-500",
+    colorScheme: {brandColor:"#737373", textColor:'#ffffff'},
     uid: "",
     birthday: "",
     cellPhone: "",
@@ -260,7 +260,7 @@ export default function Forms(props) {
             <HomeAddress handleChange={handleChange} userInputs={userInputs} />
 
             <CoverPhoto handleImageChange={handleImageChange} />
-            {/* <ColorPicker />; */}
+            <ColorPicker setUserInputs={setUserInputs} userInputs={userInputs}/>
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start mb-8">
               <div className="rounded-md shadow w-full xl:w-[300px]">
                 <button

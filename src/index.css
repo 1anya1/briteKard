@@ -22,3 +22,21 @@ input[type="number"]::-webkit-inner-spin-button {
 .scroll-fix {
   webkit-overflow-scrolling: touch;
 }
+
+/* Color wheel settings */
+.w-color-interactive,
+.w-color-saturation,
+.w-color-colorful {
+  border-radius: 20px !important;
+  margin-bottom: 10px;
+}
+.w-color-alpha {
+  border-radius: 20px;
+  display: none;
+}
+.w-color-hue {
+  display: block;
+}
+.w-color-hue > div {
+  border-radius: 20px;
+}

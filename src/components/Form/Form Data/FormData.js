@@ -6,6 +6,7 @@ const cardNameInputs = [
     placeholder: "Work",
   },
 ];
+
 const personalDataInputs = [
   {
     label: "First Name",
