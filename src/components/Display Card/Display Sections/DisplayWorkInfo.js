@@ -1,4 +1,3 @@
-import { BriefcaseIcon } from "@heroicons/react/solid";
 export default function DisplayWorkInfo(props) {
   const workAddressTags = [
     "Company Name",
@@ -27,73 +26,75 @@ export default function DisplayWorkInfo(props) {
 
   if (data()) {
     return (
-      <div className="drop-shadow-md mx-4 border-gray-100 border rounded-2xl  bg-white mb-5">
-        <div className="mx-4 pt-4">
-          <div className="flex items-center  pb-4">
-            <BriefcaseIcon className="h-5 w-5 fill-gray-500 mr-2" />
-            <p className="text-lg font-medium text-gray-500">Company Info</p>
-          </div>
-          {workAddressTags.map((title, idx) => {
-            const currSectionData = props.workAddressData[idx];
-            return (
-              currSectionData && (
-                <div key={idx}>
-                  <p className="text-gray-400 text-sm  font-medium">{title}</p>
-                  {title === "Company Number" && (
-                    <a href={`tel:+1${currSectionData}`}>
-                      <p className="text-gray-700 text-base pb-4 font-medium">
-                        {formatUSNumber(props.workAddressData[idx])}
-                      </p>
-                    </a>
-                  )}
-                  {title === "Company Email" && (
-                    <a href={`mailto:${props.workAddressData[idx]}`}>
-                      <p className="text-gray-700 text-base pb-4 font-medium">
-                        {props.workAddressData[idx]}
-                      </p>
-                    </a>
-                  )}
-                  {title === "Company Website" && (
-                    <a
-                      href={`https://${currSectionData}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <p className="text-gray-700 text-base pb-4 font-medium">
-                        {removeHttp(props.workAddressData[idx])}
-                      </p>
-                    </a>
-                  )}
-                  {title !== "Company Website" &&
-                    title !== "Company Email" &&
-                    title !== "Company Number" && (
-                      <p className="text-gray-700 text-base pb-4 font-medium">
-                        {props.workAddressData[idx]}
-                      </p>
-                    )}
+      <div className="mx-4 mb-5">
+        <p className="text-lg font-medium text-gray-500 pb-3 pt-3 pl-4">Work Info</p>
 
-                  <div className="bg-gray-200 h-px w-full mb-4"></div>
+        {workAddressTags.map((title, idx) => {
+          const currSectionData = props.workAddressData[idx];
+          return (
+            currSectionData && (
+              <div className="drop-shadow-md  border-gray-100 border rounded-2xl  bg-white mb-4 group">
+                <div className="p-4 flex items-center">
+                  <div key={idx}>
+                    <p className="text-gray-400 text-sm  font-medium">
+                      {title}
+                    </p>
+                    {title === "Company Number" && (
+                      <a href={`tel:+1${currSectionData}`}>
+                        <p className="text-gray-700 text-base  font-medium">
+                          {formatUSNumber(props.workAddressData[idx])}
+                        </p>
+                      </a>
+                    )}
+                    {title === "Company Email" && (
+                      <a href={`mailto:${props.workAddressData[idx]}`}>
+                        <p className="text-gray-700 text-base  font-medium">
+                          {props.workAddressData[idx]}
+                        </p>
+                      </a>
+                    )}
+                    {title === "Company Website" && (
+                      <a
+                        href={`https://${currSectionData}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <p className="text-gray-700 text-base  font-medium">
+                          {removeHttp(props.workAddressData[idx])}
+                        </p>
+                      </a>
+                    )}
+                    {title !== "Company Website" &&
+                      title !== "Company Email" &&
+                      title !== "Company Number" && (
+                        <p className="text-gray-700 text-base  font-medium">
+                          {props.workAddressData[idx]}
+                        </p>
+                      )}
+                  </div>
                 </div>
-              )
-            );
-          })}
-          {props.workStreet && (
-            <div className="pb-4 ">
-              <p className="text-gray-400 text-sm  font-medium">
-                Company Address
-              </p>
-              <p className="text-gray-700 text-base font-medium capitalize ">
-                {props.workStreet}
-              </p>
-              <p className="text-gray-700 text-base font-medium capitalize ">
-                {props.workCity}, {props.workState} {props.workzip}
-              </p>
-              <p className="text-gray-700 text-base font-medium capitalize ">
-                {props.workCountry}
-              </p>
-            </div>
-          )}
-        </div>
+              </div>
+            )
+          );
+        })}
+        {props.workStreet && (
+           <div className="drop-shadow-md  border-gray-100 border rounded-2xl  bg-white mb-4 group">
+           <div className="p-4 ">
+            <p className="text-gray-400 text-sm  font-medium">
+              Company Address
+            </p>
+            <p className="text-gray-700 text-base font-medium capitalize ">
+              {props.workStreet}
+            </p>
+            <p className="text-gray-700 text-base font-medium capitalize ">
+              {props.workCity}, {props.workState} {props.workzip}
+            </p>
+            <p className="text-gray-700 text-base font-medium capitalize ">
+              {props.workCountry}
+            </p>
+          </div>
+          </div>
+        )}
       </div>
     );
   } else {

@@ -6,11 +6,10 @@ import { PhoneIcon, MailIcon, ChatAltIcon } from "@heroicons/react/solid";
 import { useParams, useLocation } from "react-router-dom";
 import QRmodal from "./Display Sections/Display Functions/QRmodal";
 import LoadingScreen from "../LoadingScreen";
-// import { saveAs } from "file-saver";
 import { browserName } from "react-device-detect";
-
-// import { Link } from "react-router-dom";
-
+import EmptyBackground from "./Display Sections/EmptyBackground";
+import { Link } from "react-router-dom";
+const Color = require("color");
 const axios = require("axios");
 
 export default function DisplayCard() {
@@ -29,6 +28,7 @@ export default function DisplayCard() {
       .then((response) => {
         const data = response.data[0];
         setData(data);
+        console.log(data);
       })
       .catch((error) => {
         setError(true);
@@ -60,46 +60,6 @@ export default function DisplayCard() {
       });
   }
   function download(filename, text) {
-    // if (browserName === "Safari" || browserName === "Chrome") {
-    //   var element = document.createElement("a");
-    //   element.setAttribute(
-    //     "href",
-    //     "data:text/vcard;charset=utf-8," + encodeURIComponent(text)
-    //   );
-    //   element.setAttribute("download", filename.username);
-    //   element.style.display = "none";
-    //   document.body.appendChild(element);
-    //   element.click();
-    //   document.body.removeChild(element);
-    // } else {
-    // const file = new Blob([text], { type: "data:text/vcard;charset=UTF-32" });
-    //   if (!file) {
-    //     console.error("No file selected!");
-    //     return;
-    //   }
-    //   const reader = new FileReader();
-    //   reader.onload = () => {
-    //     const vcardData = reader.result;
-    //     const blob = new Blob([vcardData], {
-    //       type: "data:text/vcard;charset=utf-8",
-    //     });
-    //     const url = window.URL.createObjectURL(blob);
-    //     const link = document.createElement("a");
-    //     link.href = url;
-    //     link.download = `${filename.username}.vcf`;
-    //     document.body.appendChild(link);
-    //     link.click();
-    //     document.body.removeChild(link);
-    //     if(browserName === "Firefox" || ){
-    //       console.log('heres')
-    //       window.URL.revokeObjectURL(url);
-    //     }
-    //   };
-    //   reader.readAsText(file);
-    // }
-
-    //   blob = new Blob([data], { type: "text/x-vcard" });
-    // } else {
     if (browserName === "Firefox") {
       alert("in here");
       const dataUri = `data:text/vcard;charset=utf-8,${encodeURIComponent(
@@ -136,6 +96,7 @@ export default function DisplayCard() {
       email,
       lastName,
       firstName,
+      colorScheme,
       homeAddress: { street: houseStreet },
       homeAddress: { city: houseCity },
       homeAddress: { stateProvince: houseState },
@@ -193,38 +154,38 @@ export default function DisplayCard() {
         <div
           className={`${
             pathname.includes("share") ? "sm:pb-12 sm:px-9" : "sm:pb-12 sm:px-9"
-          } grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-gray-500  sm:bg-white max-w-screen-sm mx-auto  sm:rounded-3xl`}
+          } grid grid-cols-4 gap-x-4 place-content-center justify-items-center bg-white max-w-screen-sm mx-auto  sm:rounded-3xl`}
         >
           <div className=" w-full col-span-5 h-60  sm:h-64 relative sm:pt-12 sm:pb-104">
             {data.logo && (
               <img
-                className="object-cover overflow-hiddenr w-full h-64 object-center sm:rounded-3xl"
+                className="object-cover overflow-hidden w-full h-64 object-center sm:rounded-3xl"
                 src={data.logo}
                 alt="logo"
               />
             )}
             {!data.logo && (
-              <img
-                className="object-cover overflow-hiddenr w-full h-64 object-center sm:rounded-3xl"
-                src="https://res.cloudinary.com/dwz87zxoy/image/upload/v1677106414/britekard/Screen_Shot_2023-02-22_at_2.53.13_PM_im2ned.png"
-                alt="logo"
-              />
+              <div className=" w-full h-64 object-center sm:rounded-3xl overflow-hidden">
+                <div className="h-[104%] w-[110%] left-[-2%] top-[-2%] relative">
+                  <EmptyBackground color={colorScheme.brandColor} />
+                </div>
+              </div>
             )}
 
             {data.photo && (
-              <div className=" rounded-full overflow-hidden justify-self-center absolute bottom-[-88px] sm:bottom-[-124px] left-2/4 translate-x-negative-half z-20">
+              <div className=" rounded-full overflow-hidden justify-center flex absolute bottom-[-78px] sm:bottom-[-124px] w-full  z-20">
                 <img
                   src={data.photo}
                   alt="profile"
-                  className="h-36 w-36 sm:h-40 sm:w-40 object-cover border-solid  rounded-full border-gray-50  border-8 relative "
+                  className="h-36 w-36 sm:h-40 sm:w-40 object-cover border-solid  rounded-full relative  border-white border-8 "
                 />
               </div>
             )}
             {!data.photo && (
-              <div className=" rounded-full overflow-hidden justify-self-center absolute bottom-[-88px] sm:bottom-[-124px] left-2/4 translate-x-negative-half z-20">
+              <div className=" rounded-full overflow-hidden justify-center flex absolute bottom-[-78px] sm:bottom-[-124px] w-full  z-20">
                 <div
                   alt="profile"
-                  className="h-36 w-36 sm:h-40 sm:w-40  border-solid  bg-gray-200 rounded-full border-gray-50  border-8 relative flex justify-center items-center   "
+                  className="h-36 w-36 sm:h-40 sm:w-40  border-solid  bg-gray-200 rounded-full border-white border-8 relative flex justify-center items-center   "
                 >
                   <p className="text-3xl sm:text-4xl uppercase font-bold antialiased text-gray-500">
                     {data.firstName[0]} {data.lastName[0]}
@@ -234,30 +195,42 @@ export default function DisplayCard() {
             )}
           </div>
           <div className="col-span-5 pt-104  sm:pt-0 sm:mt-[146px] bg-white w-full rounded-t-3xl z-10">
-            <div>
-              <p className="text-2xl font-medium text-gray-700 tracking-wide text-center capitalize ">
+            <div className="px-4 md:px-0">
+              <p className=" text-[28px] sm:text-[32px] leading-tight font-medium text-gray-700 tracking-wide text-center capitalize pb-2">
                 {data.firstName} {data.lastName}
               </p>
               {data.title && (
-                <p className="text-lg text-gray-600 font-light text-center capitalize ">
+                <p className="  text-[18px] sm:text-[20px] text-gray-600 font-light text-center capitalize ">
                   {data.title} @ {data.organization}
                 </p>
               )}
             </div>
-            <div className="flex space-x-4 pt-4 justify-center pb-9 ">
+            <div className="flex space-x-4 pt-4 justify-center pb-9  flex-wrap">
               {cellPhone && (
                 <>
                   <div
                     onClick={() => handleAnalytics("phone")}
-                    className="h-12 w-12 rounded-full border-gray-500 border-2 bg-white  flex justify-center items-center hover:bg-gray-500"
+                    className="h-12 w-12 rounded-full  flex justify-center items-center  hover:opacity-75"
+                    style={{
+                      backgroundColor: data.colorScheme.brandColor,
+                    }}
                   >
                     <a href={`tel:+1${cellPhone}`}>
-                      <PhoneIcon className="fill-gray-500  h-7 w-7 hover:fill-white" />
+                      <PhoneIcon
+                        className="  h-7 w-7"
+                        style={{ fill: data.colorScheme.textColor }}
+                      />
                     </a>
                   </div>
-                  <div className="h-12 w-12 rounded-full border-gray-500 border-2 bg-white flex justify-center items-center hover:bg-gray-500">
+                  <div
+                    className="h-12 w-12 rounded-full  flex justify-center items-center hover:opacity-75"
+                    style={{ backgroundColor: data.colorScheme.brandColor }}
+                  >
                     <a href={`sms:+1${cellPhone}`}>
-                      <ChatAltIcon className="fill-gray-500    h-7 w-7 hover:fill-white" />
+                      <ChatAltIcon
+                        className="h-7 w-7"
+                        style={{ fill: data.colorScheme.textColor }}
+                      />
                     </a>
                   </div>
                 </>
@@ -265,10 +238,14 @@ export default function DisplayCard() {
               {email && (
                 <div
                   onClick={() => handleAnalytics("email")}
-                  className="h-12 w-12 rounded-full border-gray-500 border-2 bg-white flex justify-center items-center hover:bg-gray-500"
+                  className="h-12 w-12 rounded-full  flex justify-center items-center hover:opacity-75"
+                  style={{ backgroundColor: data.colorScheme.brandColor }}
                 >
                   <a href={`mailto:${email}`}>
-                    <MailIcon className="fill-gray-500   h-7 w-7 hover:fill-white" />
+                    <MailIcon
+                      className="  h-7 w-7"
+                      style={{ fill: data.colorScheme.textColor }}
+                    />
                   </a>
                 </div>
               )}
@@ -285,7 +262,11 @@ export default function DisplayCard() {
                     getCard();
                     handleAnalytics("addCard");
                   }}
-                  className={`text-small text-white font-medium pt-4 pb-4 mb-4 w-full rounded-2xl hover:bg-opacity-70 bg-${data.colorScheme}`}
+                  className={`text-small  font-medium pt-4 pb-4 mb-4 w-full rounded-2xl hover:opacity-75`}
+                  style={{
+                    backgroundColor: data.colorScheme.brandColor,
+                    color: data.colorScheme.textColor,
+                  }}
                 >
                   {"Add To Contacts".toUpperCase()}
                 </button>
@@ -294,7 +275,11 @@ export default function DisplayCard() {
                     shareCard();
                     handleAnalytics("qrCode");
                   }}
-                  className={`text-small text-white font-medium pt-4 pb-4 mb-8 w-full rounded-2xl  hover:bg-opacity-70 bg-${data.colorScheme}`}
+                  className={`text-small text-white font-medium pt-4 pb-4 mb-8 w-full rounded-2xl  hover:opacity-75`}
+                  style={{
+                    backgroundColor: data.colorScheme.brandColor,
+                    color: data.colorScheme.textColor,
+                  }}
                 >
                   {"Share Card".toUpperCase()}
                 </button>
@@ -323,8 +308,28 @@ export default function DisplayCard() {
               workAddressData={workAddressData}
               workCountry={workCountry}
             />
-            <DisplaySocial socialData={socialData} />
+            {data.colorScheme && (
+              <DisplaySocial
+                socialData={socialData}
+                colorScheme={data.colorScheme}
+              />
+            )}
           </div>
+          <p className="col-span-4 pt-4 pb-8 md:pb-0 capitalize">
+            made with{" "}
+            <Link to={"/"}>
+              <span
+                className="cursor-pointer"
+                style={{
+                  color: colorScheme.brandColor,
+                  fontWeight: 700,
+                  textDecoration: `${colorScheme.brandColor} underline`,
+                }}
+              >
+                BriteKard
+              </span>
+            </Link>
+          </p>
         </div>
       );
     };
@@ -337,26 +342,18 @@ export default function DisplayCard() {
                 Business Card Preview
               </p>
             </div>
-            {/* <div className="flex flex-row gap-1">
-              <Link to={"/dashboard"}>
-                <p className="font-bold cursor-pointer hover:text-purple-400">
-                  Back to Cards
-                </p>
-              </Link>
-              <p className="font-medium">{">"}</p>
-              <p className="font-medium">Preview</p>
-            </div> */}
-            {/* <div className="w-[39vh] h-[86vh] overflow-scroll m-auto border border-gray-300  rounded-2xl"> */}
-            {/* <div className=" w-[calc(47vh_-_100px)]  sm:w-[calc(47vh_-_74px)]  h-[calc(100vh_-_200px)] sm:h-[calc(100vh_-_160px)] overflow-scroll border border-gray-300 rounded-2xl m-auto"> */}
             <div className=" w-full h-full sm:py-16 ">{cardView()}</div>
-            {/* </div> */}
           </div>
         </div>
-        // </div>
       );
     } else {
       return (
-        <div className=" w-full h-full sm:py-16 bg-gray-100">{cardView()}</div>
+        <div
+          className=" w-full h-full sm:py-16 "
+          style={{ backgroundColor: Color(colorScheme.brandColor).alpha(0.25) }}
+        >
+          {cardView()}
+        </div>
       );
     }
   }
