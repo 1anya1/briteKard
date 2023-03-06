@@ -96,7 +96,7 @@ export default function DisplaySocial(props) {
   if (activeLinks.length > 0) {
     return (
       <div className="mx-4 mb-5">
-        <p className="text-lg font-medium text-gray-500 pb-3 pt-3 pl-4">
+        <p className="text-lg font-bold text-gray-500 pb-3 pt-3 pl-4">
           Social Link
         </p>
         {props.socialData.map((socialLink, idx) =>
@@ -115,7 +115,7 @@ export default function DisplaySocial(props) {
                 setCurrent(null);
               }}
             >
-              <div className="drop-shadow-md  border-gray-100 border rounded-2xl  bg-white mb-4 group">
+              <div className="shadow  border-gray-100 border rounded-2xl  bg-white mb-4 group">
                 <div className="p-4 flex items-center">
                   {socialData[`${socialLink[0]}`]}
                   <p
