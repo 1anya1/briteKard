@@ -8,6 +8,7 @@ import WorkInfo from "./Form Sections/WorkInfo";
 import CoverPhoto from "./Form Sections/CoverPhoto";
 import LoadingScreen from "../LoadingScreen";
 import CardName from "./Form Sections/CardName";
+import ColorPicker from "./ColorSelect";
 
 const axios = require("axios");
 export default function UpdateForm(props) {
@@ -15,13 +16,13 @@ export default function UpdateForm(props) {
   const { id } = useParams();
   const { username } = props;
 
-  // eslint-disable-next-line no-unused-vars
-  const [options, setOptions] = useState([
-    { name: "Home Address", toggle: true },
-    { name: "Work Info", toggle: true },
-    { name: "Social Links", toggle: true },
-    { name: "Cover Photo", toggle: true },
-  ]);
+  // // eslint-disable-next-line no-unused-vars
+  // const [options, setOptions] = useState([
+  //   { name: "Home Address", toggle: true },
+  //   { name: "Work Info", toggle: true },
+  //   { name: "Social Links", toggle: true },
+  //   { name: "Cover Photo", toggle: true },
+  // ]);
 
   const [userInputs, setUserInputs] = useState(null);
   const [submittedUpdate, setSubmittedUpdate] = useState(false);
@@ -175,6 +176,7 @@ export default function UpdateForm(props) {
               handleImageChange={handleImageChange}
               logo={userInputs.logo}
             />
+            <ColorPicker setUserInputs={setUserInputs} userInputs={userInputs} />
 
             <div className="flex flex-col lg:flex-row gap-4 align-center my-10 ">
               <div className=" sm:flex justify-center  sm:justify-start">
