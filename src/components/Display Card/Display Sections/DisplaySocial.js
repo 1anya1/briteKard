@@ -86,45 +86,57 @@ export default function DisplaySocial(props) {
 
   const [hover, setHover] = useState(false);
   const [current, setCurrent] = useState(null);
+  const activeLinks = props.socialData.filter(el=>el[1])
+
+  
 
   const colorChange = props.colorScheme.brandColor;
+  console.log(props.socialData)
 
-  return props.socialData.map((socialLink, idx) => {
-    if (socialLink[1]) {
-      return (
-        <a
-          href={`https://${socialLink[1]}`}
-          key={idx}
-          target="_blank"
-          rel="noopener noreferrer"
-          onMouseEnter={() => {
-            setHover(true);
-            setCurrent(idx);
-          }}
-          onMouseLeave={() => {
-            setHover(false);
-            setCurrent(null);
-          }}
-        >
-          <div className="drop-shadow-md mx-4 border-gray-100 border rounded-2xl  bg-white mb-4 group">
-            <div className="p-4 flex items-center">
-              {socialData[`${socialLink[0]}`]}
-              <p
-                className="text-gray-500 pl-4 text-base font-medium "
-                style={
-                  hover && current === idx
-                    ? { color: colorChange }
-                    : { color: "#a3a3a3 " }
-                }
-              >
-                {socialLink[0]}
-              </p>
-            </div>
-          </div>
-        </a>
-      );
-    } else {
-      return null;
-    }
-  });
+  if (activeLinks.length > 0) {
+    return (
+      <div className="mx-4 mb-5">
+        <p className="text-lg font-medium text-gray-500 pb-3 pt-3 pl-4">
+          Social Link
+        </p>
+        {props.socialData.map((socialLink, idx) =>
+          socialLink[1] ? (
+            <a
+              href={`https://${socialLink[1]}`}
+              key={idx}
+              target="_blank"
+              rel="noopener noreferrer"
+              onMouseEnter={() => {
+                setHover(true);
+                setCurrent(idx);
+              }}
+              onMouseLeave={() => {
+                setHover(false);
+                setCurrent(null);
+              }}
+            >
+              <div className="drop-shadow-md  border-gray-100 border rounded-2xl  bg-white mb-4 group">
+                <div className="p-4 flex items-center">
+                  {socialData[`${socialLink[0]}`]}
+                  <p
+                    className="text-gray-500 pl-4 text-base font-medium "
+                    style={
+                      hover && current === idx
+                        ? { color: colorChange }
+                        : { color: "#a3a3a3 " }
+                    }
+                  >
+                    {socialLink[0]}
+                  </p>
+                </div>
+              </div>
+            </a>
+          ) : null
+        )}
+      </div>
+    );
+  } else {
+    return null;
+  }
+
 }

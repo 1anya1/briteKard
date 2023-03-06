@@ -6,11 +6,11 @@ import { PhoneIcon, MailIcon, ChatAltIcon } from "@heroicons/react/solid";
 import { useParams, useLocation } from "react-router-dom";
 import QRmodal from "./Display Sections/Display Functions/QRmodal";
 import LoadingScreen from "../LoadingScreen";
-// import { saveAs } from "file-saver";
 import { browserName } from "react-device-detect";
 import EmptyBackground from "./Display Sections/EmptyBackground";
 
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+const Color = require("color");
 
 const axios = require("axios");
 
@@ -32,8 +32,7 @@ export default function DisplayCard() {
         const data = response.data[0];
         setData(data);
         console.log(data);
-       
-       
+
       })
       .catch((error) => {
         setError(true);
@@ -170,8 +169,12 @@ export default function DisplayCard() {
               />
             )}
             {!data.logo && (
-              <div  className=" w-full h-64 object-center sm:rounded-3xl">
-              <EmptyBackground  color={colorScheme.brandColor}/>
+
+              <div className=" w-full h-64 object-center sm:rounded-3xl overflow-hidden">
+                <div className="h-[104%] w-[110%] left-[-2%] top-[-2%] relative">
+                  <EmptyBackground color={colorScheme.brandColor} />
+                </div>
+
               </div>
             )}
 
@@ -181,7 +184,7 @@ export default function DisplayCard() {
                   src={data.photo}
                   alt="profile"
                   className="h-36 w-36 sm:h-40 sm:w-40 object-cover border-solid  rounded-full relative  border-white border-8 "
-                 
+
                 />
               </div>
             )}
@@ -199,12 +202,14 @@ export default function DisplayCard() {
             )}
           </div>
           <div className="col-span-5 pt-104  sm:pt-0 sm:mt-[146px] bg-white w-full rounded-t-3xl z-10">
-            <div>
-              <p className="text-[40px] leading-tight font-medium text-gray-700 tracking-wide text-center capitalize pb-2">
+
+            <div className="px-4 md:px-0">
+              <p className=" text-[28px] sm:text-[32px] leading-tight font-medium text-gray-700 tracking-wide text-center capitalize pb-2">
                 {data.firstName} {data.lastName}
               </p>
               {data.title && (
-                <p className="text-[26px] text-gray-600 font-light text-center capitalize ">
+                <p className="  text-[18px] sm:text-[20px] text-gray-600 font-light text-center capitalize ">
+
                   {data.title} @ {data.organization}
                 </p>
               )}
@@ -242,8 +247,10 @@ export default function DisplayCard() {
               {email && (
                 <div
                   onClick={() => handleAnalytics("email")}
-                  className="drop-shadow-md mx-4rounded-2xl  mb-4 hover:opacity-75"
-                  style={{ borderColor: data.colorScheme.brandColor }}
+
+                  className="h-12 w-12 rounded-full  flex justify-center items-center hover:opacity-75"
+                  style={{ backgroundColor: data.colorScheme.brandColor }}
+
                 >
                   <a href={`mailto:${email}`}>
                     <MailIcon
@@ -340,6 +347,21 @@ export default function DisplayCard() {
               />
             )}
           </div>
+          <p className="col-span-4 pt-4 pb-8 md:pb-0 capitalize">
+            made with{" "}
+            <Link to={"/"}>
+              <span
+                className="cursor-pointer"
+                style={{
+                  color: colorScheme.brandColor,
+                  fontWeight: 700,
+                  textDecoration: `${colorScheme.brandColor} underline`,
+                }}
+              >
+                BriteKard
+              </span>
+            </Link>
+          </p>
         </div>
       );
     };
@@ -352,26 +374,18 @@ export default function DisplayCard() {
                 Business Card Preview
               </p>
             </div>
-            {/* <div className="flex flex-row gap-1">
-              <Link to={"/dashboard"}>
-                <p className="font-bold cursor-pointer hover:text-purple-400">
-                  Back to Cards
-                </p>
-              </Link>
-              <p className="font-medium">{">"}</p>
-              <p className="font-medium">Preview</p>
-            </div> */}
-            {/* <div className="w-[39vh] h-[86vh] overflow-scroll m-auto border border-gray-300  rounded-2xl"> */}
-            {/* <div className=" w-[calc(47vh_-_100px)]  sm:w-[calc(47vh_-_74px)]  h-[calc(100vh_-_200px)] sm:h-[calc(100vh_-_160px)] overflow-scroll border border-gray-300 rounded-2xl m-auto"> */}
             <div className=" w-full h-full sm:py-16 ">{cardView()}</div>
-            {/* </div> */}
           </div>
         </div>
-        // </div>
       );
     } else {
       return (
-        <div className=" w-full h-full sm:py-16 bg-gray-100">{cardView()}</div>
+        <div
+          className=" w-full h-full sm:py-16 "
+          style={{ backgroundColor: Color(colorScheme.brandColor).alpha(0.25) }}
+        >
+          {cardView()}
+        </div>
       );
     }
   }
