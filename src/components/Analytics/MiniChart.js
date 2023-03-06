@@ -12,7 +12,7 @@ const MiniChart = ({ labels, data, title }) => {
   const [trend, setTrend] = useState(0);
   useEffect(() => {
     const newValue = data[data.length - 1];
-    const originalValue = data[data.length - 2];
+    const originalValue = data[0];
     const val =
       ((newValue - originalValue) / (originalValue > 0 ? originalValue : 1)) *
       100;
