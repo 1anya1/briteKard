@@ -27,13 +27,13 @@ export default function DisplayWorkInfo(props) {
   if (data()) {
     return (
       <div className="mx-4 mb-5">
-        <p className="text-lg font-medium text-gray-500 pb-3 pt-3 pl-4">Work Info</p>
+        <p className="text-lg font-bold text-gray-500 pb-3 pt-3 pl-4">Work Info</p>
 
         {workAddressTags.map((title, idx) => {
           const currSectionData = props.workAddressData[idx];
           return (
             currSectionData && (
-              <div className="drop-shadow-md  border-gray-100 border rounded-2xl  bg-white mb-4 group">
+              <div className="shadow  border-gray-100 border rounded-2xl  bg-white mb-4 group">
                 <div className="p-4 flex items-center">
                   <div key={idx}>
                     <p className="text-gray-400 text-sm  font-medium">
@@ -78,7 +78,7 @@ export default function DisplayWorkInfo(props) {
           );
         })}
         {props.workStreet && (
-           <div className="drop-shadow-md  border-gray-100 border rounded-2xl  bg-white mb-4 group">
+           <div className="shadow  border-gray-100 border rounded-2xl  bg-white mb-4 group">
            <div className="p-4 ">
             <p className="text-gray-400 text-sm  font-medium">
               Company Address

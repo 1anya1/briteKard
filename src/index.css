@@ -12,6 +12,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden !important;
 }
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
@@ -23,20 +24,45 @@ input[type="number"]::-webkit-inner-spin-button {
   webkit-overflow-scrolling: touch;
 }
 
-/* Color wheel settings */
-.w-color-interactive,
-.w-color-saturation,
-.w-color-colorful {
-  border-radius: 20px !important;
-  margin-bottom: 10px;
+.chrome-picker {
+  width: 100% !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1) !important;
 }
-.w-color-alpha {
-  border-radius: 20px;
-  display: none;
+.hue-horizontal {
+  height: 16px !important;
+  cursor: pointer;
+  border-radius: 10px;
 }
-.w-color-hue {
-  display: block;
+.hue-horizontal > div {
+  height: 16px !important;
+  width: 16px !important;
 }
-.w-color-hue > div {
-  border-radius: 20px;
+.hue-horizontal > div > div {
+  height: 16px !important;
+  width: 16px !important;
+  border-radius: 100% !important;
+  cursor: pointer;
+}
+.saturation-white > div > div {
+  height: 16px !important;
+  width: 16px !important;
+  border-radius: 100% !important;
+  cursor: pointer;
+  border-width: 1px;
+  box-shadow: unset !important;
+}
+
+.chrome-picker > *:last-child > *:first-child > *:first-child {
+  display: none !important;
+}
+
+.chrome-picker > *:last-child > *:last-child > *:last-child {
+  display: flex !important;
+  justify-content: flex-end;
+}
+
+.chrome-picker > *:last-child > *:last-child > *:last-child > div {
+  margin: 0 !important;
 }

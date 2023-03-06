@@ -260,27 +260,6 @@ export default function DisplayCard() {
                   </a>
                 </div>
               )}
-              {/* {socialData.map((socialLink, idx) => {
-                if (socialLink[1]) {
-                  return (
-                    <a
-                      href={`https://${socialLink[1]}`}
-                      key={idx}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <div className="drop-shadow-md mx-4 border-gray-100 border rounded-2xl  bg-white mb-4">
-                        <div className="p-4 flex items-center">
-                          {socialIcons[`${socialLink[0]}`]}
-                          
-                        </div>
-                      </div>
-                    </a>
-                  );
-                } else {
-                  return null;
-                }
-              })} */}
             </div>
             <div>
               {data.note && (
@@ -330,6 +309,7 @@ export default function DisplayCard() {
               houseStreet={houseStreet}
               housezip={housezip}
               houseCountry={houseCountry}
+              colorScheme={colorScheme}
             />
 
             <DisplayWorkInfo
@@ -382,7 +362,7 @@ export default function DisplayCard() {
       return (
         <div
           className=" w-full h-full sm:py-16 "
-          style={{ backgroundColor: Color(colorScheme.brandColor).alpha(0.25) }}
+          style={{ backgroundColor: Color(colorScheme.brandColor).alpha(0.05) }}
         >
           {cardView()}
         </div>
