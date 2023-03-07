@@ -8,8 +8,10 @@ import QRmodal from "./Display Sections/Display Functions/QRmodal";
 import LoadingScreen from "../LoadingScreen";
 import { browserName } from "react-device-detect";
 import EmptyBackground from "./Display Sections/EmptyBackground";
-
 import { Link } from "react-router-dom";
+import Header from "../Header/Header";
+
+
 const Color = require("color");
 
 const axios = require("axios");
@@ -21,7 +23,6 @@ export default function DisplayCard() {
 
   const [data, setData] = useState(null);
   const [qrToggle, setQrToggle] = useState(false);
- 
 
   useEffect(() => {
     axios
@@ -32,7 +33,6 @@ export default function DisplayCard() {
         const data = response.data[0];
         setData(data);
         console.log(data);
-
       })
       .catch((error) => {
         setError(true);
@@ -169,12 +169,10 @@ export default function DisplayCard() {
               />
             )}
             {!data.logo && (
-
               <div className=" w-full h-64 object-center sm:rounded-3xl overflow-hidden">
                 <div className="h-[104%] w-[110%] left-[-2%] top-[-2%] relative">
                   <EmptyBackground color={colorScheme.brandColor} />
                 </div>
-
               </div>
             )}
 
@@ -184,7 +182,6 @@ export default function DisplayCard() {
                   src={data.photo}
                   alt="profile"
                   className="h-36 w-36 sm:h-40 sm:w-40 object-cover border-solid  rounded-full relative  border-white border-8 "
-
                 />
               </div>
             )}
@@ -202,14 +199,12 @@ export default function DisplayCard() {
             )}
           </div>
           <div className="col-span-5 pt-104  sm:pt-0 sm:mt-[146px] bg-white w-full rounded-t-3xl z-10">
-
             <div className="px-4 md:px-0">
               <p className=" text-[28px] sm:text-[32px] leading-tight font-medium text-gray-700 tracking-wide text-center capitalize pb-2">
                 {data.firstName} {data.lastName}
               </p>
               {data.title && (
                 <p className="  text-[18px] sm:text-[20px] text-gray-600 font-light text-center capitalize ">
-
                   {data.title} @ {data.organization}
                 </p>
               )}
@@ -247,10 +242,8 @@ export default function DisplayCard() {
               {email && (
                 <div
                   onClick={() => handleAnalytics("email")}
-
                   className="h-12 w-12 rounded-full  flex justify-center items-center hover:opacity-75"
                   style={{ backgroundColor: data.colorScheme.brandColor }}
-
                 >
                   <a href={`mailto:${email}`}>
                     <MailIcon
@@ -348,6 +341,7 @@ export default function DisplayCard() {
     if (pathname.includes("preview")) {
       return (
         <div className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(100%_-_300px)] ml-auto  pb-[120px] ">
+        
           <div className=" mx-auto  ">
             <div className="flex flex-row items-end justify-between pb-10">
               <p className="  text-2xl font-bold  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
@@ -363,7 +357,8 @@ export default function DisplayCard() {
         <div
           className=" w-full h-full sm:py-16 "
           style={{ backgroundColor: Color(colorScheme.brandColor).alpha(0.05) }}
-        >
+        > <Header username={username} photo={data?.photo}/>
+
           {cardView()}
         </div>
       );
