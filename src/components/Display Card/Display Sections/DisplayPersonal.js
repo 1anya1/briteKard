@@ -4,7 +4,6 @@ export default function DisplayPersonal(props) {
   function removeHttp(url) {
     return url.replace(/^https?:\/\//, "");
   }
-   console.log(props)
 
   return (
     <div className="mx-4 mb-5">
@@ -17,6 +16,7 @@ export default function DisplayPersonal(props) {
           return (
             props.houseStreet && (
               <div
+              key={idx}
                 className="shadow  rounded-2xl  border-gray-100 border bg-white mb-4 group"
                 // style={{
                 //   boxShadow:
@@ -47,7 +47,7 @@ export default function DisplayPersonal(props) {
         } else {
           return (
             props.personalInfo[idx] && (
-              <div className="shadow border-gray-100 border rounded-2xl  bg-white mb-4 group"  
+              <div  key={idx} className="shadow border-gray-100 border rounded-2xl  bg-white mb-4 group"  
               // style={{
               //   boxShadow:
               //     `0 4px 6px -1px ${Color(props.colorScheme.brandColor).alpha(0.25)}, 0 2px 4px -2px ${Color(props.brandColor).alpha(0.25)}`,

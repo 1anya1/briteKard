@@ -7,7 +7,6 @@ import { ChromePicker } from "react-color";
 import FormDescription from "./Input Styles/FormDescription";
 
 export default function ColorPicker(props) {
-  console.log(props);
   const { setUserInputs, userInputs } = props;
   const [color, setColor] = useState(
     userInputs.colorScheme.brandColor
@@ -21,7 +20,6 @@ export default function ColorPicker(props) {
   );
 
   useEffect(() => {
-    console.log("in here");
     setUserInputs((prevVal) => ({
       ...prevVal,
       colorScheme: { brandColor: color, textColor: text },
@@ -29,7 +27,6 @@ export default function ColorPicker(props) {
   }, [color, setUserInputs, text]);
 
   const onColorPickerInfoChange = (color, event) => {
-    console.log("Main Color Change", color, event);
     setColor(color.hex);
   };
 

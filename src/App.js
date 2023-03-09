@@ -45,7 +45,6 @@ export default function App() {
           `${process.env.REACT_APP_BACKEND_URL}/user/verify/${localStorage.token}`
         )
         .then((response) => {
-          console.log(response);
           setLoggedIn(true);
           setUsername(response.data.username);
         })

@@ -11,7 +11,6 @@ import EmptyBackground from "./Display Sections/EmptyBackground";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 
-
 const Color = require("color");
 
 const axios = require("axios");
@@ -32,7 +31,6 @@ export default function DisplayCard() {
       .then((response) => {
         const data = response.data[0];
         setData(data);
-        console.log(data);
       })
       .catch((error) => {
         setError(true);
@@ -44,9 +42,6 @@ export default function DisplayCard() {
       const body = { cardId: data._id, [dataType]: time };
       axios
         .post(`${process.env.REACT_APP_BACKEND_URL}/engagement`, body)
-        .then((response) => {
-          console.log(response);
-        })
         .catch((error) => {
           console.log(error);
         });
@@ -209,7 +204,7 @@ export default function DisplayCard() {
                 </p>
               )}
             </div>
-            <div className="flex space-x-4 pt-4 justify-center pb-9  flex-wrap">
+            <div className={`flex space-x-4 pt-4 justify-center pb-4  flex-wrap ${data.note ? 'pb-4' : 'pb-9'}`}>
               {cellPhone && (
                 <>
                   <div
@@ -256,7 +251,7 @@ export default function DisplayCard() {
             </div>
             <div>
               {data.note && (
-                <p className="text-base text-gray-600 pb-8 text-center">
+                <p className=" text-gray-600 pb-8 text-center px-4  font-normal text-base " >
                   {data.note}
                 </p>
               )}
@@ -341,7 +336,6 @@ export default function DisplayCard() {
     if (pathname.includes("preview")) {
       return (
         <div className=" max-w-[1800px] px-[5%] sm:pb-6 sm:w-[calc(100%_-_100px)] lg:w-[calc(100%_-_300px)] ml-auto  pb-[120px] ">
-        
           <div className=" mx-auto  ">
             <div className="flex flex-row items-end justify-between pb-10">
               <p className="  text-2xl font-bold  text-left  tracking-tight text-gray-900  mb-0 mt-10 ">
@@ -357,8 +351,9 @@ export default function DisplayCard() {
         <div
           className=" w-full h-full sm:py-16 "
           style={{ backgroundColor: Color(colorScheme.brandColor).alpha(0.05) }}
-        > <Header username={username} photo={data?.photo}/>
-
+        >
+          {" "}
+          <Header username={username} photo={data?.photo} />
           {cardView()}
         </div>
       );

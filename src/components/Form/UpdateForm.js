@@ -29,12 +29,10 @@ export default function UpdateForm(props) {
   const [cardNameError, setCardNameError] = useState(false);
   const [existingTitles, setTitles] = useState("");
   useEffect(() => {
-    console.log(username);
     if (username) {
       axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/vCards/${username}`)
         .then((response) => {
-          console.log(response);
           const titles = [];
           const data = response.data;
           data.forEach((el) => {
@@ -108,9 +106,7 @@ export default function UpdateForm(props) {
   }
 
   const handleChange = (event) => {
-    console.log(event.target.getAttribute("id"));
     if (event.target.getAttribute("id") === "cardName") {
-      console.log(existingTitles);
       if (existingTitles.indexOf(event.target.value) !== -1) {
         setCardNameError(true);
       } else {
