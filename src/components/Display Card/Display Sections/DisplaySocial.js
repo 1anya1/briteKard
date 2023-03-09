@@ -14,7 +14,6 @@ import {
 import { useState } from "react";
 
 export default function DisplaySocial(props) {
-  console.log(props);
   const socialData = {
     Github: (
       <GitHubSVG
@@ -86,12 +85,8 @@ export default function DisplaySocial(props) {
 
   const [hover, setHover] = useState(false);
   const [current, setCurrent] = useState(null);
-  const activeLinks = props.socialData.filter(el=>el[1])
-
-  
-
+  const activeLinks = props.socialData.filter((el) => el[1]);
   const colorChange = props.colorScheme.brandColor;
-  console.log(props.socialData)
 
   if (activeLinks.length > 0) {
     return (
@@ -138,5 +133,4 @@ export default function DisplaySocial(props) {
   } else {
     return null;
   }
-
 }

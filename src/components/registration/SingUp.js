@@ -52,7 +52,6 @@ export default function SignUp(props) {
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/user/signup`, userInput)
       .then((response) => {
-        console.log(response);
         axios
           .post(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
             email: userInput.email,

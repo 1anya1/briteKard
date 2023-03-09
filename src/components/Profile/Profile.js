@@ -35,7 +35,6 @@ export default function Profile(props) {
       axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/user/${username}`)
         .then((res) => {
-          console.log(res.data);
           setUserData(res.data);
           setUser((prevState) => ({
             ...prevState,
@@ -113,7 +112,6 @@ export default function Profile(props) {
         email: data.email,
       })
       .then((response) => {
-        console.log("in here");
         props.setUsername(user.new);
       })
       .catch((error) => {

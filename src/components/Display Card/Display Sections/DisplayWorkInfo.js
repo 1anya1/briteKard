@@ -33,7 +33,7 @@ export default function DisplayWorkInfo(props) {
           const currSectionData = props.workAddressData[idx];
           return (
             currSectionData && (
-              <div className="shadow  border-gray-100 border rounded-2xl  bg-white mb-4 group">
+              <div className="shadow  border-gray-100 border rounded-2xl  bg-white mb-4 group"  key={idx}>
                 <div className="p-4 flex items-center">
                   <div key={idx}>
                     <p className="text-gray-400 text-sm  font-medium">

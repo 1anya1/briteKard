@@ -41,6 +41,12 @@ const personalDataInputs = [
     id: "url",
     placeholder: "MyPortfolio.com",
   },
+  {
+    label: "note",
+    type: "text",
+    id: "note",
+    placeholder: "Write something about yourself",
+  },
 ];
 
 const homeAddressInputs = [
