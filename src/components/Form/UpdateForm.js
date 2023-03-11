@@ -15,15 +15,6 @@ export default function UpdateForm(props) {
   const navigate = useNavigate();
   const { id } = useParams();
   const { username } = props;
-
-  // // eslint-disable-next-line no-unused-vars
-  // const [options, setOptions] = useState([
-  //   { name: "Home Address", toggle: true },
-  //   { name: "Work Info", toggle: true },
-  //   { name: "Social Links", toggle: true },
-  //   { name: "Cover Photo", toggle: true },
-  // ]);
-
   const [userInputs, setUserInputs] = useState(null);
   const [submittedUpdate, setSubmittedUpdate] = useState(false);
   const [cardNameError, setCardNameError] = useState(false);
@@ -60,7 +51,9 @@ export default function UpdateForm(props) {
   function handleSubmit(event) {
     event.preventDefault();
     let body = userInputs;
-    sendData(body);
+    if (body.cardName.length > 0 && !cardNameError) {
+      sendData(body);
+    }
   }
   function sendData(body) {
     setSubmittedUpdate(true);
@@ -132,11 +125,6 @@ export default function UpdateForm(props) {
     }
     setUserInputs(userObj);
   };
-  // function toggle(e) {
-  //   let newOptions = [...options];
-  //   newOptions[e].toggle = !newOptions[e].toggle;
-  //   setOptions(newOptions);
-  // }
 
   if (submittedUpdate || !userInputs) {
     return <LoadingScreen />;
@@ -172,7 +160,10 @@ export default function UpdateForm(props) {
               handleImageChange={handleImageChange}
               logo={userInputs.logo}
             />
-            <ColorPicker setUserInputs={setUserInputs} userInputs={userInputs} />
+            <ColorPicker
+              setUserInputs={setUserInputs}
+              userInputs={userInputs}
+            />
 
             <div className="flex flex-col lg:flex-row gap-4 align-center my-10 ">
               <div className=" sm:flex justify-center  sm:justify-start">

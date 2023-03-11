@@ -35,7 +35,7 @@ export default function Forms(props) {
   const [userInputs, setUserInputs] = useState({
     username: "",
     cardName: "",
-    colorScheme: {brandColor:"#737373", textColor:'#ffffff'},
+    colorScheme: { brandColor: "#737373", textColor: "#ffffff" },
     uid: "",
     birthday: "",
     cellPhone: "",
@@ -89,30 +89,20 @@ export default function Forms(props) {
     qrCode: "",
   });
 
-  const [nameError, setNameError] = useState(false);
-  const [cellError, setCellError] = useState(false);
+
   const [cardNameError, setCardNameError] = useState(false);
   const [existingTitles, setTitles] = useState("");
+  
 
   function handleSubmit(event) {
     event.preventDefault();
     userInputs.username = props.username;
     let body = userInputs;
-    const duplicate = existingTitles.indexOf(userInputs.cardName) !== -1;
-    if (duplicate) {
-      setCardNameError(true);
-    }
-    if (body.firstName === "") {
-      setNameError(true);
-    }
-    if (body.cellPhone === "") {
-      setCellError(true);
-    } else {
-      if (!cardNameError) {
-        sendData(body);
-      }
+    if (body.cardName.length > 0 && !cardNameError) {
+      sendData(body);
     }
   }
+
   useEffect(() => {
     const duplicate = existingTitles.indexOf(userInputs.cardName) !== -1;
     if (!duplicate) {
@@ -201,6 +191,13 @@ export default function Forms(props) {
 
     let value = event.target.value;
     let objKey = event.target.getAttribute("id");
+    if (event.target.getAttribute("id") === "cardName") {
+      if (existingTitles.indexOf(event.target.value) !== -1) {
+        setCardNameError(true);
+      } else {
+        setCardNameError(false);
+      }
+    }
     if (
       (objKey === "cellPhone" && objKey.length > 0) ||
       (objKey === "workPhone" && objKey.length > 0) ||
@@ -219,11 +216,6 @@ export default function Forms(props) {
 
     setUserInputs(userObj);
   }
-  // function toggle(e) {
-  //   let newOptions = [...options];
-  //   newOptions[e].toggle = !newOptions[e].toggle;
-  //   setOptions(newOptions);
-  // }
   if (submittedUpdate || !userInputs) {
     return <LoadingScreen />;
   } else {
@@ -235,9 +227,6 @@ export default function Forms(props) {
               Add New Card
             </p>
           </div>
-          {/* <div className="flex flex-row flex-nowrap overflow-scroll scrollbar-hide my-8  container mx-auto gap-2">
-            <Chips options={options} toggle={toggle} />
-          </div> */}
         </div>
         <div>
           <form onSubmit={handleSubmit}>
@@ -249,10 +238,6 @@ export default function Forms(props) {
             <PersonalInfo
               handleChange={handleChange}
               userInputs={userInputs}
-              cellError={cellError}
-              nameError={nameError}
-              setNameError={setNameError}
-              setCellError={setCellError}
               handleImageChange={handleImageChange}
             />
             <SocialLinks handleChange={handleChange} userInputs={userInputs} />
@@ -260,7 +245,10 @@ export default function Forms(props) {
             <HomeAddress handleChange={handleChange} userInputs={userInputs} />
 
             <CoverPhoto handleImageChange={handleImageChange} />
-            <ColorPicker setUserInputs={setUserInputs} userInputs={userInputs}/>
+            <ColorPicker
+              setUserInputs={setUserInputs}
+              userInputs={userInputs}
+            />
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start mb-8">
               <div className="rounded-md shadow w-full xl:w-[300px]">
                 <button

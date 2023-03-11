@@ -36,11 +36,7 @@ export default function PersonalInfo(props) {
                 id={el.id}
                 value={props.userInputs[el.id]}
                 change={props.handleChange}
-                error={
-                  props.cellError && props.userInputs[el.id].length < 1
-                    ? "Please enter phone number"
-                    : null
-                }
+                
               />
             );
           }
@@ -53,11 +49,6 @@ export default function PersonalInfo(props) {
                 id={el.id}
                 value={props.userInputs[el.id]}
                 change={props.handleChange}
-                error={
-                  props.nameError && props.userInputs[el.id].length < 1
-                    ? "Please enter name"
-                    : null
-                }
               />
             );
           }
