@@ -5,6 +5,10 @@ module.exports = {
       sans: ["Graphik", "sans-serif"],
       serif: ["Merriweather", "serif"],
     },
+    screens: {
+      'xs': '360px',
+
+    },
 
     borderWidth: {
       DEFAULT: "1px",

@@ -42,13 +42,14 @@ export default function AllCards(props) {
       axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/vCards/${username}`)
         .then((response) => {
+          console.log(response.data)
           setData(response.data);
         });
     }
   }, [username, deleteModal]);
 
   for (let card in data) {
-    const { _id, firstName, lastName, title, photo, qrCode } = data[card];
+    const { _id, firstName, lastName, title, photo, qrCode, cardName } = data[card];
 
     const name = `${firstName} ${lastName}`;
 
@@ -58,6 +59,7 @@ export default function AllCards(props) {
       jobTitle: title,
       image: photo,
       qrCode,
+      cardName
     };
     displayCard.push(display);
   }
@@ -95,6 +97,7 @@ export default function AllCards(props) {
               />
             )}
             {displayCard.map((card, id) => {
+              console.log(card)
               return (
                 <div
                   key={id}
@@ -115,9 +118,9 @@ export default function AllCards(props) {
                       )}
                     </div>
 
-                    <p className="font-bold text-xl">{card.name}</p>
+                    <p className="font-bold text-xl sm:text-md text-right">{card.cardName}</p>
                   </div>
-                  <div className="grid grid-cols-2 gap-1 sm:gap-2">
+                  <div className="grid xs:grid-cols-2 grid-cols-1 gap-1 sm:gap-2">
                     <button
                       onClick={() =>
                         navigate(`/mycard/preview/${username}/${card.id}`)
