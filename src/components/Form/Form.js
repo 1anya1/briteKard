@@ -89,7 +89,6 @@ export default function Forms(props) {
     qrCode: "",
   });
 
-
   const [cardNameError, setCardNameError] = useState(false);
   const [existingTitles, setTitles] = useState("");
   
@@ -191,16 +190,17 @@ export default function Forms(props) {
 
     let value = event.target.value;
     let objKey = event.target.getAttribute("id");
-    console.log(objKey)
     if (event.target.getAttribute("id") === "cardName") {
       if (existingTitles.indexOf(event.target.value) !== -1) {
         setCardNameError(true);
       } else {
         setCardNameError(false);
       }
+
     } 
     if(objKey==='email' || objKey==='workEmail' || objKey==="url" || objKey.indexOf('socialUrls') !== -1 || objKey==='workEmail' || objKey==='workUrl'){
       value = value.toLowerCase()
+
     }
     if (
       (objKey === "cellPhone" && objKey.length > 0) ||
