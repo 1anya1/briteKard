@@ -116,6 +116,9 @@ export default function UpdateForm(props) {
     ) {
       value = formatUSNumber(value);
     }
+    if(objKey==='email' || objKey==='workEmail' || objKey==="url" || objKey.indexOf('socialUrls') !== -1 || objKey==='workEmail' || objKey==='workUrl'){
+      value = value.toLowerCase()
+    }
 
     objKey = objKey.split(".");
     if (objKey.length === 1) {

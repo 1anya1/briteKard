@@ -91,6 +91,7 @@ export default function Forms(props) {
 
   const [cardNameError, setCardNameError] = useState(false);
   const [existingTitles, setTitles] = useState("");
+  
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -195,6 +196,11 @@ export default function Forms(props) {
       } else {
         setCardNameError(false);
       }
+
+    } 
+    if(objKey==='email' || objKey==='workEmail' || objKey==="url" || objKey.indexOf('socialUrls') !== -1 || objKey==='workEmail' || objKey==='workUrl'){
+      value = value.toLowerCase()
+
     }
     if (
       (objKey === "cellPhone" && objKey.length > 0) ||

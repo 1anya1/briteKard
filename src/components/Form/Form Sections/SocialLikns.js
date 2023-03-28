@@ -21,6 +21,7 @@ export default function SocialLinks(props) {
       id: `socialUrls.${input.toLowerCase()}`,
       placeholder: "example.com",
       value: ["socialUrls", `${input.toLowerCase()}`],
+      
     };
     duplicateState.push(data);
     setSite(duplicateState);
