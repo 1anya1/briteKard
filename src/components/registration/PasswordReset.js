@@ -15,26 +15,27 @@ export default function PasswordReset(props) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  
-
+  const [submitting, setSubmitting] = useState(false);
   function handleChange(event) {
     let value = event.target.value;
-    setError(false)
+    setError(false);
     setEmail(value);
   }
- 
+
   function handleSubmit(e) {
     e.preventDefault();
+    setSubmitting(true)
     axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/passwordReset/reset-password`, { email })
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/passwordReset/reset-password`,
+        { email }
+      )
       .then((response) => {
         if (response) {
           setLoaded(true);
         }
       })
       .catch((error) => {
-
         setErrorMessage(error.response.data);
         setError(true);
       });
@@ -74,8 +75,9 @@ export default function PasswordReset(props) {
               <div className="mt-4 sm:flex sm:justify-center  w-full ">
                 <div className="rounded-md shadow">
                   <button
+                    disabled={submitting}
                     type="submit"
-                    className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-400 hover:bg-purple-300 md:py-4 md:text-lg md:px-10 cursor-pointer"
+                    className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-400 disabled:bg-purple-100 hover:bg-purple-300 md:py-4 md:text-lg md:px-10 cursor-pointer"
                   >
                     Reset Password
                   </button>

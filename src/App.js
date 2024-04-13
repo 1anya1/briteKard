@@ -22,6 +22,9 @@ import Footer from "./components/Footer/Footer";
 import Analytics from "./components/Analytics/Analytics";
 import Profile from "./components/Profile/Profile";
 import Header from "./components/Header/Header";
+import VerifyEmail from "./components/VerifyEmail";
+import { Navigate } from "react-router-dom";
+import ConfirmEmail from "./components/ConfirmEmail";
 
 import {
   AiOutlineUser,
@@ -35,8 +38,11 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
   const [id, setId] = useState("");
+  const [verified, setVerified] = useState(false);
   const location = useLocation();
   const [height, setHeight] = useState(window.innerHeight);
+  const [email, setEmail] = useState("");
+  console.log(email)
 
   useEffect(() => {
     if (localStorage.token) {
@@ -64,6 +70,21 @@ export default function App() {
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
+  const ProtectedRoute = ({ component: Component, ...rest }) => {
+    // Assuming `loggedIn` and `verified` are passed through context or props.
+    const { loggedIn, verified } = rest;
+
+    return loggedIn && verified ? (
+      <Component {...rest} />
+    ) : (
+      <Navigate to="/login" />
+    );
+  };
+  const verifyEmailRoute = ({ component: Component, ...rest }) => {
+    // Assuming `loggedIn` and `verified` are passed through context or props.
+    const { email } = rest;
+    return email ? <Component {...rest} /> : <Navigate to="/login" />;
+  };
 
   const routerSystem = () => {
     return (
@@ -81,11 +102,27 @@ export default function App() {
         />
         <Route
           path="/login"
-          element={<LogIn setUsername={setUsername} loggedIn={loggedIn} />}
+          element={
+            <LogIn
+              setUsername={setUsername}
+              loggedIn={loggedIn}
+              setVerified={setVerified}
+              setEmail={setEmail}
+            />
+          }
         />
+        <Route path="/verify-email" element={<VerifyEmail email={email} />} />
+        <Route path='/confirm-email' element={<ConfirmEmail email={email} />}/>
+
         <Route
           path="/signup"
-          element={<SignUp setUsername={setUsername} loggedIn={loggedIn} />}
+          element={
+            <SignUp
+              setUsername={setUsername}
+              loggedIn={loggedIn}
+              setEmail={setEmail}
+            />
+          }
         />
 
         <Route
@@ -104,7 +141,18 @@ export default function App() {
         <Route path={`/reset/:token`} element={<CreateNewPassword />} />
         <Route path={`/share/:username/:id`} element={<DisplayCard />} />
 
-        <Route path={`/dashboard`} element={<AllCards username={username} />} />
+        {/* <Route path={`/dashboard`} element={<AllCards username={username} />} /> */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute
+              component={AllCards}
+              loggedIn={loggedIn}
+              username={username}
+            />
+          }
+        />
+
         <Route
           path={"/dashboard/analytics"}
           element={<Analytics username={username} />}

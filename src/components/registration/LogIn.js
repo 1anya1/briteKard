@@ -45,9 +45,16 @@ export default function LogIn(props) {
       })
       .then((response) => {
         localStorage.token = response.data.token;
-        if (response.data.token) {
+        console.log(response.data.token, response)
+        if (response.data.token && response.data.verified) {
           props.setUsername(userInputs.username);
+          props.setVerified(response.data.verified)
+          props.setEmail(userInputs.email)
           navigate(`/dashboard`);
+        }
+        else if(response.data.token){
+          props.setEmail(userInputs.email)
+          navigate('/verify-email')
         }
       })
       .catch((error) => {

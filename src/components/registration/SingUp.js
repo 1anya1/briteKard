@@ -61,7 +61,8 @@ export default function SignUp(props) {
             localStorage.token = response.data.token;
             if (response.data.token) {
               props.setUsername(userInput.username);
-              navigate(`/dashboard`);
+              props.setEmail(userInput.email)
+              navigate('/verify-email')
             }
           })
           .catch((error) => {
